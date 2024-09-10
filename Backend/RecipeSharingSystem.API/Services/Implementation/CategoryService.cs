@@ -1,6 +1,8 @@
-﻿namespace RecipeSharingSystem.API.Services.Implementation
+﻿using RecipeSharingSystem.API.Services.Interfaces;
+
+namespace RecipeSharingSystem.API.Services.Implementation
 {
-	public class CategoryService
+	public class CategoryService : ICategoryService
 	{
 	}
 }

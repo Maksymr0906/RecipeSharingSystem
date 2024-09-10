@@ -2,7 +2,7 @@
 
 namespace RecipeSharingSystem.API.Services.Implementation
 {
-	public class CommentService : ICommentService
+	public class RatingService : IRatingService
 	{
 	}
 }

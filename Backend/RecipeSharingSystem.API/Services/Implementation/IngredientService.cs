@@ -1,6 +1,8 @@
-﻿namespace RecipeSharingSystem.API.Services.Implementation
+﻿using RecipeSharingSystem.API.Services.Interfaces;
+
+namespace RecipeSharingSystem.API.Services.Implementation
 {
-	public class IngredientService
+	public class IngredientService : IIngredientService
 	{
 	}
 }

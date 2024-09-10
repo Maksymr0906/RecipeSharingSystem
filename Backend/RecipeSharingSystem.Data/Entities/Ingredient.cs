@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RecipeSharingSystem.Data.Entities
+﻿namespace RecipeSharingSystem.Data.Entities
 {
-	public class Ingredient
+	public class Ingredient : BaseEntity
 	{
+		public string Name { get; set; }
+		public Guid ImageId { get; set; }
+		public Image Image { get; set; }
+		public ICollection<RecipeIngredient> RecipeIngredients { get; set;}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace RecipeSharingSystem.API.Services.Interfaces
 {
-	public interface IUserService
+	public interface IUserService : IAbstractService
 	{
 	}
 }
