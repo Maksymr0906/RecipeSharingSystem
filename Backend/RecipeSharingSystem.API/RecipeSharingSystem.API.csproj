@@ -15,16 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="DTOs\Category\" />
-    <Folder Include="DTOs\Comment\" />
-    <Folder Include="DTOs\Ingredient\" />
-    <Folder Include="DTOs\Instruction\" />
-    <Folder Include="DTOs\User\" />
-    <Folder Include="DTOs\Recipe\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\RecipeSharingSystem.Data\RecipeSharingSystem.Data.csproj" />
   </ItemGroup>
 

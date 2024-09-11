@@ -5,5 +5,9 @@ namespace RecipeSharingSystem.Data.Repositories.Implementation
 {
 	public class InstructionRepository : AbstractRepository<Instruction>, IInstructionRepository
 	{
+		public InstructionRepository(RecipeSharingSystemDbContext context)
+			: base(context)
+		{
+		}
 	}
 }
