@@ -1,8 +1,22 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using RecipeSharingSystem.Business;
+using RecipeSharingSystem.Business.Services.Implementation;
+using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Data;
+using RecipeSharingSystem.Data.Repositories.Implementation;
+using RecipeSharingSystem.Data.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAutoMapper(typeof(AutomapperProfile));
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -23,6 +37,12 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+	FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+	RequestPath = "/Images"
+});
 
 app.MapControllers();
 
