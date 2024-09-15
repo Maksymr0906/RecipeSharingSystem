@@ -2,6 +2,7 @@
 using RecipeSharingSystem.Business.DTOs.Category;
 using RecipeSharingSystem.Business.DTOs.Image;
 using RecipeSharingSystem.Business.DTOs.Ingredient;
+using RecipeSharingSystem.Business.DTOs.Instruction;
 using RecipeSharingSystem.Data.Entities;
 
 namespace RecipeSharingSystem.Business
@@ -42,6 +43,16 @@ namespace RecipeSharingSystem.Business
 				.ForMember(i => i.RecipeIngredients, opt => opt.Ignore());
 
 			CreateMap<Ingredient, IngredientDto>();
+
+			// Instruction
+			CreateMap<CreateInstructionRequestDto, Instruction>()
+				.ForMember(i => i.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
+				.ForMember(i => i.Recipe, opt => opt.Ignore());
+
+			CreateMap<UpdateInstructionRequestDto, Instruction>()
+				.ForMember(i => i.Recipe, opt => opt.Ignore());
+
+			CreateMap<Instruction, InstructionDto>();
 		}
 	}
 }

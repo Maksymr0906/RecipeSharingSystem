@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RecipeSharingSystem.Business.DTOs.Instruction
+﻿namespace RecipeSharingSystem.Business.DTOs.Instruction
 {
 	public class CreateInstructionRequestDto
 	{
+		public string Content { get; set; }
 	}
 }
