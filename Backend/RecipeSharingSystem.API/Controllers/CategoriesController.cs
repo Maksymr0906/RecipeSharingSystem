@@ -16,7 +16,7 @@ namespace RecipeSharingSystem.API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
+		public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
 		{
 			var category = await _service.CreateCategoryAsync(request);
 			return Ok(category);

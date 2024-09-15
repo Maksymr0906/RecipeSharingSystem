@@ -3,6 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 Backend/RecipeSharingSystem.Data/Migrations/
+Backend/RecipeSharingSystem.API/Images/
 
 # User-specific files
 *.rsuser

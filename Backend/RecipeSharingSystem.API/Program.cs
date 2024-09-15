@@ -14,9 +14,11 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

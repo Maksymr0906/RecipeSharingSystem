@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RecipeSharingSystem.Business.DTOs.Ingredient
+﻿namespace RecipeSharingSystem.Business.DTOs.Ingredient
 {
 	public class UpdateIngredientRequestDto
 	{
+		public string Name { get; set; }
+		public Guid ImageId { get; set; }
 	}
 }
