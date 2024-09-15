@@ -10,4 +10,12 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RecipeSharingSystem.Data\RecipeSharingSystem.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validation\" />
+  </ItemGroup>
+
 </Project>
