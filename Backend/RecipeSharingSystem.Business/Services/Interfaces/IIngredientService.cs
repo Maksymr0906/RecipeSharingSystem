@@ -5,7 +5,7 @@ namespace RecipeSharingSystem.Business.Services.Interfaces
 	public interface IIngredientService
 	{
 		Task<IngredientDto> CreateIngredientAsync(CreateIngredientRequestDto model);
-		Task<IEnumerable<IngredientDto>> GetAllIngredientsAsync();
+		Task<ICollection<IngredientDto>> GetAllIngredientsAsync();
 		Task<IngredientDto> GetIngredientByIdAsync(Guid id);
 		Task<IngredientDto> UpdateIngredientAsync(Guid id, UpdateIngredientRequestDto model);
 		Task<IngredientDto> DeleteIngredientAsync(Guid id);

@@ -24,10 +24,10 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 			return _mapper.Map<CategoryDto>(category);
 		}
 
-		public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
+		public async Task<ICollection<CategoryDto>> GetAllCategoriesAsync()
 		{
 			var categories = await _repository.GetAllAsync();
-			return _mapper.Map<IEnumerable<CategoryDto>>(categories);
+			return _mapper.Map<ICollection<CategoryDto>>(categories);
 		}
 
 		public async Task<CategoryDto> GetCategoryByIdAsync(Guid id)

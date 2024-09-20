@@ -24,10 +24,10 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 			return _mapper.Map<IngredientDto>(ingredient);
 		}
 
-		public async Task<IEnumerable<IngredientDto>> GetAllIngredientsAsync()
+		public async Task<ICollection<IngredientDto>> GetAllIngredientsAsync()
 		{
 			var ingredients = await _repository.GetAllAsync();
-			return _mapper.Map<IEnumerable<IngredientDto>>(ingredients);
+			return _mapper.Map<ICollection<IngredientDto>>(ingredients);
 		}
 
 		public async Task<IngredientDto> GetIngredientByIdAsync(Guid id)

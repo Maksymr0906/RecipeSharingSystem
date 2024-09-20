@@ -28,10 +28,10 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 			return _mapper.Map<ImageDto>(image);
 		}
 
-		public async Task<IEnumerable<ImageDto>> GetAllImagesAsync()
+		public async Task<ICollection<ImageDto>> GetAllImagesAsync()
 		{
 			var images = await _repository.GetAllAsync();
-			return _mapper.Map<IEnumerable<ImageDto>>(images);
+			return _mapper.Map<ICollection<ImageDto>>(images);
 		}
 
 		public async Task<ImageDto> GetImageByIdAsync(Guid id)
