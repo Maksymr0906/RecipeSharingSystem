@@ -1,0 +1,20 @@
+.navbar {
+  background-color: #d8c3a5 !important;
+}
+
+.navbar-brand {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #e85a4f;
+}
+
+.navbar-text {
+  color: #ffffff !important;
+}
+
+.dropdown-menu {
+  background-color: #d8c3a5 !important;
+}

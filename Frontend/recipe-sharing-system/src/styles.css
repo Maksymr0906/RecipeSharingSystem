@@ -1,1 +1,67 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #eae7dc;
+  color: #ffffff;
+}
+
+.btn-primary {
+  background-color: #e98074 !important;
+  border-color: #8e8d8a !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover {
+  background-color: #e85a4f !important;
+}
+
+.btn-secondary {
+  background-color: #d8c3a5 !important;
+  border-color: #8e8d8a !important;
+  color: #ffffff !important;
+}
+
+.text-primary {
+  color: #8e8d8a !important;
+}
+
+.text-secondary {
+  color: #cccccc !important;
+}
+
+.text-header {
+  color: #e85a4f !important;
+}
+
+.table-custom {
+  border: 1px solid #8e8d8a;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-custom thead tr {
+  background-color: #e98074;
+  color: #ffffff;
+}
+
+.table-custom th,
+.table-custom td {
+  padding: 12px 15px;
+}
+
+.table-custom tbody tr {
+  color: #8e8d8a;
+}
+
+.table-custom tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.images-container-modal {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
