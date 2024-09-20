@@ -42,7 +42,7 @@ namespace RecipeSharingSystem.Data.Repositories.Implementation
 			return entity;
 		}
 
-		public async Task<IEnumerable<TEntity>> GetAllAsync()
+		public async Task<ICollection<TEntity>> GetAllAsync()
 		{
 			return await _entities.ToListAsync();
 		}
