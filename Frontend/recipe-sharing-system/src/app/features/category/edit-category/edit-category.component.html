@@ -1,0 +1,55 @@
+<div class="container">
+  <h1 class="text-header mt-3">Edit Category</h1>
+  <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+    <div class="mt-3">
+      <label class="form-label text-primary" for="categoryName">Name</label>
+      <input
+        class="form-control"
+        type="text"
+        id="categoryName"
+        name="categoryName"
+        [(ngModel)]="model.name"
+      />
+    </div>
+    <div class="mt-3">
+      <label
+        class="form-label text-primary d-flex gap-3 align-items-center"
+        for="categoryImageId"
+        >Image Id
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="openImageSelector()"
+        >
+          Select image
+        </button>
+      </label>
+      <input
+        class="form-control"
+        type="text"
+        id="categoryImageId"
+        name="categoryImageId"
+        [(ngModel)]="model.imageId"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+  </form>
+</div>
+
+<div
+  class="images-container-modal"
+  [ngClass]="{
+    'd-block': isImageSelectorVisible,
+    'd-none': !isImageSelectorVisible
+  }"
+>
+  <button
+    type="button"
+    class="btn btn-light position-fixed"
+    style="top: 10px; right: 10px"
+    (click)="closeImageSelector()"
+  >
+    X
+  </button>
+  <app-image-selector></app-image-selector>
+</div>

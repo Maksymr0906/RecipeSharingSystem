@@ -3,6 +3,7 @@ import { AddCategoryRequest } from '../../models/add-category-request.model';
 import { Subscription } from 'rxjs';
 import { ImageService } from 'src/app/shared/services/image.service';
 import { CategoryService } from '../services/category.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
@@ -17,7 +18,8 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
 
   constructor(
     private imageService: ImageService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private router: Router
   )
   {
     this.model = {
@@ -28,8 +30,8 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
 
   onFormSubmit() {
     this.addCategorySubscription = this.categoryService.addCategory(this.model).subscribe(
-      category => {
-        console.log(category);
+      _ => {
+        this.router.navigateByUrl('/admin/categories');
       }
     );
   }
