@@ -1,24 +1,24 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AddCategoryRequest } from '../models/add-category-request.model';
+import { AddIngredientRequest } from '../models/add-ingredient.model';
 import { Subscription } from 'rxjs';
 import { ImageService } from 'src/app/shared/services/image.service';
-import { CategoryService } from '../services/category.service';
+import { IngredientService } from '../services/ingredient.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-category',
-  templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.css']
+  selector: 'app-add-ingredient',
+  templateUrl: './add-ingredient.component.html',
+  styleUrls: ['./add-ingredient.component.css']
 })
-export class AddCategoryComponent implements OnInit, OnDestroy {
-  model: AddCategoryRequest;
+export class AddIngredientComponent implements OnInit, OnDestroy {
+  model: AddIngredientRequest;
   isImageSelectorVisible: boolean = false;
   imageSelectorSubscription?: Subscription;
-  addCategorySubscription?: Subscription;
+  addIngredientSubscription?: Subscription;
 
   constructor(
     private imageService: ImageService,
-    private categoryService: CategoryService,
+    private ingredientService: IngredientService,
     private router: Router
   )
   {
@@ -29,9 +29,9 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
   }
 
   onFormSubmit() {
-    this.addCategorySubscription = this.categoryService.addCategory(this.model).subscribe(
+    this.addIngredientSubscription = this.ingredientService.addIngredient(this.model).subscribe(
       _ => {
-        this.router.navigateByUrl('/admin/categories');
+        this.router.navigateByUrl('/admin/ingredients');
       }
     );
   }
@@ -55,6 +55,6 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.imageSelectorSubscription?.unsubscribe();
-    this.addCategorySubscription?.unsubscribe();
+    this.addIngredientSubscription?.unsubscribe();
   }
 }

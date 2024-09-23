@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category } from '../../models/category.model';
+import { Category } from '../models/category.model';
 import { environment } from 'src/environments/environment.development';
-import { AddCategoryRequest } from '../../models/add-category-request.model';
-import { EditCategoryRequest } from '../../models/edit-category-request.model';
+import { AddCategoryRequest } from '../models/add-category-request.model';
+import { EditCategoryRequest } from '../models/edit-category-request.model';
 
 @Injectable({
   providedIn: 'root'
