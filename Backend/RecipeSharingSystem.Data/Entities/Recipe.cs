@@ -6,11 +6,10 @@
 		public string ShortDescription { get; set; }
 		public Guid InstructionId { get; set; }
 		public Instruction Instruction { get; set; }
-		public Guid CategoryId { get; set; }
-		public Category Category { get; set; }
 		public Guid ImageId { get; set; }
 		public Image Image { get; set; }
 		public ICollection<Rating> Ratings { get; set; }
 		public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+		public ICollection<Category> Categories { get; set; }
 	}
 }

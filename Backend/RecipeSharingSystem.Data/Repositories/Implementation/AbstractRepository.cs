@@ -15,18 +15,27 @@ namespace RecipeSharingSystem.Data.Repositories.Implementation
 			_entities = _context.Set<TEntity>();
 		}
 
+		protected RecipeSharingSystemDbContext Context => _context;
 		protected DbSet<TEntity> Entities => _entities;
 
 		public async Task<TEntity> CreateAsync(TEntity entity)
 		{
-			if (entity == null)
+			try
 			{
-				throw new ArgumentNullException(nameof(entity));
-			}
+				if (entity == null)
+				{
+					throw new ArgumentNullException(nameof(entity));
+				}
 
-			await _entities.AddAsync(entity);
-			await _context.SaveChangesAsync();
-			return entity;
+				await _entities.AddAsync(entity);
+				await _context.SaveChangesAsync();
+				return entity;
+			}
+			catch(Exception ex)
+			{
+				string exception = ex.Message;
+				return null;
+			}
 		}
 
 		public async Task<TEntity> DeleteByIdAsync(Guid id)
@@ -60,13 +69,7 @@ namespace RecipeSharingSystem.Data.Repositories.Implementation
 
 		public async Task<TEntity> UpdateAsync(TEntity entity)
 		{
-			var existingEntity = await _entities.FindAsync(entity.Id);
-			if (existingEntity == null)
-			{
-				throw new KeyNotFoundException();
-			}
-
-			_context.Entry(existingEntity).CurrentValues.SetValues(entity);
+			_entities.Update(entity);
 			await _context.SaveChangesAsync();
 			return entity;
 		}

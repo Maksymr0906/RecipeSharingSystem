@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="d-flex justify-content-between mt-3 align-items-end">
+    <h1 class="text-header">Recipes</h1>
+    <a class="btn btn-primary" [routerLink]="['/admin/recipes/add']">
+      Add Recipe
+    </a>
+  </div>
+
+  <ng-container *ngIf="recipes$ | async as recipes">
+    <table class="table-custom mt-3">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Short Description</th>
+          <th>Rating</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let recipe of recipes">
+          <td>{{ recipe.id }}</td>
+          <td>{{ recipe.title }}</td>
+          <td>{{ recipe.shortDescription }}</td>
+          <td>{{ recipe.ratingIds }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary"
+              [routerLink]="['/admin/recipes/', recipe.id]"
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</div>

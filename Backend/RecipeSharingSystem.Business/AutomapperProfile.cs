@@ -109,7 +109,8 @@ namespace RecipeSharingSystem.Business
 						RecipeId = recipe.Id,
 						Quantity = iq.Quantity
 					})
-				));
+				))
+				.ForMember(r => r.Categories, opt => opt.Ignore());
 
 			CreateMap<UpdateRecipeRequestDto, Recipe>()
 				.ForMember(r => r.Ratings, opt => opt.Ignore())
@@ -120,7 +121,8 @@ namespace RecipeSharingSystem.Business
 						RecipeId = recipe.Id,
 						Quantity = iq.Quantity
 					})
-				));
+				))
+				.ForMember(r => r.Categories, opt => opt.Ignore());
 
 			CreateMap<Recipe, RecipeDto>()
 				.ForMember(dto => dto.RatingIds, opt => opt.MapFrom(r => r.Ratings.Select(rt => rt.Id)))
@@ -130,7 +132,8 @@ namespace RecipeSharingSystem.Business
 						IngredientId = ri.IngredientId,
 						Quantity = ri.Quantity
 					})
-				));
+				))
+				.ForMember(dto => dto.CategoryIds, opt => opt.MapFrom(r => r.Categories.Select(c => c.Id)));
 		}
 	}
 }

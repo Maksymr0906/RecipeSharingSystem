@@ -1,0 +1,132 @@
+<div class="container">
+  <h1 class="text-header mt-3">Add Recipe</h1>
+
+  <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+    <div class="mt-3">
+      <label class="form-label text-primary" for="recipeTitle">Title</label>
+      <input
+        class="form-control"
+        type="text"
+        id="recipeTitle"
+        name="recipeTitle"
+        [(ngModel)]="recipeModel.title"
+      />
+    </div>
+    <div class="mt-3">
+      <label class="form-label text-primary" for="recipeShortDescription">
+        Short Description
+      </label>
+      <textarea
+        class="form-control"
+        id="recipeShortDescription"
+        name="recipeShortDescription"
+        [(ngModel)]="recipeModel.shortDescription"
+      ></textarea>
+    </div>
+    <div class="mt-3">
+      <label class="form-label text-primary" for="instructionContent">
+        Instruction
+      </label>
+      <textarea
+        class="form-control"
+        id="instructionContent"
+        name="instructionContent"
+        [(ngModel)]="instructionModel.content"
+        style="min-height: 150px"
+      ></textarea>
+    </div>
+    <div class="mt-3">
+      <label
+        class="form-label text-primary d-flex gap-3 align-items-center"
+        for="recipeImageId"
+      >
+        Image Id
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="openImageSelector()"
+        >
+          Select image
+        </button>
+      </label>
+      <input
+        class="form-control"
+        type="text"
+        id="recipeImageId"
+        name="recipeImageId"
+        [(ngModel)]="recipeModel.imageId"
+      />
+    </div>
+    <div class="mt-3">
+      <label class="form-label text-primary" for="recipeCategories"
+        >Categories</label
+      >
+      <ng-container *ngIf="categories$ | async as categories">
+        <select
+          class="form-control"
+          id="recipeCategories"
+          name="recipeCategories"
+          multiple
+          [(ngModel)]="recipeModel.categoryIds"
+        >
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </ng-container>
+    </div>
+    <div class="mt-3">
+      <label class="form-label text-primary">Ingredients</label>
+      <ng-container *ngIf="ingredients$ | async as ingredients">
+        <div
+          *ngFor="let ingredient of ingredients"
+          class="mb-3 d-flex gap-3 ingredient-container"
+        >
+          <div class="d-flex gap-1 align-items-center">
+            <input
+              type="checkbox"
+              id="ingredient_{{ ingredient.id }}"
+              [value]="ingredient.id"
+              (change)="onIngredientSelect(ingredient.id, $event)"
+              class="form-check-input"
+            />
+            <label class="text-primary" for="ingredient_{{ ingredient.id }}">{{
+              ingredient.name
+            }}</label>
+          </div>
+
+          <input
+            *ngIf="isIngredientSelected(ingredient.id)"
+            type="number"
+            id="ingredientQuantity_{{ ingredient.id }}"
+            name="ingredientQuantity_{{ ingredient.id }}"
+            min="0"
+            [(ngModel)]="ingredientQuantities[ingredient.id]"
+            (ngModelChange)="onQuantityChange(ingredient.id, $event)"
+            placeholder="Quantity"
+            class="form-control mt-0"
+          />
+        </div>
+      </ng-container>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+  </form>
+
+  <div
+    class="images-container-modal"
+    [ngClass]="{
+      'd-block': isImageSelectorVisible,
+      'd-none': !isImageSelectorVisible
+    }"
+  >
+    <button
+      type="button"
+      class="btn btn-light position-fixed"
+      style="top: 10px; right: 10px"
+      (click)="closeImageSelector()"
+    >
+      X
+    </button>
+    <app-image-selector></app-image-selector>
+  </div>
+</div>

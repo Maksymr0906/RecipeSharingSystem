@@ -7,6 +7,7 @@ namespace RecipeSharingSystem.Business.Services.Interfaces
 		Task<RecipeDto> CreateRecipeAsync(CreateRecipeRequestDto model);
 		Task<ICollection<RecipeDto>> GetAllRecipesAsync();
 		Task<RecipeDto> GetRecipeByIdAsync(Guid id);
+		Task<RecipeDto> GetRecipeWithDetailsByIdAsync(Guid id);
 		Task<RecipeDto> UpdateRecipeAsync(Guid id, UpdateRecipeRequestDto model);
 		Task<RecipeDto> DeleteRecipeAsync(Guid id);
 	}
