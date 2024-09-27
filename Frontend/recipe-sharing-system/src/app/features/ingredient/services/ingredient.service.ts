@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Ingredient } from '../models/ingredient.model';
 import { environment } from 'src/environments/environment.development';
-import { AddIngredientRequest } from '../models/add-ingredient.model';
-import { EditIngredientRequest } from '../models/edit-ingredient.model';
+import { AddIngredientRequest } from '../models/add-ingredient-request.model';
+import { EditIngredientRequest } from '../models/edit-ingredient-request.model';
 
 @Injectable({
   providedIn: 'root'

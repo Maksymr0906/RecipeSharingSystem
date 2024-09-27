@@ -47,6 +47,5 @@ private file?: File;
 
   private getImages() {
     this.images$ = this.imageService.getAllImages();
-    this.images$.forEach(image => console.log(image))
   }
 }

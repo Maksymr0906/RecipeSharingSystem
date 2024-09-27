@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AddIngredientRequest } from '../models/add-ingredient.model';
+import { AddIngredientRequest } from '../models/add-ingredient-request.model';
 import { Subscription } from 'rxjs';
 import { ImageService } from 'src/app/shared/services/image.service';
 import { IngredientService } from '../services/ingredient.service';

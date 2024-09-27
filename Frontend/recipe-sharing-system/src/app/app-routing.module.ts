@@ -6,6 +6,9 @@ import { EditCategoryComponent } from './features/category/edit-category/edit-ca
 import { IngredientListComponent } from './features/ingredient/ingredient-list/ingredient-list.component';
 import { AddIngredientComponent } from './features/ingredient/add-ingredient/add-ingredient.component';
 import { EditIngredientComponent } from './features/ingredient/edit-ingredient/edit-ingredient.component';
+import { RecipeListComponent } from './features/recipe/recipe-list/recipe-list.component';
+import { AddRecipeComponent } from './features/recipe/add-recipe/add-recipe.component';
+import { EditRecipeComponent } from './features/recipe/edit-recipe/edit-recipe.component';
 
 const routes: Routes = [
   {
@@ -31,6 +34,18 @@ const routes: Routes = [
   {
     path: 'admin/ingredients/:id',
     component: EditIngredientComponent
+  },
+  {
+    path: 'admin/recipes',
+    component: RecipeListComponent
+  },
+  {
+    path: 'admin/recipes/add',
+    component: AddRecipeComponent
+  },
+  {
+    path: 'admin/recipes/:id',
+    component: EditRecipeComponent
   }
 ];
 

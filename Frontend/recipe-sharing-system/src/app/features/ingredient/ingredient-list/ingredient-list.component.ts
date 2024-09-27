@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IngredientService } from '../services/ingredient.service';
 import { Observable } from 'rxjs';
 import { Ingredient } from '../models/ingredient.model';
@@ -8,7 +8,7 @@ import { Ingredient } from '../models/ingredient.model';
   templateUrl: './ingredient-list.component.html',
   styleUrls: ['./ingredient-list.component.css']
 })
-export class IngredientListComponent {
+export class IngredientListComponent implements OnInit {
   ingredients$?: Observable<Ingredient[]>;
 
   constructor(private ingredientService: IngredientService) {
