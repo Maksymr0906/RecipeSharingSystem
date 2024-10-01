@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EditIngredientRequest } from '../models/edit-ingredient-request.model';
 import { Subscription } from 'rxjs';
-import { ImageService } from 'src/app/shared/services/image.service';
 import { IngredientService } from '../services/ingredient.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,13 +12,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EditIngredientComponent implements OnInit, OnDestroy {
   id: string | null = null;
   model: EditIngredientRequest;
-  isImageSelectorVisible: boolean = false;
-  imageSelectorSubscription?: Subscription;
   updateIngredientSubscription?: Subscription;
   getIngredientByIdSubscription?: Subscription;
 
   constructor(
-    private imageService: ImageService,
     private ingredientService: IngredientService,
     private router: Router,
     private route: ActivatedRoute
@@ -27,7 +23,6 @@ export class EditIngredientComponent implements OnInit, OnDestroy {
   {
     this.model = {
       name: '',
-      imageId: ''
     };
   }
 
@@ -39,14 +34,6 @@ export class EditIngredientComponent implements OnInit, OnDestroy {
     }
   }
 
-  openImageSelector(): void {
-    this.isImageSelectorVisible = true;
-  }
-
-  closeImageSelector(): void {
-    this.isImageSelectorVisible = false;
-  }
-
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
@@ -54,17 +41,9 @@ export class EditIngredientComponent implements OnInit, OnDestroy {
         this.model = ingredient;
       })
     }
-   
-    this.imageSelectorSubscription = this.imageService.onSelectImage().subscribe({
-      next: (response) => {
-        this.model.imageId = response.id;
-        this.closeImageSelector();
-      }
-    })
   }
 
   ngOnDestroy(): void {
-    this.imageSelectorSubscription?.unsubscribe();
     this.updateIngredientSubscription?.unsubscribe();
     this.getIngredientByIdSubscription?.unsubscribe();
   }

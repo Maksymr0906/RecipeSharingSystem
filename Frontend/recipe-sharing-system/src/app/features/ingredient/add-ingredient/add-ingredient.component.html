@@ -11,45 +11,6 @@
         [(ngModel)]="model.name"
       />
     </div>
-    <div class="mt-3">
-      <label
-        class="form-label text-primary d-flex gap-3 align-items-center"
-        for="ingredientImageId"
-        >Image Id
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="openImageSelector()"
-        >
-          Select image
-        </button>
-      </label>
-      <input
-        class="form-control"
-        type="text"
-        id="ingredientImageId"
-        name="ingredientImageId"
-        [(ngModel)]="model.imageId"
-      />
-    </div>
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
   </form>
-</div>
-
-<div
-  class="images-container-modal"
-  [ngClass]="{
-    'd-block': isImageSelectorVisible,
-    'd-none': !isImageSelectorVisible
-  }"
->
-  <button
-    type="button"
-    class="btn btn-light position-fixed"
-    style="top: 10px; right: 10px"
-    (click)="closeImageSelector()"
-  >
-    X
-  </button>
-  <app-image-selector></app-image-selector>
 </div>

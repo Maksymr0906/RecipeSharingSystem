@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AddIngredientRequest } from '../models/add-ingredient-request.model';
 import { Subscription } from 'rxjs';
-import { ImageService } from 'src/app/shared/services/image.service';
 import { IngredientService } from '../services/ingredient.service';
 import { Router } from '@angular/router';
 
@@ -10,21 +9,17 @@ import { Router } from '@angular/router';
   templateUrl: './add-ingredient.component.html',
   styleUrls: ['./add-ingredient.component.css']
 })
-export class AddIngredientComponent implements OnInit, OnDestroy {
+export class AddIngredientComponent implements OnDestroy {
   model: AddIngredientRequest;
-  isImageSelectorVisible: boolean = false;
-  imageSelectorSubscription?: Subscription;
   addIngredientSubscription?: Subscription;
 
   constructor(
-    private imageService: ImageService,
     private ingredientService: IngredientService,
     private router: Router
   )
   {
     this.model = {
       name: '',
-      imageId: ''
     };
   }
 
@@ -36,25 +31,7 @@ export class AddIngredientComponent implements OnInit, OnDestroy {
     );
   }
 
-  openImageSelector(): void {
-    this.isImageSelectorVisible = true;
-  }
-
-  closeImageSelector(): void {
-    this.isImageSelectorVisible = false;
-  }
-
-  ngOnInit(): void {
-    this.imageSelectorSubscription = this.imageService.onSelectImage().subscribe({
-      next: (response) => {
-        this.model.imageId = response.id;
-        this.closeImageSelector();
-      }
-    })
-  }
-
   ngOnDestroy(): void {
-    this.imageSelectorSubscription?.unsubscribe();
     this.addIngredientSubscription?.unsubscribe();
   }
 }
