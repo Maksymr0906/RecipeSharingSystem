@@ -31,7 +31,6 @@ namespace RecipeSharingSystem.Business
 				.ForMember(i => i.DateCreated, opt => opt.MapFrom(_ => DateTime.Now))
 				.ForMember(i => i.Url, opt => opt.MapFrom(im => im.UrlPath))
 				.ForMember(i => i.Categories, opt => opt.Ignore())
-				.ForMember(i => i.Ingredients, opt => opt.Ignore())
 				.ForMember(i => i.Recipes, opt => opt.Ignore());
 
 			CreateMap<Image, ImageDto>();
@@ -39,11 +38,9 @@ namespace RecipeSharingSystem.Business
 			// Ingredient
 			CreateMap<CreateIngredientRequestDto, Ingredient>()
 				.ForMember(i => i.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
-				.ForMember(i => i.Image, opt => opt.Ignore())
 				.ForMember(i => i.RecipeIngredients, opt => opt.Ignore());
 
 			CreateMap<UpdateIngredientRequestDto, Ingredient>()
-				.ForMember(i => i.Image, opt => opt.Ignore())
 				.ForMember(i => i.RecipeIngredients, opt => opt.Ignore());
 
 			CreateMap<Ingredient, IngredientDto>();
@@ -107,7 +104,8 @@ namespace RecipeSharingSystem.Business
 					{
 						IngredientId = iq.IngredientId,
 						RecipeId = recipe.Id,
-						Quantity = iq.Quantity
+						Quantity = iq.Quantity,
+						MeasurementUnit = iq.MeasurementUnit,
 					})
 				))
 				.ForMember(r => r.Categories, opt => opt.Ignore());
@@ -119,7 +117,8 @@ namespace RecipeSharingSystem.Business
 					{
 						IngredientId = iq.IngredientId,
 						RecipeId = recipe.Id,
-						Quantity = iq.Quantity
+						Quantity = iq.Quantity,
+						MeasurementUnit = iq.MeasurementUnit,
 					})
 				))
 				.ForMember(r => r.Categories, opt => opt.Ignore());
@@ -130,7 +129,8 @@ namespace RecipeSharingSystem.Business
 					r.RecipeIngredients.Select(ri => new IngredientQuantityDto
 					{
 						IngredientId = ri.IngredientId,
-						Quantity = ri.Quantity
+						Quantity = ri.Quantity,
+						MeasurementUnit = ri.MeasurementUnit,
 					})
 				))
 				.ForMember(dto => dto.CategoryIds, opt => opt.MapFrom(r => r.Categories.Select(c => c.Id)));

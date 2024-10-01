@@ -49,6 +49,7 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 			return _mapper.Map<RecipeDto>(recipe);
 		}
 
+		// Refactor
 		public async Task<RecipeDto> UpdateRecipeAsync(Guid id, UpdateRecipeRequestDto model)
 		{
 			var existingRecipe = await _recipeRepository.GetRecipeWithDetailsById(id);
@@ -70,20 +71,7 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 				}
 			}
 
-			foreach (var ingredient in model.Ingredients)
-			{
-				var newIngredient = await _ingredientRepository.GetByIdAsync(ingredient.IngredientId);
-				if (newIngredient != null)
-				{
-					existingRecipe.RecipeIngredients.Add(new RecipeIngredient
-					{
-						IngredientId = newIngredient.Id,
-						Quantity = ingredient.Quantity
-					});
-				}
-			}
-
-			await _recipeRepository.UpdateAsync(existingRecipe);
+			existingRecipe = await _recipeRepository.UpdateAsync(existingRecipe);
 			return _mapper.Map<RecipeDto>(existingRecipe);
 		}
 

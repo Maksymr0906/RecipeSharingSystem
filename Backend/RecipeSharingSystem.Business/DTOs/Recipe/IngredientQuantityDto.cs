@@ -3,6 +3,7 @@
 	public class IngredientQuantityDto
 	{
 		public Guid IngredientId { get; set; }
-		public int Quantity { get; set; }
+		public double Quantity { get; set; }
+		public string MeasurementUnit { get; set; }
 	}
 }

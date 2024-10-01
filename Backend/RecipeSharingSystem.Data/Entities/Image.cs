@@ -9,6 +9,5 @@
 		public DateTime DateCreated { get; set; }
 		public ICollection<Category> Categories { get; set; }
 		public ICollection<Recipe> Recipes { get; set; }
-		public ICollection<Ingredient> Ingredients { get; set; }
 	}
 }
