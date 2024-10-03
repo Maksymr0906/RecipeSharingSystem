@@ -8,31 +8,32 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 {
 	public class CategoryService : ICategoryService
 	{
-		private readonly ICategoryRepository _repository;
+		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
 
-		public CategoryService(ICategoryRepository repository, IMapper mapper)
+		public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
-			_repository = repository;
+			_unitOfWork = unitOfWork;
 			_mapper = mapper;
 		}
 
 		public async Task<CategoryDto> CreateCategoryAsync(CreateCategoryRequestDto model)
 		{
 			var category = _mapper.Map<Category>(model);
-			category = await _repository.CreateAsync(category);
+			category = await _unitOfWork.CategoryRepository.CreateAsync(category);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<CategoryDto>(category);
 		}
 
 		public async Task<ICollection<CategoryDto>> GetAllCategoriesAsync()
 		{
-			var categories = await _repository.GetAllAsync();
+			var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
 			return _mapper.Map<ICollection<CategoryDto>>(categories);
 		}
 
 		public async Task<CategoryDto> GetCategoryByIdAsync(Guid id)
 		{
-			var category = await _repository.GetByIdAsync(id);
+			var category = await _unitOfWork.CategoryRepository.GetByIdAsync(id);
 			return _mapper.Map<CategoryDto>(category);
 		}
 
@@ -40,14 +41,21 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 		{
 			var category = _mapper.Map<Category>(model);
 			category.Id = id;
-			category = await _repository.UpdateAsync(category);
+			category = await _unitOfWork.CategoryRepository.UpdateAsync(category);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<CategoryDto>(category);
 		}
 
 		public async Task<CategoryDto> DeleteCategoryAsync(Guid id)
 		{
-			var category = await _repository.DeleteByIdAsync(id);
+			var category = await _unitOfWork.CategoryRepository.DeleteByIdAsync(id);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<CategoryDto>(category);
+		}
+
+		public async Task<ICollection<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds)
+		{
+			return await _unitOfWork.CategoryRepository.GetCategoriesByIdsAsync(categoryIds);
 		}
 	}
 }

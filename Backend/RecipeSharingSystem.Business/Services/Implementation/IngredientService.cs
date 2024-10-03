@@ -8,31 +8,32 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 {
 	public class IngredientService : IIngredientService
 	{
-		private readonly IIngredientRepository _repository;
+		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
 
-		public IngredientService(IIngredientRepository repository, IMapper mapper)
+		public IngredientService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
-			_repository = repository;
+			_unitOfWork = unitOfWork;
 			_mapper = mapper;
 		}
 
 		public async Task<IngredientDto> CreateIngredientAsync(CreateIngredientRequestDto model)
 		{
 			var ingredient = _mapper.Map<Ingredient>(model);
-			ingredient = await _repository.CreateAsync(ingredient);
+			ingredient = await _unitOfWork.IngredientRepository.CreateAsync(ingredient);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<IngredientDto>(ingredient);
 		}
 
 		public async Task<ICollection<IngredientDto>> GetAllIngredientsAsync()
 		{
-			var ingredients = await _repository.GetAllAsync();
+			var ingredients = await _unitOfWork.IngredientRepository.GetAllAsync();
 			return _mapper.Map<ICollection<IngredientDto>>(ingredients);
 		}
 
 		public async Task<IngredientDto> GetIngredientByIdAsync(Guid id)
 		{
-			var ingredient = await _repository.GetByIdAsync(id);
+			var ingredient = await _unitOfWork.IngredientRepository.GetByIdAsync(id);
 			return _mapper.Map<IngredientDto>(ingredient);
 		}
 
@@ -40,14 +41,30 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 		{
 			var ingredient = _mapper.Map<Ingredient>(model);
 			ingredient.Id = id;
-			ingredient = await _repository.UpdateAsync(ingredient);
+			ingredient = await _unitOfWork.IngredientRepository.UpdateAsync(ingredient);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<IngredientDto>(ingredient);
 		}
 
 		public async Task<IngredientDto> DeleteIngredientAsync(Guid id)
 		{
-			var ingredient = await _repository.DeleteByIdAsync(id);
+			var ingredient = await _unitOfWork.IngredientRepository.DeleteByIdAsync(id);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<IngredientDto>(ingredient);
+		}
+
+		public async Task<Ingredient> GetOrCreateIngredientAsync(string ingredientName)
+		{
+			var existingIngredient = await _unitOfWork.IngredientRepository.GetByNameAsync(ingredientName);
+			if (existingIngredient != null)
+			{
+				return existingIngredient;
+			}
+
+			var newIngredient = new Ingredient { Name = ingredientName };
+			newIngredient = await _unitOfWork.IngredientRepository.CreateAsync(newIngredient);
+			await _unitOfWork.SaveAsync();
+			return newIngredient;
 		}
 	}
 }

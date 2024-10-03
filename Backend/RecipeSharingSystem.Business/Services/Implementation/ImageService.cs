@@ -8,12 +8,12 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 {
 	public class ImageService : IImageService
 	{
-		private readonly IImageRepository _repository;
+		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
 
-		public ImageService(IImageRepository repository, IMapper mapper)
+		public ImageService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
-			_repository = repository;
+			_unitOfWork = unitOfWork;
 			_mapper = mapper;
 		}
 
@@ -24,19 +24,20 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 			using var memoryStream = new MemoryStream(model.FileContent);
 			await memoryStream.CopyToAsync(stream);
 			var image = _mapper.Map<Image>(model);
-			image = await _repository.CreateAsync(image);
+			image = await _unitOfWork.ImageRepository.CreateAsync(image);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<ImageDto>(image);
 		}
 
 		public async Task<ICollection<ImageDto>> GetAllImagesAsync()
 		{
-			var images = await _repository.GetAllAsync();
+			var images = await _unitOfWork.ImageRepository.GetAllAsync();
 			return _mapper.Map<ICollection<ImageDto>>(images);
 		}
 
 		public async Task<ImageDto> GetImageByIdAsync(Guid id)
 		{
-			var image = await _repository.GetByIdAsync(id);
+			var image = await _unitOfWork.ImageRepository.GetByIdAsync(id);
 			return _mapper.Map<ImageDto>(image);
 		}
 

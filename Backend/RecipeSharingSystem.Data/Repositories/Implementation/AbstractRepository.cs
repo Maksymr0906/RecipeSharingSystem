@@ -28,7 +28,6 @@ namespace RecipeSharingSystem.Data.Repositories.Implementation
 				}
 
 				await _entities.AddAsync(entity);
-				await _context.SaveChangesAsync();
 				return entity;
 			}
 			catch(Exception ex)
@@ -47,7 +46,6 @@ namespace RecipeSharingSystem.Data.Repositories.Implementation
 			}
 
 			_entities.Remove(entity);
-			await _context.SaveChangesAsync();
 			return entity;
 		}
 
@@ -70,7 +68,6 @@ namespace RecipeSharingSystem.Data.Repositories.Implementation
 		public async Task<TEntity> UpdateAsync(TEntity entity)
 		{
 			_entities.Update(entity);
-			await _context.SaveChangesAsync();
 			return entity;
 		}
 	}

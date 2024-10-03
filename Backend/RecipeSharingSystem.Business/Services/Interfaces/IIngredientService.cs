@@ -1,4 +1,5 @@
 ﻿using RecipeSharingSystem.Business.DTOs.Ingredient;
+using RecipeSharingSystem.Data.Entities;
 
 namespace RecipeSharingSystem.Business.Services.Interfaces
 {
@@ -9,5 +10,6 @@ namespace RecipeSharingSystem.Business.Services.Interfaces
 		Task<IngredientDto> GetIngredientByIdAsync(Guid id);
 		Task<IngredientDto> UpdateIngredientAsync(Guid id, UpdateIngredientRequestDto model);
 		Task<IngredientDto> DeleteIngredientAsync(Guid id);
+		Task<Ingredient> GetOrCreateIngredientAsync(string ingredientName);
 	}
 }

@@ -8,31 +8,32 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 {
 	public class UserService : IUserService
 	{
-		private readonly IUserRepository _repository;
+		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
 
-		public UserService(IUserRepository repository, IMapper mapper)
+		public UserService(IUnitOfWork unitOfWork, IMapper mapper)
 		{
-			_repository = repository;
+			_unitOfWork = unitOfWork;
 			_mapper = mapper;
 		}
 
 		public async Task<UserDto> CreateUserAsync(CreateUserRequestDto model)
 		{
 			var user = _mapper.Map<User>(model);
-			user = await _repository.CreateAsync(user);
+			user = await _unitOfWork.UserRepository.CreateAsync(user);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<UserDto>(user);
 		}
 
 		public async Task<ICollection<UserDto>> GetAllUsersAsync()
 		{
-			var users = await _repository.GetAllAsync();
+			var users = await _unitOfWork.UserRepository.GetAllAsync();
 			return _mapper.Map<ICollection<UserDto>>(users);
 		}
 
 		public async Task<UserDto> GetUserByIdAsync(Guid id)
 		{
-			var users = await _repository.GetByIdAsync(id);
+			var users = await _unitOfWork.UserRepository.GetByIdAsync(id);
 			return _mapper.Map<UserDto>(users);
 		}
 
@@ -40,13 +41,15 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 		{
 			var user = _mapper.Map<User>(model);
 			user.Id = id;
-			user = await _repository.UpdateAsync(user);
+			user = await _unitOfWork.UserRepository.UpdateAsync(user);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<UserDto>(user);
 		}
 
 		public async Task<UserDto> DeleteUserAsync(Guid id)
 		{
-			var user = await _repository.DeleteByIdAsync(id);
+			var user = await _unitOfWork.UserRepository.DeleteByIdAsync(id);
+			await _unitOfWork.SaveAsync();
 			return _mapper.Map<UserDto>(user);
 		}
 	}

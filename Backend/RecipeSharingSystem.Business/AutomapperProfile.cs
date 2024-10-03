@@ -99,40 +99,22 @@ namespace RecipeSharingSystem.Business
 			CreateMap<CreateRecipeRequestDto, Recipe>()
 				.ForMember(r => r.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
 				.ForMember(r => r.Ratings, opt => opt.Ignore())
-				.ForMember(r => r.RecipeIngredients, opt => opt.MapFrom((dto, recipe) =>
-					dto.Ingredients.Select(iq => new RecipeIngredient
-					{
-						IngredientId = iq.IngredientId,
-						RecipeId = recipe.Id,
-						Quantity = iq.Quantity,
-						MeasurementUnit = iq.MeasurementUnit,
-					})
-				))
+				.ForMember(r => r.RecipeIngredients, opt => opt.MapFrom(_ => new List<RecipeIngredient>()))
 				.ForMember(r => r.Categories, opt => opt.Ignore());
 
 			CreateMap<UpdateRecipeRequestDto, Recipe>()
 				.ForMember(r => r.Ratings, opt => opt.Ignore())
-				.ForMember(r => r.RecipeIngredients, opt => opt.MapFrom((dto, recipe) =>
-					dto.Ingredients.Select(iq => new RecipeIngredient
-					{
-						IngredientId = iq.IngredientId,
-						RecipeId = recipe.Id,
-						Quantity = iq.Quantity,
-						MeasurementUnit = iq.MeasurementUnit,
-					})
-				))
+				.ForMember(r => r.RecipeIngredients, opt => opt.MapFrom(_ => new List<RecipeIngredient>()))
 				.ForMember(r => r.Categories, opt => opt.Ignore());
 
 			CreateMap<Recipe, RecipeDto>()
 				.ForMember(dto => dto.RatingIds, opt => opt.MapFrom(r => r.Ratings.Select(rt => rt.Id)))
-				.ForMember(dto => dto.Ingredients, opt => opt.MapFrom(r =>
-					r.RecipeIngredients.Select(ri => new IngredientQuantityDto
-					{
-						IngredientId = ri.IngredientId,
-						Quantity = ri.Quantity,
-						MeasurementUnit = ri.MeasurementUnit,
-					})
-				))
+				.ForMember(dto => dto.Ingredients, opt => opt.MapFrom(r => r.RecipeIngredients.Select(ri => new IngredientQuantityDto
+				{
+					IngredientName = ri.Ingredient.Name,
+					Quantity = ri.Quantity,
+					MeasurementUnit = ri.MeasurementUnit
+				})))
 				.ForMember(dto => dto.CategoryIds, opt => opt.MapFrom(r => r.Categories.Select(c => c.Id)));
 		}
 	}

@@ -30,12 +30,9 @@ namespace RecipeSharingSystem.API.Controllers
 		}
 
 		[HttpGet("{id:Guid}")]
-		public async Task<IActionResult> GetRecipeById([FromRoute] Guid id, [FromQuery] bool includeDetails = false)
+		public async Task<IActionResult> GetRecipeById([FromRoute] Guid id)
 		{
-			var recipe = includeDetails
-				? await _service.GetRecipeWithDetailsByIdAsync(id)
-				: await _service.GetRecipeByIdAsync(id);
-
+			var recipe = await _service.GetRecipeByIdAsync(id);
 			return Ok(recipe);
 		}
 
@@ -49,6 +46,13 @@ namespace RecipeSharingSystem.API.Controllers
 			}
 
 			return Ok(recipe);
+		}
+
+		[HttpGet("random")]
+		public async Task<IActionResult> GetRandomRecipes([FromQuery] int count = 5)
+		{
+			var randomRecipes = await _service.GetRandomRecipesWithDetailsAsync(count);
+			return Ok(randomRecipes);
 		}
 	}
 }
