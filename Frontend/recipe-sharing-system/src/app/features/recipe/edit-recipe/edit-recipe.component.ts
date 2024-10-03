@@ -7,9 +7,9 @@ import { EditRecipeRequest } from '../models/edit-recipe-request.model';
 import { EditInstructionRequest } from '../../instruction/models/edit-instruction-request.model';
 import { RecipeService } from '../services/recipe.service';
 import { CategoryService } from '../../category/services/category.service';
-import { IngredientService } from '../../ingredient/services/ingredient.service';
 import { InstructionService } from '../../instruction/services/instruction.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IngredientQuantity } from '../models/ingredient-quantity.model';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -18,11 +18,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditRecipeComponent implements OnInit, OnDestroy {
   categories$?: Observable<Category[]>;
-  ingredients$?: Observable<Ingredient[]>;
-  ingredientQuantities: { [key: string]: number } = {};
-  selectedIngredients: string[] = [];
+  ingredients: IngredientQuantity[] = [];
   recipeModel: EditRecipeRequest;
-  ingredientsModel: Ingredient[] = [];
   instructionModel: EditInstructionRequest;
   isImageSelectorVisible: boolean = false;
   imageSelectorSubscription?: Subscription;
@@ -37,7 +34,6 @@ export class EditRecipeComponent implements OnInit, OnDestroy {
     private imageService: ImageService,
     private recipeService: RecipeService,
     private categoryService: CategoryService,
-    private ingredientService: IngredientService,
     private instructionService: InstructionService,
     private router: Router,
     private route: ActivatedRoute
@@ -81,7 +77,6 @@ export class EditRecipeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.categories$ = this.categoryService.getAllCategories();
-    this.ingredients$ = this.ingredientService.getAllIngredients();
 
     this.imageSelectorSubscription = this.imageService.onSelectImage().subscribe({
       next: (response) => {
@@ -92,19 +87,15 @@ export class EditRecipeComponent implements OnInit, OnDestroy {
 
     this.recipeId = this.route.snapshot.paramMap.get('id');
     if (this.recipeId) {
-      this.getRecipeByIdSubscription = this.recipeService.getRecipeById(this.recipeId, true).subscribe(recipe => {
+      this.getRecipeByIdSubscription = this.recipeService.getRecipeById(this.recipeId).subscribe(recipe => {
         this.recipeModel = recipe;
         this.instructionId = recipe.instructionId;
+        this.ingredients = recipe.ingredients
         if (this.instructionId) {
           this.getInstructionByIdSubscription = this.instructionService.getInstructionById(this.instructionId).subscribe(instruction => {
             this.instructionModel = instruction;
           })
         }
-
-        this.selectedIngredients = recipe.ingredients.map(ing => ing.ingredientId);
-        recipe.ingredients.forEach(ingredient => {
-          this.ingredientQuantities[ingredient.ingredientId] = ingredient.quantity;
-        });
       })
     }
   }
@@ -117,32 +108,23 @@ export class EditRecipeComponent implements OnInit, OnDestroy {
     this.getInstructionByIdSubscription?.unsubscribe();
   }
 
-  onIngredientSelect(ingredientId: string, event: any): void {
-    if (event.target.checked) {
-      this.selectedIngredients.push(ingredientId);
-      this.ingredientQuantities[ingredientId] = 0;
-    } else {
-      this.selectedIngredients = this.selectedIngredients.filter(
-        id => id !== ingredientId
-      );
-      delete this.ingredientQuantities[ingredientId];
-    }
-    this.updateRecipeIngredients();
+  addIngredient(): void {
+    this.ingredients.push({ ingredientName: '', quantity: 0, measurementUnit: '' });
   }
 
-  onQuantityChange(ingredientId: string, quantity: number): void {
-    this.ingredientQuantities[ingredientId] = quantity;
-    this.updateRecipeIngredients();
+  removeIngredient(index: number): void {
+    this.ingredients.splice(index, 1);
   }
 
-  isIngredientSelected(ingredientId: string): boolean {
-    return this.selectedIngredients.includes(ingredientId);
+  updateIngredientName(index: number, name: string): void {
+    this.ingredients[index].ingredientName = name;
   }
 
-  updateRecipeIngredients(): void {
-    this.recipeModel.ingredients = this.selectedIngredients.map(id => ({
-      ingredientId: id,
-      quantity: this.ingredientQuantities[id] || 0
-    }));
+  updateIngredientQuantity(index: number, quantity: number): void {
+    this.ingredients[index].quantity = quantity;
+  }
+
+  updateIngredientMeasurementUnit(index: number, unit: string): void {
+    this.ingredients[index].measurementUnit = unit;
   }
 }

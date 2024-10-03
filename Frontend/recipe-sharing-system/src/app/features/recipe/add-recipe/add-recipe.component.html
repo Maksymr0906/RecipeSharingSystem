@@ -27,13 +27,24 @@
       <label class="form-label text-primary" for="instructionContent">
         Instruction
       </label>
-      <textarea
-        class="form-control"
-        id="instructionContent"
-        name="instructionContent"
-        [(ngModel)]="instructionModel.content"
-        style="min-height: 150px"
-      ></textarea>
+      <div class="d-flex flex-row">
+        <div class="col-6 p-2">
+          <textarea
+            class="form-control"
+            id="instructionContent"
+            name="instructionContent"
+            [(ngModel)]="instructionModel.content"
+            style="height: 350px; max-height: 350px"
+          ></textarea>
+        </div>
+
+        <div
+          class="col-6 p-2 text-primary"
+          style="max-height: 350px; overflow-y: scroll"
+        >
+          <markdown [data]="instructionModel.content"></markdown>
+        </div>
+      </div>
     </div>
     <div class="mt-3">
       <label
@@ -75,39 +86,49 @@
         </select>
       </ng-container>
     </div>
-    <div class="mt-3">
+    <div class="mt-3 d-flex flex-column">
       <label class="form-label text-primary">Ingredients</label>
-      <ng-container *ngIf="ingredients$ | async as ingredients">
-        <div
-          *ngFor="let ingredient of ingredients"
-          class="mb-3 d-flex gap-3 ingredient-container"
+      <div
+        *ngFor="let ingredient of ingredients; let i = index"
+        class="mb-3 d-flex gap-1 align-items-center"
+      >
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Ingredient Name"
+          [(ngModel)]="ingredients[i].ingredientName"
+          (ngModelChange)="updateIngredientName(i, $event)"
+          name="ingredientName_{{ i }}"
+        />
+        <input
+          class="form-control"
+          type="number"
+          placeholder="Quantity"
+          [(ngModel)]="ingredients[i].quantity"
+          (ngModelChange)="updateIngredientQuantity(i, $event)"
+          name="ingredientQuantity_{{ i }}"
+        />
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Measurement Unit"
+          [(ngModel)]="ingredients[i].measurementUnit"
+          (ngModelChange)="updateIngredientMeasurementUnit(i, $event)"
+          name="ingredientMeasurementUnit_{{ i }}"
+        />
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="removeIngredient(i)"
         >
-          <div class="d-flex gap-1 align-items-center">
-            <input
-              type="checkbox"
-              id="ingredient_{{ ingredient.id }}"
-              [value]="ingredient.id"
-              (change)="onIngredientSelect(ingredient.id, $event)"
-              class="form-check-input"
-            />
-            <label class="text-primary" for="ingredient_{{ ingredient.id }}">{{
-              ingredient.name
-            }}</label>
-          </div>
-
-          <input
-            *ngIf="isIngredientSelected(ingredient.id)"
-            type="number"
-            id="ingredientQuantity_{{ ingredient.id }}"
-            name="ingredientQuantity_{{ ingredient.id }}"
-            min="0"
-            [(ngModel)]="ingredientQuantities[ingredient.id]"
-            (ngModelChange)="onQuantityChange(ingredient.id, $event)"
-            placeholder="Quantity"
-            class="form-control mt-0"
-          />
-        </div>
-      </ng-container>
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+      <div>
+        <a class="add-ingredient-link" (click)="addIngredient()"
+          >+ Add ingredient</a
+        >
+      </div>
     </div>
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
   </form>
