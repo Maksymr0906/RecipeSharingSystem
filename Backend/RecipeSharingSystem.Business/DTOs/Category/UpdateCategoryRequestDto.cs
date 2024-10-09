@@ -3,6 +3,6 @@
 	public class UpdateCategoryRequestDto
 	{
 		public string Name { get; set; }
-		public Guid ImageId { get; set; }
+		public string FeaturedImageUrl { get; set; }
 	}
 }

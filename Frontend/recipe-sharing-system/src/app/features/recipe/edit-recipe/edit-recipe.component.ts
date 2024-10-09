@@ -43,7 +43,7 @@ export class EditRecipeComponent implements OnInit, OnDestroy {
       title: '',
       shortDescription: '',
       instructionId: '',
-      imageId: '',
+      featuredImageUrl: '',
       categoryIds: [],
       ingredients: []
     };
@@ -80,7 +80,7 @@ export class EditRecipeComponent implements OnInit, OnDestroy {
 
     this.imageSelectorSubscription = this.imageService.onSelectImage().subscribe({
       next: (response) => {
-        this.recipeModel.imageId = response.id;
+        this.recipeModel.featuredImageUrl = response.url;
         this.closeImageSelector();
       }
     })

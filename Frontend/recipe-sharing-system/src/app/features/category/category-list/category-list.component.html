@@ -12,7 +12,7 @@
         <tr>
           <th>Id</th>
           <th>Name</th>
-          <th>ImageId</th>
+          <th>Featured Image Url</th>
           <th></th>
         </tr>
       </thead>
@@ -20,7 +20,7 @@
         <tr *ngFor="let category of categories">
           <td>{{ category.id }}</td>
           <td>{{ category.name }}</td>
-          <td>{{ category.imageId }}</td>
+          <td>{{ category.featuredImageUrl }}</td>
           <td>
             <button
               type="button"

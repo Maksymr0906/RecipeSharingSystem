@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './core/components/navbar/navbar.component';
@@ -17,6 +16,10 @@ import { EditIngredientComponent } from './features/ingredient/edit-ingredient/e
 import { RecipeListComponent } from './features/recipe/recipe-list/recipe-list.component';
 import { AddRecipeComponent } from './features/recipe/add-recipe/add-recipe.component';
 import { EditRecipeComponent } from './features/recipe/edit-recipe/edit-recipe.component';
+import { RecipeBlogComponent } from './public/components/recipe-blog/recipe-blog.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { HomeComponent } from './public/components/home/home.component';
+import { RecipeCardComponent } from './public/components/recipe-card/recipe-card.component';
 
 @NgModule({
   declarations: [
@@ -32,13 +35,17 @@ import { EditRecipeComponent } from './features/recipe/edit-recipe/edit-recipe.c
     RecipeListComponent,
     AddRecipeComponent,
     EditRecipeComponent,
+    RecipeBlogComponent,
+    HomeComponent,
+    RecipeCardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MarkdownModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -17,11 +17,9 @@ namespace RecipeSharingSystem.Business
 		{
 			// Category
 			CreateMap<CreateCategoryRequestDto, Category>()
-				.ForMember(c => c.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
-				.ForMember(c => c.Image, opt => opt.Ignore());
+				.ForMember(c => c.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
 
-			CreateMap<UpdateCategoryRequestDto, Category>()
-				.ForMember(c => c.Image, opt => opt.Ignore());
+			CreateMap<UpdateCategoryRequestDto, Category>();
 
 			CreateMap<Category, CategoryDto>();
 
@@ -29,9 +27,7 @@ namespace RecipeSharingSystem.Business
 			CreateMap<ImageUploadModel, Image>()
 				.ForMember(i => i.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
 				.ForMember(i => i.DateCreated, opt => opt.MapFrom(_ => DateTime.Now))
-				.ForMember(i => i.Url, opt => opt.MapFrom(im => im.UrlPath))
-				.ForMember(i => i.Categories, opt => opt.Ignore())
-				.ForMember(i => i.Recipes, opt => opt.Ignore());
+				.ForMember(i => i.Url, opt => opt.MapFrom(im => im.UrlPath));
 
 			CreateMap<Image, ImageDto>();
 

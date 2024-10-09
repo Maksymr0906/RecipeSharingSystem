@@ -4,8 +4,8 @@ export interface Recipe {
     id: string
     title: string;
     shortDescription: string;
+    featuredImageUrl: string;
     instructionId: string;
-    imageId: string;
     ratingIds: string[];
     categoryIds: string[];
     ingredients: IngredientQuantity[];

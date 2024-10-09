@@ -20,8 +20,12 @@ export class RecipeService {
     return this.http.get<Recipe[]>(`${environment.apiBaseUrl}/api/recipes`);
   }
 
-  getRecipeById(id: string, includeDetails: boolean = false): Observable<Recipe> {
-    const url = `${environment.apiBaseUrl}/api/recipes/${id}?includeDetails=${includeDetails}`;
+  getRandomRecipes(count: number): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${environment.apiBaseUrl}/api/recipes/random?count=${count}`);
+  }
+
+  getRecipeById(id: string): Observable<Recipe> {
+    const url = `${environment.apiBaseUrl}/api/recipes/${id}`;
     return this.http.get<Recipe>(url);
   }
 

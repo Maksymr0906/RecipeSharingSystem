@@ -27,7 +27,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   {
     this.model = {
       name: '',
-      imageId: ''
+      featuredImageUrl: ''
     };
   }
 
@@ -57,7 +57,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
    
     this.imageSelectorSubscription = this.imageService.onSelectImage().subscribe({
       next: (response) => {
-        this.model.imageId = response.id;
+        this.model.featuredImageUrl = response.url;
         this.closeImageSelector();
       }
     })

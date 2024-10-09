@@ -24,7 +24,7 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
   {
     this.model = {
       name: '',
-      imageId: ''
+      featuredImageUrl: ''
     };
   }
 
@@ -47,7 +47,7 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.imageSelectorSubscription = this.imageService.onSelectImage().subscribe({
       next: (response) => {
-        this.model.imageId = response.id;
+        this.model.featuredImageUrl = response.url;
         this.closeImageSelector();
       }
     })

@@ -4,9 +4,12 @@
   </div>
   <div class="card-body">
     <div class="d-flex flex-md-row flex-sm-column flex-wrap">
-      <div class="col-8 p-4" style="overflow-y: scroll">
+      <div class="col-8 p-4">
         <ng-container *ngIf="images$ | async as images">
-          <div class="d-flex flex-wrap">
+          <div
+            class="d-flex flex-wrap"
+            style="max-height: 500px; overflow-y: scroll"
+          >
             <div
               *ngFor="let image of images"
               style="min-width: 100px; justify-content: center; cursor: pointer"

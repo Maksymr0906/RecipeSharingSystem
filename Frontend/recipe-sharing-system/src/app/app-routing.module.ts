@@ -9,6 +9,8 @@ import { EditIngredientComponent } from './features/ingredient/edit-ingredient/e
 import { RecipeListComponent } from './features/recipe/recipe-list/recipe-list.component';
 import { AddRecipeComponent } from './features/recipe/add-recipe/add-recipe.component';
 import { EditRecipeComponent } from './features/recipe/edit-recipe/edit-recipe.component';
+import { HomeComponent } from './public/components/home/home.component';
+import { RecipeBlogComponent } from './public/components/recipe-blog/recipe-blog.component';
 
 const routes: Routes = [
   {
@@ -46,6 +48,14 @@ const routes: Routes = [
   {
     path: 'admin/recipes/:id',
     component: EditRecipeComponent
+  },
+  {
+    path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'recipe/:id',
+    component: RecipeBlogComponent
   }
 ];
 

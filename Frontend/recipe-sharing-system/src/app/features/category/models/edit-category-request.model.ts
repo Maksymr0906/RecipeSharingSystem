@@ -1,4 +1,4 @@
 export interface EditCategoryRequest {
     name: string;
-    imageId: string;
+    featuredImageUrl: string;
 }
