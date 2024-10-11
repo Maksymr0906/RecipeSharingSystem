@@ -1,0 +1,29 @@
+<ng-container *ngIf="recipe; else NotFound">
+  <div
+    class="recipe-img"
+    [style.backgroundImage]="'url(' + recipe.featuredImageUrl + ')'"
+  ></div>
+  <div class="container">
+    <p>Rating here</p>
+    <h1 class="recipe-title text-header">{{ recipe.title }}</h1>
+    <ul class="ingredient-list">
+      <ng-container *ngFor="let ingredient of recipe.ingredients">
+        <li class="ingredient-item text-primary">
+          {{ ingredient.quantity }} {{ ingredient.measurementUnit }}
+          {{ ingredient.ingredientName }}
+        </li>
+      </ng-container>
+    </ul>
+    <markdown
+      class="recipe-instruction text-primary"
+      [data]="instruction.content"
+    >
+    </markdown>
+    <p>Comments here</p>
+  </div>
+</ng-container>
+<ng-template #NotFound>
+  <div class="d-flex justify-content-center align-items-center">
+    <h1 class="display-6 text-header mt-3">Recipes not found!</h1>
+  </div>
+</ng-template>
