@@ -12,7 +12,7 @@
   </div>
 
   <div class="mt-3 d-flex gap-3">
-    <ng-container *ngIf="recipes$ | async as recipes">
+    <ng-container *ngIf="recipes$ | async as recipes; else NotFound">
       <div
         class="recipe-container featured-recipe-container"
         *ngIf="recipes.length > 0"
@@ -47,4 +47,9 @@
       </div>
     </ng-container>
   </div>
+  <ng-template #NotFound>
+    <div class="d-flex justify-content-center align-items-center">
+      <h1 class="display-6 text-header mt-3">Recipes not found!</h1>
+    </div>
+  </ng-template>
 </div>

@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ImageService } from 'src/app/shared/services/image.service';
 import { Category } from '../../category/models/category.model';
 import { Observable, Subscription } from 'rxjs';
-import { Ingredient } from '../../ingredient/models/ingredient.model';
 import { EditRecipeRequest } from '../models/edit-recipe-request.model';
 import { EditInstructionRequest } from '../../instruction/models/edit-instruction-request.model';
 import { RecipeService } from '../services/recipe.service';

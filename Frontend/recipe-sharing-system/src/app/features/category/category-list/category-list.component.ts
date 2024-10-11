@@ -18,4 +18,10 @@ export class CategoryListComponent implements OnInit {
   ngOnInit(): void {
     this.categories$ = this.categoryService.getAllCategories();
   }
+
+  onDelete(category: Category): void {
+    this.categoryService.deleteCategory(category.id).subscribe(_ => {
+      this.categories$ = this.categoryService.getAllCategories();
+    });
+  }
 }

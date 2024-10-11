@@ -6,7 +6,7 @@
     </a>
   </div>
 
-  <ng-container *ngIf="recipes$ | async as recipes">
+  <ng-container *ngIf="recipes$ | async as recipes; else NotFound">
     <table class="table-custom mt-3">
       <thead>
         <tr>
@@ -23,7 +23,7 @@
           <td>{{ recipe.title }}</td>
           <td>{{ recipe.shortDescription }}</td>
           <td>{{ recipe.ratingIds }}</td>
-          <td>
+          <td class="d-flex gap-3">
             <button
               type="button"
               class="btn btn-primary"
@@ -31,9 +31,21 @@
             >
               Edit
             </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onDelete(recipe)"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </ng-container>
+  <ng-template #NotFound>
+    <div class="d-flex justify-content-center align-items-center">
+      <h1 class="display-6 text-header mt-3">Recipes not found!</h1>
+    </div>
+  </ng-template>
 </div>

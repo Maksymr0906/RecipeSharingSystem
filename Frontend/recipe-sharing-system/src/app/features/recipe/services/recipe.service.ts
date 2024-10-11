@@ -32,4 +32,8 @@ export class RecipeService {
   updateRecipe(id: string, model: EditRecipeRequest): Observable<Recipe> {
     return this.http.put<Recipe>(`${environment.apiBaseUrl}/api/recipes/${id}`, model);
   }
+
+  deleteRecipe(id: string): Observable<Recipe> {
+    return this.http.delete<Recipe>(`${environment.apiBaseUrl}/api/recipes/${id}`);
+  }
 }

@@ -28,4 +28,8 @@ export class IngredientService {
   updateIngredient(id: string, model: EditIngredientRequest): Observable<Ingredient> {
     return this.http.put<Ingredient>(`${environment.apiBaseUrl}/api/ingredients/${id}`, model);
   }
+
+  deleteIngredient(id: string): Observable<Ingredient> {
+    return this.http.delete<Ingredient>(`${environment.apiBaseUrl}/api/ingredients/${id}`);
+  }
 }

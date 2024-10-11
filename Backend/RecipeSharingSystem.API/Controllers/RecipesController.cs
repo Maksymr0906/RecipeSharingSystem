@@ -54,5 +54,17 @@ namespace RecipeSharingSystem.API.Controllers
 			var randomRecipes = await _service.GetRandomRecipesWithDetailsAsync(count);
 			return Ok(randomRecipes);
 		}
+
+		[HttpDelete("{id:Guid}")]
+		public async Task<IActionResult> DeleteRecipe([FromRoute] Guid id)
+		{
+			var recipe = await _service.DeleteRecipeAsync(id);
+			if (recipe == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(recipe);
+		}
 	}
 }

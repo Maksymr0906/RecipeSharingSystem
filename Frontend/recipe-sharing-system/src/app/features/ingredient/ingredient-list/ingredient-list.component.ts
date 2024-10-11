@@ -18,4 +18,10 @@ export class IngredientListComponent implements OnInit {
   ngOnInit(): void {
     this.ingredients$ = this.ingredientService.getAllIngredients();
   }
+
+  onDelete(ingredient: Ingredient): void {
+    this.ingredientService.deleteIngredient(ingredient.id).subscribe(_ => {
+      this.ingredients$ = this.ingredientService.getAllIngredients();
+    })
+  }
 }

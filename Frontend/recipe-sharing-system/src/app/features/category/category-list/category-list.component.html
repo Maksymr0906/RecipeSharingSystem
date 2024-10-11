@@ -6,7 +6,7 @@
     </a>
   </div>
 
-  <ng-container *ngIf="categories$ | async as categories">
+  <ng-container *ngIf="categories$ | async as categories; else NotFound">
     <table class="table-custom mt-3">
       <thead>
         <tr>
@@ -21,7 +21,7 @@
           <td>{{ category.id }}</td>
           <td>{{ category.name }}</td>
           <td>{{ category.featuredImageUrl }}</td>
-          <td>
+          <td class="d-flex gap-3">
             <button
               type="button"
               class="btn btn-primary"
@@ -29,9 +29,21 @@
             >
               Edit
             </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onDelete(category)"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </ng-container>
+  <ng-template #NotFound>
+    <div class="d-flex justify-content-center align-items-center">
+      <h1 class="display-6 text-header mt-3">Categories not found!</h1>
+    </div>
+  </ng-template>
 </div>

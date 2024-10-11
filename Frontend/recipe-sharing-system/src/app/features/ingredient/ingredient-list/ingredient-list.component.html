@@ -6,7 +6,7 @@
     </a>
   </div>
 
-  <ng-container *ngIf="ingredients$ | async as ingredients">
+  <ng-container *ngIf="ingredients$ | async as ingredients;else NotFound">
     <table class="table-custom mt-3">
       <thead>
         <tr>
@@ -19,7 +19,7 @@
         <tr *ngFor="let ingredient of ingredients">
           <td>{{ ingredient.id }}</td>
           <td>{{ ingredient.name }}</td>
-          <td>
+          <td class="d-flex gap-3">
             <button
               type="button"
               class="btn btn-primary"
@@ -27,9 +27,21 @@
             >
               Edit
             </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onDelete(ingredient)"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </ng-container>
+  <ng-template #NotFound>
+    <div class="d-flex justify-content-center align-items-center">
+      <h1 class="display-6 text-header mt-3">Ingredients not found!</h1>
+    </div>
+  </ng-template>
 </div>

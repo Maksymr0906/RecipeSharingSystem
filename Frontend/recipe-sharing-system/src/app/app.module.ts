@@ -16,10 +16,10 @@ import { EditIngredientComponent } from './features/ingredient/edit-ingredient/e
 import { RecipeListComponent } from './features/recipe/recipe-list/recipe-list.component';
 import { AddRecipeComponent } from './features/recipe/add-recipe/add-recipe.component';
 import { EditRecipeComponent } from './features/recipe/edit-recipe/edit-recipe.component';
-import { RecipeBlogComponent } from './public/components/recipe-blog/recipe-blog.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { HomeComponent } from './public/components/home/home.component';
 import { RecipeCardComponent } from './public/components/recipe-card/recipe-card.component';
+import { RecipePageComponent } from './public/components/recipe-page/recipe-page.component';
 
 @NgModule({
   declarations: [
@@ -35,9 +35,9 @@ import { RecipeCardComponent } from './public/components/recipe-card/recipe-card
     RecipeListComponent,
     AddRecipeComponent,
     EditRecipeComponent,
-    RecipeBlogComponent,
     HomeComponent,
     RecipeCardComponent,
+    RecipePageComponent,
   ],
   imports: [
     BrowserModule,

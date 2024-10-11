@@ -18,4 +18,10 @@ export class RecipeListComponent implements OnInit {
   ngOnInit(): void {
     this.recipes$ = this.recipeService.getAllRecipes();
   }
+
+  onDelete(recipe: Recipe): void {
+    this.recipeService.deleteRecipe(recipe.id).subscribe(_ => {
+      this.recipes$ = this.recipeService.getAllRecipes();
+    })
+  }
 }

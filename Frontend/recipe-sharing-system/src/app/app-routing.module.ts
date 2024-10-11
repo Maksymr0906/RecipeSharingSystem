@@ -10,7 +10,7 @@ import { RecipeListComponent } from './features/recipe/recipe-list/recipe-list.c
 import { AddRecipeComponent } from './features/recipe/add-recipe/add-recipe.component';
 import { EditRecipeComponent } from './features/recipe/edit-recipe/edit-recipe.component';
 import { HomeComponent } from './public/components/home/home.component';
-import { RecipeBlogComponent } from './public/components/recipe-blog/recipe-blog.component';
+import { RecipePageComponent } from './public/components/recipe-page/recipe-page.component';
 
 const routes: Routes = [
   {
@@ -55,7 +55,7 @@ const routes: Routes = [
   },
   {
     path: 'recipe/:id',
-    component: RecipeBlogComponent
+    component: RecipePageComponent
   }
 ];
 
