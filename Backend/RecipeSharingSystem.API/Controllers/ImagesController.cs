@@ -30,7 +30,7 @@ namespace RecipeSharingSystem.API.Controllers
 				var urlPath = $"{httpRequest.Scheme}://{httpRequest.Host}{httpRequest.PathBase}/Images/{fileName}{fileExtension}";
 				var localPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", $"{fileName}{fileExtension}");
 
-				var imageUploadModel = new ImageUploadModel
+				var imageUploadModel = new ImageUploadModel(default, default, default, default, default, default)
 				{
 					FileName = fileName,
 					FileExtension = fileExtension,

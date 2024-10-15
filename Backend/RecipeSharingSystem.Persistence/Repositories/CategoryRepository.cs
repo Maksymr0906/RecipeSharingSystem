@@ -1,27 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecipeSharingSystem.Core.Repositories;
-using RecipeSharingSystem.Data;
 using RecipeSharingSystem.Data.Entities;
 
-namespace RecipeSharingSystem.Persistence.Repositories
+namespace RecipeSharingSystem.Persistence.Repositories;
+
+public class CategoryRepository(RecipeSharingSystemDbContext context)
+    : AbstractRepository<Category>(context), ICategoryRepository
 {
-    public class CategoryRepository : AbstractRepository<Category>, ICategoryRepository
+	public async Task<List<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds)
     {
-        public CategoryRepository(RecipeSharingSystemDbContext context)
-            : base(context)
+        if (categoryIds == null || !categoryIds.Any())
         {
+            return new List<Category>();
         }
 
-        public async Task<List<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds)
-        {
-            if (categoryIds == null || !categoryIds.Any())
-            {
-                return new List<Category>();
-            }
-
-            return await Context.Categories
-                .Where(c => categoryIds.Contains(c.Id))
-                .ToListAsync();
-        }
+        return await Context.Categories
+            .Where(c => categoryIds.Contains(c.Id))
+            .ToListAsync();
     }
 }

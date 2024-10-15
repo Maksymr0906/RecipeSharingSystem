@@ -1,8 +1,8 @@
 ﻿using RecipeSharingSystem.Data.Entities;
 
-namespace RecipeSharingSystem.Core.Repositories
+namespace RecipeSharingSystem.Core.Repositories;
+
+public interface IUserRepository : IAbstractRepository<User>
 {
-    public interface IUserRepository : IAbstractRepository<User>
-    {
-    }
+
 }

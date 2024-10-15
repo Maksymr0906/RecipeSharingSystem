@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RecipeSharingSystem.Persistence
 {
-	public class AuthDbContext : IdentityDbContext
+	public class AuthDbContext(DbContextOptions<AuthDbContext> options)
+		: IdentityDbContext(options)
 	{
-		public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
-		{
-		}
 	}
 }

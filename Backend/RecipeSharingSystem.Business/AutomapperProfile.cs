@@ -105,12 +105,7 @@ namespace RecipeSharingSystem.Business
 
 			CreateMap<Recipe, RecipeDto>()
 				.ForMember(dto => dto.RatingIds, opt => opt.MapFrom(r => r.Ratings.Select(rt => rt.Id)))
-				.ForMember(dto => dto.Ingredients, opt => opt.MapFrom(r => r.RecipeIngredients.Select(ri => new IngredientQuantityDto
-				{
-					IngredientName = ri.Ingredient.Name,
-					Quantity = ri.Quantity,
-					MeasurementUnit = ri.MeasurementUnit
-				})))
+				.ForMember(dto => dto.Ingredients, opt => opt.MapFrom(r => r.RecipeIngredients.Select(ri => new IngredientQuantityDto(ri.Ingredient.Name, ri.Quantity, ri.MeasurementUnit))))
 				.ForMember(dto => dto.CategoryIds, opt => opt.MapFrom(r => r.Categories.Select(c => c.Id)));
 		}
 	}

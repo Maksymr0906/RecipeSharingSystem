@@ -1,7 +1,3 @@
-﻿namespace RecipeSharingSystem.Business.DTOs.Ingredient
-{
-	public class CreateIngredientRequestDto
-	{
-		public string Name { get; set; }
-	}
-}
+﻿namespace RecipeSharingSystem.Business.DTOs.Ingredient;
+
+public record CreateIngredientRequestDto(string Name);

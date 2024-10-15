@@ -1,14 +1,9 @@
 ﻿using RecipeSharingSystem.Core.Repositories;
-using RecipeSharingSystem.Data;
 using RecipeSharingSystem.Data.Entities;
 
-namespace RecipeSharingSystem.Persistence.Repositories
+namespace RecipeSharingSystem.Persistence.Repositories;
+
+public class ImageRepository(RecipeSharingSystemDbContext context)
+	: AbstractRepository<Image>(context), IImageRepository
 {
-    public class ImageRepository : AbstractRepository<Image>, IImageRepository
-    {
-        public ImageRepository(RecipeSharingSystemDbContext context)
-            : base(context)
-        {
-        }
-    }
 }

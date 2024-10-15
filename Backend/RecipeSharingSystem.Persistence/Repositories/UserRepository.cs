@@ -1,13 +1,9 @@
 ﻿using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Data.Entities;
 
-namespace RecipeSharingSystem.Persistence.Repositories
+namespace RecipeSharingSystem.Persistence.Repositories;
+
+public class UserRepository(RecipeSharingSystemDbContext context)
+	: AbstractRepository<User>(context), IUserRepository
 {
-    public class UserRepository : AbstractRepository<User>, IUserRepository
-    {
-        public UserRepository(RecipeSharingSystemDbContext context)
-            : base(context)
-        {
-        }
-    }
 }

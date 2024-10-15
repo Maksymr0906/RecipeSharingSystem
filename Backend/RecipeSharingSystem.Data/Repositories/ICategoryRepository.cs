@@ -1,9 +1,9 @@
 ﻿using RecipeSharingSystem.Data.Entities;
 
-namespace RecipeSharingSystem.Core.Repositories
+namespace RecipeSharingSystem.Core.Repositories;
+
+public interface ICategoryRepository : IAbstractRepository<Category>
 {
-    public interface ICategoryRepository : IAbstractRepository<Category>
-    {
-        Task<List<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds);
-    }
+	Task<List<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds);
 }
+

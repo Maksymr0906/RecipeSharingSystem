@@ -1,9 +1,7 @@
-﻿namespace RecipeSharingSystem.Business.DTOs.Recipe
-{
-	public class IngredientQuantityDto
-	{
-		public string IngredientName { get; set; }
-		public double Quantity { get; set; }
-		public string MeasurementUnit { get; set; }
-	}
-}
+﻿namespace RecipeSharingSystem.Business.DTOs.Recipe;
+
+public record IngredientQuantityDto(
+	string IngredientName,
+	double Quantity,
+	string MeasurementUnit
+);

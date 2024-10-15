@@ -1,12 +1,10 @@
-﻿namespace RecipeSharingSystem.Business.DTOs.Recipe
-{
-	public class CreateRecipeRequestDto
-	{
-		public string Title { get; set; }
-		public string ShortDescription { get; set; }
-		public string FeaturedImageUrl { get; set; }
-		public Guid InstructionId { get; set; }
-		public IEnumerable<Guid> CategoryIds { get; set; }
-		public ICollection<IngredientQuantityDto> Ingredients { get; set; }
-	}
-}
+﻿namespace RecipeSharingSystem.Business.DTOs.Recipe;
+
+public record CreateRecipeRequestDto(
+	string Title,
+	string ShortDescription,
+	string FeaturedImageUrl,
+	Guid InstructionId,
+	IEnumerable<Guid> CategoryIds,
+	ICollection<IngredientQuantityDto> Ingredients
+);

@@ -1,9 +1,7 @@
-﻿namespace RecipeSharingSystem.Business.DTOs.Category
-{
-	public class CategoryDto
-	{
-		public Guid Id { get; set; }
-		public string Name { get; set; }
-		public string FeaturedImageUrl { get; set; }
-	}
-}
+﻿namespace RecipeSharingSystem.Business.DTOs.Category;
+
+public record CategoryDto(
+	Guid Id,
+	string Name,
+	string FeaturedImageUrl
+);

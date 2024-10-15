@@ -1,9 +1,7 @@
-﻿namespace RecipeSharingSystem.Business.DTOs.Comment
-{
-	public class CreateCommentRequestDto
-	{
-		public string Content { get; set; }
-		public Guid UserId { get; set; }
-		public Guid RecipeId { get; set; }
-	}
-}
+﻿namespace RecipeSharingSystem.Business.DTOs.Comment;
+
+public record CreateCommentRequestDto(
+	string Content,
+	Guid UserId,
+	Guid RecipeId
+);

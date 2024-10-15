@@ -1,10 +1,9 @@
 ﻿using RecipeSharingSystem.Data.Entities;
 
-namespace RecipeSharingSystem.Core.Repositories
+namespace RecipeSharingSystem.Core.Repositories;
+
+public interface IRecipeRepository : IAbstractRepository<Recipe>
 {
-    public interface IRecipeRepository : IAbstractRepository<Recipe>
-    {
-        Task<Recipe> GetWithDetailsByIdAsync(Guid id);
-        Task<ICollection<Recipe>> GetAllWithDetailsAsync();
-    }
+	Task<Recipe> GetWithDetailsByIdAsync(Guid id);
+	Task<ICollection<Recipe>> GetAllWithDetailsAsync();
 }

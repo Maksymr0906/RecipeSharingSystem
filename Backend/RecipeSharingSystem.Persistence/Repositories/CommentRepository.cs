@@ -1,14 +1,9 @@
 ﻿using RecipeSharingSystem.Core.Repositories;
-using RecipeSharingSystem.Data;
 using RecipeSharingSystem.Data.Entities;
 
-namespace RecipeSharingSystem.Persistence.Repositories
+namespace RecipeSharingSystem.Persistence.Repositories;
+
+public class CommentRepository(RecipeSharingSystemDbContext context)
+	: AbstractRepository<Comment>(context), ICommentRepository
 {
-    public class CommentRepository : AbstractRepository<Comment>, ICommentRepository
-    {
-        public CommentRepository(RecipeSharingSystemDbContext context)
-            : base(context)
-        {
-        }
-    }
 }
