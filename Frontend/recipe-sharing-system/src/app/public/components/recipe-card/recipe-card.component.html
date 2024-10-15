@@ -1,5 +1,5 @@
-<ng-container *ngIf="recipe"
-  ><div class="card" style="width: 18rem">
+<ng-container *ngIf="recipe">
+  <div class="card" style="width: 18rem">
     <img
       [src]="recipe.featuredImageUrl"
       class="card-img-top"
@@ -8,7 +8,9 @@
     <div class="card-body">
       <p class="text-secondary card-subtitle">
         <ng-container *ngFor="let category of categories">
-          <a [routerLink]="['/category', category.id]" class="category-link"
+          <a
+            [routerLink]="['/category', category.id]"
+            class="category-link text-uppercase text-decoration-none"
             >{{ category.name }}
           </a>
         </ng-container>
@@ -17,9 +19,12 @@
       <p class="card-text">
         {{ recipe.shortDescription }}
       </p>
-      <a [routerLink]="['/recipe/', recipe.id]" class="btn btn-primary"
-        >View more</a
-      >
+      <div class="d-flex align-items-center justify-content-between">
+        <a [routerLink]="['/recipe/', recipe.id]" class="btn btn-primary">
+          View more
+        </a>
+        <p class="m-0">Rating</p>
+      </div>
     </div>
   </div>
 </ng-container>

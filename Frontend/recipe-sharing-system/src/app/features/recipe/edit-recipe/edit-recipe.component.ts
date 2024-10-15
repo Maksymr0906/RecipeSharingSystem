@@ -105,6 +105,7 @@ export class EditRecipeComponent implements OnInit, OnDestroy {
     this.updateInstructionSubscription?.unsubscribe();
     this.getRecipeByIdSubscription?.unsubscribe();
     this.getInstructionByIdSubscription?.unsubscribe();
+    this.imageService.resetSelectedImage();
   }
 
   addIngredient(): void {

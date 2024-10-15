@@ -82,6 +82,7 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
     this.imageSelectorSubscription?.unsubscribe();
     this.addRecipeSubscription?.unsubscribe();
     this.addInstructionSubscription?.unsubscribe();
+    this.imageService.resetSelectedImage();
   }
 
   addIngredient(): void {

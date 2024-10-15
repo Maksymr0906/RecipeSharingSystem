@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using RecipeSharingSystem.Business.DTOs.Comment;
 using RecipeSharingSystem.Business.Services.Interfaces;
+using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Data.Entities;
-using RecipeSharingSystem.Data.Repositories.Interfaces;
 
 namespace RecipeSharingSystem.Business.Services.Implementation
 {
-	public class CommentService : ICommentService
+    public class CommentService : ICommentService
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using RecipeSharingSystem.Business.DTOs.Ingredient;
 using RecipeSharingSystem.Business.Services.Interfaces;
+using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Data.Entities;
-using RecipeSharingSystem.Data.Repositories.Interfaces;
 
 namespace RecipeSharingSystem.Business.Services.Implementation
 {
-	public class IngredientService : IIngredientService
+    public class IngredientService : IIngredientService
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;

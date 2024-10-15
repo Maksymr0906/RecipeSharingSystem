@@ -36,4 +36,8 @@ export class RecipeService {
   deleteRecipe(id: string): Observable<Recipe> {
     return this.http.delete<Recipe>(`${environment.apiBaseUrl}/api/recipes/${id}`);
   }
+
+  getRecipesByCategoryId(categoryId: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${environment.apiBaseUrl}/api/recipes/category/${categoryId}`);
+  }
 }

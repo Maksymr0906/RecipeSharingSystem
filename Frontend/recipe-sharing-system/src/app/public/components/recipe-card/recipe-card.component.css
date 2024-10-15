@@ -1,4 +1,8 @@
 .category-link {
-  text-decoration: none;
-  text-transform: uppercase;
+  color: #d8c3a5;
+  transition: color 0.3s ease;
+}
+
+.category-link:hover {
+  color: #e85a4f;
 }

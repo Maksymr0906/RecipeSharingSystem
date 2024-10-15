@@ -20,6 +20,9 @@ import { MarkdownModule } from 'ngx-markdown';
 import { HomeComponent } from './public/components/home/home.component';
 import { RecipeCardComponent } from './public/components/recipe-card/recipe-card.component';
 import { RecipePageComponent } from './public/components/recipe-page/recipe-page.component';
+import { CategoryPageComponent } from './public/components/category-page/category-page.component';
+import { LoginPageComponent } from './public/components/login-page/login-page.component';
+import { RegistrationPageComponent } from './public/components/registration-page/registration-page.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,9 @@ import { RecipePageComponent } from './public/components/recipe-page/recipe-page
     HomeComponent,
     RecipeCardComponent,
     RecipePageComponent,
+    CategoryPageComponent,
+    LoginPageComponent,
+    RegistrationPageComponent,
   ],
   imports: [
     BrowserModule,

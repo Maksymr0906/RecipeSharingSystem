@@ -56,5 +56,6 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.imageSelectorSubscription?.unsubscribe();
     this.addCategorySubscription?.unsubscribe();
+    this.imageService.resetSelectedImage();
   }
 }

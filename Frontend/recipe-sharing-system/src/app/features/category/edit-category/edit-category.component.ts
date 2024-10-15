@@ -67,5 +67,6 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     this.imageSelectorSubscription?.unsubscribe();
     this.updateCategorySubscription?.unsubscribe();
     this.getCategoryByIdSubscription?.unsubscribe();
+    this.imageService.resetSelectedImage();
   }
 }

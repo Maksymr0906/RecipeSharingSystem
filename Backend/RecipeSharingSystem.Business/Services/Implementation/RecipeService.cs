@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using RecipeSharingSystem.Business.DTOs.Recipe;
 using RecipeSharingSystem.Business.Services.Interfaces;
+using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Data.Entities;
-using RecipeSharingSystem.Data.Repositories.Interfaces;
 
 namespace RecipeSharingSystem.Business.Services.Implementation
 {
-	public class RecipeService : IRecipeService
+    public class RecipeService : IRecipeService
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
@@ -102,5 +102,13 @@ namespace RecipeSharingSystem.Business.Services.Implementation
 			return _mapper.Map<ICollection<RecipeDto>>(randomRecipes);
 		}
 
+		public async Task<ICollection<RecipeDto>> GetRecipesByCategoryId(Guid categoryId)
+		{
+			var recipes = await _unitOfWork.RecipeRepository.GetAllWithDetailsAsync();
+			var categoryRecipes = recipes
+				.Where(r => r.Categories.Any(c => c.Id == categoryId))
+				.ToList();
+			return _mapper.Map<ICollection<RecipeDto>>(categoryRecipes);
+		}
 	}
 }

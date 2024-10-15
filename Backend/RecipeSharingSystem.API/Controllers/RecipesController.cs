@@ -55,6 +55,13 @@ namespace RecipeSharingSystem.API.Controllers
 			return Ok(randomRecipes);
 		}
 
+		[HttpGet("category/{categoryId:Guid}")]
+		public async Task<IActionResult> GetRecipesByCategoryId([FromRoute] Guid categoryId)
+		{
+			var recipes = await _service.GetRecipesByCategoryId(categoryId);
+			return Ok(recipes);
+		}
+
 		[HttpDelete("{id:Guid}")]
 		public async Task<IActionResult> DeleteRecipe([FromRoute] Guid id)
 		{

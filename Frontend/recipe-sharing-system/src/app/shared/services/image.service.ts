@@ -37,4 +37,14 @@ export class ImageService {
   onSelectImage(): Observable<Image> {
     return this.selectedImage.asObservable();
   }
+
+  resetSelectedImage(): void {
+    this.selectedImage.next({
+      id: '',
+      fileExtension: '',
+      fileName: '',
+      title: '',
+      url: ''
+    });
+  }
 }

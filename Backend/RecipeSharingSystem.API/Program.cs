@@ -3,9 +3,10 @@ using Microsoft.Extensions.FileProviders;
 using RecipeSharingSystem.Business;
 using RecipeSharingSystem.Business.Services.Implementation;
 using RecipeSharingSystem.Business.Services.Interfaces;
+using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Data;
-using RecipeSharingSystem.Data.Repositories.Implementation;
-using RecipeSharingSystem.Data.Repositories.Interfaces;
+using RecipeSharingSystem.Persistence;
+using RecipeSharingSystem.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

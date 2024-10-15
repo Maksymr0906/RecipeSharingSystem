@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using RecipeSharingSystem.Business.DTOs.Rating;
 using RecipeSharingSystem.Business.Services.Interfaces;
+using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Data.Entities;
-using RecipeSharingSystem.Data.Repositories.Interfaces;
 
 namespace RecipeSharingSystem.Business.Services.Implementation
 {
-	public class RatingService : IRatingService
+    public class RatingService : IRatingService
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;

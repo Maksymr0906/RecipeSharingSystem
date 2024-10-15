@@ -11,6 +11,9 @@ import { AddRecipeComponent } from './features/recipe/add-recipe/add-recipe.comp
 import { EditRecipeComponent } from './features/recipe/edit-recipe/edit-recipe.component';
 import { HomeComponent } from './public/components/home/home.component';
 import { RecipePageComponent } from './public/components/recipe-page/recipe-page.component';
+import { CategoryPageComponent } from './public/components/category-page/category-page.component';
+import { LoginPageComponent } from './public/components/login-page/login-page.component';
+import { RegistrationPageComponent } from './public/components/registration-page/registration-page.component';
 
 const routes: Routes = [
   {
@@ -56,6 +59,18 @@ const routes: Routes = [
   {
     path: 'recipe/:id',
     component: RecipePageComponent
+  },
+  {
+    path: 'category/:id',
+    component: CategoryPageComponent
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent
+  },
+  {
+    path: 'registration',
+    component: RegistrationPageComponent
   }
 ];
 
