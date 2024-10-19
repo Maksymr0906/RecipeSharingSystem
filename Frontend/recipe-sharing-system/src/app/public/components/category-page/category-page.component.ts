@@ -16,6 +16,7 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
   category: Category = {
     id: '',
     name: '',
+    slug: '',
     featuredImageUrl: ''
   };
   recipes$?: Observable<Recipe[]>;

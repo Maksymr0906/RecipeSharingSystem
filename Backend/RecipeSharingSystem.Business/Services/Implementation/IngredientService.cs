@@ -55,7 +55,7 @@ public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper) : IIngred
 			return existingIngredient;
 		}
 
-		var newIngredient = new Ingredient { Name = ingredientName };
+		var newIngredient = new Ingredient { Name = ingredientName, Slug = ingredientName.ToLower() + "-ingredient" };
 		newIngredient = await _unitOfWork.IngredientRepository.CreateAsync(newIngredient);
 		await _unitOfWork.SaveAsync();
 		return newIngredient;

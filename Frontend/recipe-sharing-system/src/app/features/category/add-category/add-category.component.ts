@@ -24,6 +24,7 @@ export class AddCategoryComponent implements OnInit, OnDestroy {
   {
     this.model = {
       name: '',
+      slug: '',
       featuredImageUrl: ''
     };
   }

@@ -1,3 +1,3 @@
 ﻿namespace RecipeSharingSystem.Business.DTOs.Ingredient;
 
-public record CreateIngredientRequestDto(string Name);
+public record CreateIngredientRequestDto(string Name, string Slug);

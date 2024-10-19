@@ -27,6 +27,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   {
     this.model = {
       name: '',
+      slug: '',
       featuredImageUrl: ''
     };
   }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using RecipeSharingSystem.Application.DTOs.Auth;
 using RecipeSharingSystem.Business.DTOs.Category;
 using RecipeSharingSystem.Business.DTOs.Comment;
 using RecipeSharingSystem.Business.DTOs.Image;
@@ -64,6 +65,12 @@ namespace RecipeSharingSystem.Business
 			CreateMap<User, UserDto>()
 				.ForMember(dto => dto.CommentIds, opt => opt.MapFrom(u => u.Comments.Select(c => c.Id)))
 				.ForMember(dto => dto.RatingIds, opt => opt.MapFrom(u => u.Ratings.Select(r => r.Id)));
+
+			CreateMap<RegisterRequestDto, User>()
+				.ForMember(u => u.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
+				.ForMember(u => u.PasswordHash, opt => opt.Ignore())
+				.ForMember(u => u.Ratings, opt => opt.Ignore())
+				.ForMember(u => u.Comments, opt => opt.Ignore());
 
 			// Comment
 			CreateMap<CreateCommentRequestDto, Comment>()

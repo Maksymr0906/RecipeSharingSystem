@@ -4,6 +4,7 @@ export interface Recipe {
     id: string
     title: string;
     shortDescription: string;
+    slug: string;
     featuredImageUrl: string;
     instructionId: string;
     ratingIds: string[];

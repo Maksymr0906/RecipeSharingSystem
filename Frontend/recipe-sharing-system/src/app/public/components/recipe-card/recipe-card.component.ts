@@ -14,6 +14,7 @@ export class RecipeCardComponent implements OnInit {
       id: '',
       title: '',
       shortDescription: '',
+      slug: '',
       featuredImageUrl: '',
       instructionId: '',
       ratingIds: [],

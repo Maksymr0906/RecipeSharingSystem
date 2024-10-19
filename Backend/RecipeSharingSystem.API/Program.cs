@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using RecipeSharingSystem.Application.Interfaces;
+using RecipeSharingSystem.Application.Services.Implementation;
+using RecipeSharingSystem.Application.Services.Interfaces;
 using RecipeSharingSystem.Business;
 using RecipeSharingSystem.Business.Services.Implementation;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Repositories;
-using RecipeSharingSystem.Data;
+using RecipeSharingSystem.Infrastructure;
 using RecipeSharingSystem.Persistence;
 using RecipeSharingSystem.Persistence.Repositories;
 
@@ -32,6 +35,10 @@ builder.Services.AddScoped<IInstructionService, InstructionService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -40,6 +47,9 @@ builder.Services.AddDbContext<RecipeSharingSystemDbContext>(options =>
 {
 	options.UseMySql(builder.Configuration.GetConnectionString("RecipeSharingSystemConnectionString"), new MySqlServerVersion(new Version(8, 3, 0)));
 });
+
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
+
 
 var app = builder.Build();
 
@@ -58,6 +68,7 @@ app.UseCors(options =>
 	options.AllowAnyMethod();
 });
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles(new StaticFileOptions

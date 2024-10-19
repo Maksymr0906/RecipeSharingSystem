@@ -6,12 +6,13 @@
     </a>
   </div>
 
-  <ng-container *ngIf="ingredients$ | async as ingredients;else NotFound">
+  <ng-container *ngIf="ingredients$ | async as ingredients; else NotFound">
     <table class="table-custom mt-3">
       <thead>
         <tr>
           <th>Id</th>
           <th>Name</th>
+          <th>Slug</th>
           <th></th>
         </tr>
       </thead>
@@ -19,6 +20,7 @@
         <tr *ngFor="let ingredient of ingredients">
           <td>{{ ingredient.id }}</td>
           <td>{{ ingredient.name }}</td>
+          <td>{{ ingredient.slug }}</td>
           <td class="d-flex gap-3">
             <button
               type="button"

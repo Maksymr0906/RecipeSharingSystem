@@ -20,6 +20,7 @@ export class AddIngredientComponent implements OnDestroy {
   {
     this.model = {
       name: '',
+      slug: '',
     };
   }
 

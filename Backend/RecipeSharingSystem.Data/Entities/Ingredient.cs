@@ -1,8 +1,8 @@
-﻿namespace RecipeSharingSystem.Data.Entities
+﻿namespace RecipeSharingSystem.Data.Entities;
+
+public class Ingredient : BaseEntity
 {
-	public class Ingredient : BaseEntity
-	{
-		public string Name { get; set; }
-		public ICollection<RecipeIngredient> RecipeIngredients { get; set;}
-	}
+	public string Name { get; set; }
+	public string Slug { get; set; }
+	public ICollection<RecipeIngredient> RecipeIngredients { get; set;}
 }

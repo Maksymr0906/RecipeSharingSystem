@@ -23,6 +23,7 @@ export class EditIngredientComponent implements OnInit, OnDestroy {
   {
     this.model = {
       name: '',
+      slug: '',
     };
   }
 

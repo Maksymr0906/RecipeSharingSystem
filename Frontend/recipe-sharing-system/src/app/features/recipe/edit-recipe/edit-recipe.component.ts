@@ -41,6 +41,7 @@ export class EditRecipeComponent implements OnInit, OnDestroy {
     this.recipeModel = {
       title: '',
       shortDescription: '',
+      slug: '',
       instructionId: '',
       featuredImageUrl: '',
       categoryIds: [],

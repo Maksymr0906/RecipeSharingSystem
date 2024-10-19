@@ -1,7 +1,6 @@
-﻿namespace RecipeSharingSystem.Data.Entities
+﻿namespace RecipeSharingSystem.Data.Entities;
+
+public abstract class BaseEntity
 {
-	public abstract class BaseEntity
-	{
-		public Guid Id { get; set; }
-	}
+	public Guid Id { get; set; }
 }
