@@ -1,55 +1,28 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-using RecipeSharingSystem.Application.Interfaces;
-using RecipeSharingSystem.Application.Services.Implementation;
-using RecipeSharingSystem.Application.Services.Interfaces;
-using RecipeSharingSystem.Business;
-using RecipeSharingSystem.Business.Services.Implementation;
-using RecipeSharingSystem.Business.Services.Interfaces;
-using RecipeSharingSystem.Core.Repositories;
+using RecipeSharingSystem.API.Extensions;
+using RecipeSharingSystem.Application;
 using RecipeSharingSystem.Infrastructure;
 using RecipeSharingSystem.Persistence;
-using RecipeSharingSystem.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAutoMapper(typeof(AutomapperProfile));
-builder.Services.AddHttpContextAccessor();
+var services = builder.Services;
+var configuration = builder.Configuration;
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<IImageRepository, ImageRepository>();
-builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
-builder.Services.AddScoped<IInstructionRepository, InstructionRepository>();
-builder.Services.AddScoped<IRatingRepository, RatingRepository>();
-builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+services.AddHttpContextAccessor();
 
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ICommentService, CommentService>();
-builder.Services.AddScoped<IImageService, ImageService>();
-builder.Services.AddScoped<IIngredientService, IngredientService>();
-builder.Services.AddScoped<IInstructionService, InstructionService>();
-builder.Services.AddScoped<IRatingService, RatingService>();
-builder.Services.AddScoped<IRecipeService, RecipeService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+services
+	.AddPersistence(configuration)
+	.AddApplication()
+	.AddInfrastructure();
 
-builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
-builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+services.AddApiAuthentication(configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<RecipeSharingSystemDbContext>(options =>
-{
-	options.UseMySql(builder.Configuration.GetConnectionString("RecipeSharingSystemConnectionString"), new MySqlServerVersion(new Version(8, 3, 0)));
-});
-
-builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
-
 
 var app = builder.Build();
 
