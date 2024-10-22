@@ -3,7 +3,7 @@ using RecipeSharingSystem.Application.DTOs.Auth;
 using RecipeSharingSystem.Application.Interfaces;
 using RecipeSharingSystem.Application.Services.Interfaces;
 using RecipeSharingSystem.Core.Repositories;
-using RecipeSharingSystem.Data.Entities;
+using RecipeSharingSystem.Core.Entities;
 
 namespace RecipeSharingSystem.Application.Services.Implementation;
 

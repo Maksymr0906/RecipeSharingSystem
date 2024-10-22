@@ -2,7 +2,7 @@
 using RecipeSharingSystem.Business.DTOs.Category;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Repositories;
-using RecipeSharingSystem.Data.Entities;
+using RecipeSharingSystem.Core.Entities;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Application.DTOs.Auth;
-using RecipeSharingSystem.Application.Interfaces;
 using RecipeSharingSystem.Application.Services.Interfaces;
 
 namespace RecipeSharingSystem.API.Controllers

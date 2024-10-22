@@ -22,6 +22,7 @@ public static class ApplicationExtensions
 		services.AddScoped<IRecipeService, RecipeService>();
 		services.AddScoped<IUserService, UserService>();
 		services.AddScoped<IAuthService, AuthService>();
+		services.AddScoped<IPermissionService, PermissionService>();
 
 		return services;
 	}

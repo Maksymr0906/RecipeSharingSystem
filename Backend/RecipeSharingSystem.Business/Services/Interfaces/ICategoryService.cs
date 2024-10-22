@@ -1,5 +1,5 @@
 ﻿using RecipeSharingSystem.Business.DTOs.Category;
-using RecipeSharingSystem.Data.Entities;
+using RecipeSharingSystem.Core.Entities;
 
 namespace RecipeSharingSystem.Business.Services.Interfaces;
 

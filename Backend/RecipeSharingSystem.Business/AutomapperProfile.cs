@@ -8,7 +8,7 @@ using RecipeSharingSystem.Business.DTOs.Instruction;
 using RecipeSharingSystem.Business.DTOs.Rating;
 using RecipeSharingSystem.Business.DTOs.Recipe;
 using RecipeSharingSystem.Business.DTOs.User;
-using RecipeSharingSystem.Data.Entities;
+using RecipeSharingSystem.Core.Entities;
 
 namespace RecipeSharingSystem.Business
 {

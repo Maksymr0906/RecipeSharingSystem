@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Business.DTOs.Category;
 using RecipeSharingSystem.Business.Services.Interfaces;
 
@@ -22,6 +23,7 @@ namespace RecipeSharingSystem.API.Controllers
 			return Ok(category);
 		}
 
+		[Authorize(Policy = "ReadPolicy")]
 		[HttpGet]
 		public async Task<IActionResult> GetAllCategories()
 		{

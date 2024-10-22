@@ -2,7 +2,8 @@
 using RecipeSharingSystem.Business.DTOs.User;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Repositories;
-using RecipeSharingSystem.Data.Entities;
+using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Enums;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
@@ -45,5 +46,10 @@ public class UserService(IUnitOfWork unitOfWork, IMapper mapper) : IUserService
 		var user = await _unitOfWork.UserRepository.DeleteByIdAsync(id);
 		await _unitOfWork.SaveAsync();
 		return _mapper.Map<UserDto>(user);
+	}
+
+	public async Task<HashSet<PermissionEnum>> GetUserPermissions(Guid userId)
+	{
+		return await _unitOfWork.UserRepository.GetPermissions(userId);
 	}
 }

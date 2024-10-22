@@ -9,13 +9,11 @@ namespace RecipeSharingSystem.API.Controllers
 	public class ImagesController : ControllerBase
 	{
 		private readonly IWebHostEnvironment _webHostEnvironment;
-		private readonly IHttpContextAccessor _httpContextAccessor;
 		private readonly IImageService _service;
 
-		public ImagesController(IImageService service, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment webHostEnvironment)
+		public ImagesController(IImageService service, IWebHostEnvironment webHostEnvironment)
 		{
 			_service = service;
-			_httpContextAccessor = httpContextAccessor;
 			_webHostEnvironment = webHostEnvironment;
 		}
 
@@ -26,7 +24,7 @@ namespace RecipeSharingSystem.API.Controllers
 			try
 			{
 				var fileExtension = Path.GetExtension(file.FileName);
-				var httpRequest = _httpContextAccessor.HttpContext.Request;
+				var httpRequest = HttpContext.Request;
 				var urlPath = $"{httpRequest.Scheme}://{httpRequest.Host}{httpRequest.PathBase}/Images/{fileName}{fileExtension}";
 				var localPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", $"{fileName}{fileExtension}");
 

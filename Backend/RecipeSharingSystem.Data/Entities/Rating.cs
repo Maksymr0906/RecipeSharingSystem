@@ -1,4 +1,4 @@
-﻿namespace RecipeSharingSystem.Data.Entities;
+﻿namespace RecipeSharingSystem.Core.Entities;
 
 public class Rating : BaseEntity
 {

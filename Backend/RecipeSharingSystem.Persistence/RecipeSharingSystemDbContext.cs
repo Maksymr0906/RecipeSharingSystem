@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecipeSharingSystem.Data.Entities;
+using Microsoft.Extensions.Options;
+using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Enums;
+using RecipeSharingSystem.Persistence.Configurations;
+using System.Net;
 
 namespace RecipeSharingSystem.Persistence
 {
-	public class RecipeSharingSystemDbContext : DbContext
+	public class RecipeSharingSystemDbContext(
+		DbContextOptions<RecipeSharingSystemDbContext> options,
+		IOptions<AuthorizationOptions> authOptions) 
+		: DbContext(options)
 	{
-		public RecipeSharingSystemDbContext()
-		{
-		}
-
-		public RecipeSharingSystemDbContext(DbContextOptions<RecipeSharingSystemDbContext> options)
-			: base(options) 
-		{
-		}
+		private readonly AuthorizationOptions _authorizationOptions = authOptions.Value;
 
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Comment> Comments { get; set; }
@@ -23,5 +23,16 @@ namespace RecipeSharingSystem.Persistence
 		public DbSet<Recipe> Recipes { get; set; }
 		public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 		public DbSet<User> Users { get; set; }
+		public DbSet<Role> Roles { get; set; }
+		public DbSet<Permission> Permissions { get; set; }
+		public DbSet<RolePermission> RolePermissions { get; set; }
+		public DbSet<UserRole> UserRoles { get; set; }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.ApplyConfigurationsFromAssembly(typeof(RecipeSharingSystemDbContext).Assembly);
+
+			modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(authOptions.Value));
+		}
 	}
 }
