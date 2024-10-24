@@ -1,4 +1,4 @@
-﻿using RecipeSharingSystem.Core.Repositories;
+﻿using RecipeSharingSystem.Core.Interfaces.Repositories;
 
 namespace RecipeSharingSystem.Persistence.Repositories;
 

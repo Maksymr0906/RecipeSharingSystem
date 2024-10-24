@@ -4,5 +4,5 @@ namespace RecipeSharingSystem.Application.Services.Interfaces;
 
 public interface IPermissionService
 {
-	Task<HashSet<PermissionEnum>> GetPermissionsAsync(Guid userId);
+	Task<HashSet<PermissionType>> GetPermissionsAsync(Guid userId);
 }

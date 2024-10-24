@@ -10,5 +10,5 @@ public interface IUserService
 	Task<UserDto> GetUserByIdAsync(Guid id);
 	Task<UserDto> UpdateUserAsync(Guid id, UpdateUserRequestDto model);
 	Task<UserDto> DeleteUserAsync(Guid id);
-	Task<HashSet<PermissionEnum>> GetUserPermissions(Guid userId);
+	Task<HashSet<PermissionType>> GetUserPermissions(Guid userId);
 }

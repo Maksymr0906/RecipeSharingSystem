@@ -2,13 +2,16 @@
 using RecipeSharingSystem.Application.DTOs.Auth;
 using RecipeSharingSystem.Application.Interfaces;
 using RecipeSharingSystem.Application.Services.Interfaces;
-using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Interfaces.Repositories;
 
 namespace RecipeSharingSystem.Application.Services.Implementation;
 
-public class AuthService(IUnitOfWork unitOfWork, IMapper mapper, IPasswordHasher passwordHasher, IJwtProvider jwtProvider) 
-	: IAuthService
+public class AuthService(
+	IUnitOfWork unitOfWork,
+	IMapper mapper,
+	IPasswordHasher passwordHasher,
+	IJwtProvider jwtProvider) : IAuthService
 {
 	private readonly IPasswordHasher _passwordHasher = passwordHasher;
 	private readonly IJwtProvider _jwtProvider = jwtProvider;

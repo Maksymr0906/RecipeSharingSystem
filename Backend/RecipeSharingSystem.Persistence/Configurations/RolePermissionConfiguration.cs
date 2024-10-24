@@ -5,15 +5,10 @@ using RecipeSharingSystem.Core.Enums;
 
 namespace RecipeSharingSystem.Persistence.Configurations;
 
-public partial class RolePermissionConfiguration
-	: IEntityTypeConfiguration<RolePermission>
+public partial class RolePermissionConfiguration(AuthorizationOptions authorization)
+		: IEntityTypeConfiguration<RolePermission>
 {
-	private readonly AuthorizationOptions _authorization;
-
-	public RolePermissionConfiguration(AuthorizationOptions authorization)
-	{
-		_authorization = authorization;
-	}
+	private readonly AuthorizationOptions _authorization = authorization;
 
 	public void Configure(EntityTypeBuilder<RolePermission> builder)
 	{
@@ -28,8 +23,8 @@ public partial class RolePermissionConfiguration
 			.SelectMany(rp => rp.Permissions
 				.Select(p => new RolePermission
 				{
-					RoleId = (int)Enum.Parse<RoleEnum>(rp.Role),
-					PermissionId = (int)Enum.Parse<PermissionEnum>(p)
+					RoleId = (int)Enum.Parse<RoleType>(rp.Role),
+					PermissionId = (int)Enum.Parse<PermissionType>(p)
 				}))
 				.ToArray();
 

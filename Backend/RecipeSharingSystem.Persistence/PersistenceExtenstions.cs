@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RecipeSharingSystem.Core.Repositories;
+using RecipeSharingSystem.Core.Interfaces.Repositories;
 using RecipeSharingSystem.Persistence.Repositories;
 
 namespace RecipeSharingSystem.Persistence;

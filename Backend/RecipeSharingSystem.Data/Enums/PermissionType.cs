@@ -1,6 +1,6 @@
 ﻿namespace RecipeSharingSystem.Core.Enums;
 
-public enum PermissionEnum
+public enum PermissionType
 {
 	Create = 1,
 	Read = 2,

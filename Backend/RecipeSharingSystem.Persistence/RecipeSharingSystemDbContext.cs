@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RecipeSharingSystem.Core.Entities;
-using RecipeSharingSystem.Core.Enums;
 using RecipeSharingSystem.Persistence.Configurations;
-using System.Net;
 
 namespace RecipeSharingSystem.Persistence
 {
@@ -33,6 +31,10 @@ namespace RecipeSharingSystem.Persistence
 			modelBuilder.ApplyConfigurationsFromAssembly(typeof(RecipeSharingSystemDbContext).Assembly);
 
 			modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(authOptions.Value));
+
+			modelBuilder.ApplyConfiguration(new UserConfiguration(authOptions.Value));
+
+			modelBuilder.ApplyConfiguration(new UserRoleConfiguration(authOptions.Value));
 		}
 	}
 }

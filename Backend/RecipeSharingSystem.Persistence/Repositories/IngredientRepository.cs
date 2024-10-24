@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Interfaces.Repositories;
 
 namespace RecipeSharingSystem.Persistence.Repositories;
 

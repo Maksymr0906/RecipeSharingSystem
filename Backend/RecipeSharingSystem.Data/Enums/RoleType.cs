@@ -1,6 +1,6 @@
 ﻿namespace RecipeSharingSystem.Core.Enums;
 
-public enum RoleEnum
+public enum RoleType
 {
 	Admin = 1,
 	User = 2,

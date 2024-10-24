@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using RecipeSharingSystem.Business.DTOs.Image;
 using RecipeSharingSystem.Business.Services.Interfaces;
-using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Interfaces.Repositories;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
-public class ImageService(IUnitOfWork unitOfWork, IMapper mapper) : IImageService
+public class ImageService(IUnitOfWork unitOfWork, IMapper mapper)
+	: IImageService
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;

@@ -11,7 +11,7 @@ public partial class PermissionConfiguration
 	public void Configure(EntityTypeBuilder<Permission> builder)
 	{
 		var permissions = Enum
-			   .GetValues<PermissionEnum>()
+			   .GetValues<PermissionType>()
 			   .Select(p => new Permission
 			   {
 				   Id = (int)p,

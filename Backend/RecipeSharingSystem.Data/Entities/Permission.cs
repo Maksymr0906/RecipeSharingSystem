@@ -6,5 +6,5 @@ public class Permission
 
 	public string Name { get; set; } = string.Empty;
 
-	public ICollection<RolePermission> RolePermissions { get; set; }
+	public ICollection<RolePermission> RolePermissions { get; set; } = [];
 }

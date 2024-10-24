@@ -4,11 +4,13 @@ using RecipeSharingSystem.Core.Entities;
 
 namespace RecipeSharingSystem.Persistence.Configurations;
 
-public partial class UserConfiguration
+public partial class UserConfiguration(AuthorizationOptions authorization)
 	: IEntityTypeConfiguration<User>
 {
+	private readonly AuthorizationOptions _authorization = authorization;
+
 	public void Configure(EntityTypeBuilder<User> builder)
 	{
-		throw new NotImplementedException();
+		builder.HasData(_authorization.Users);
 	}
 }

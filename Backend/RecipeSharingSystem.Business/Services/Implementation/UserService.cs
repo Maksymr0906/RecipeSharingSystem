@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using RecipeSharingSystem.Business.DTOs.User;
 using RecipeSharingSystem.Business.Services.Interfaces;
-using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Core.Enums;
+using RecipeSharingSystem.Core.Interfaces.Repositories;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
-public class UserService(IUnitOfWork unitOfWork, IMapper mapper) : IUserService
+public class UserService(IUnitOfWork unitOfWork, IMapper mapper)
+	: IUserService
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
@@ -48,7 +49,7 @@ public class UserService(IUnitOfWork unitOfWork, IMapper mapper) : IUserService
 		return _mapper.Map<UserDto>(user);
 	}
 
-	public async Task<HashSet<PermissionEnum>> GetUserPermissions(Guid userId)
+	public async Task<HashSet<PermissionType>> GetUserPermissions(Guid userId)
 	{
 		return await _unitOfWork.UserRepository.GetPermissions(userId);
 	}

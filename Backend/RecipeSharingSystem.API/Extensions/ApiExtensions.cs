@@ -1,9 +1,8 @@
-﻿using LearninPlatform.Infrastructure.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using RecipeSharingSystem.Core.Enums;
-using RecipeSharingSystem.Infrastructure;
+using RecipeSharingSystem.Infrastructure.Auth;
 using System.Text;
 
 namespace RecipeSharingSystem.API.Extensions;
@@ -41,26 +40,26 @@ public static class ApiExtensions
 			{
 				policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
 
-				policy.Requirements.Add(new PermissionRequirement([PermissionEnum.Create]));
+				policy.Requirements.Add(new PermissionRequirement([PermissionType.Create]));
 			});
 
 			options.AddPolicy("ReadPolicy", policy =>
 			{
 				policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
 
-				policy.Requirements.Add(new PermissionRequirement([PermissionEnum.Read]));
+				policy.Requirements.Add(new PermissionRequirement([PermissionType.Read]));
 			});
 			options.AddPolicy("UpdatePolicy", policy =>
 			{
 				policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
 
-				policy.Requirements.Add(new PermissionRequirement([PermissionEnum.Update]));
+				policy.Requirements.Add(new PermissionRequirement([PermissionType.Update]));
 			});
 			options.AddPolicy("DeletePolicy", policy =>
 			{
 				policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
 
-				policy.Requirements.Add(new PermissionRequirement([PermissionEnum.Delete]));
+				policy.Requirements.Add(new PermissionRequirement([PermissionType.Delete]));
 			});
 		});
 	}

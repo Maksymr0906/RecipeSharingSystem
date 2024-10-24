@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Core.Enums;
+using RecipeSharingSystem.Core.Interfaces.Repositories;
 
 namespace RecipeSharingSystem.Persistence.Repositories;
 
@@ -14,7 +14,7 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 		return user;
 	}
 
-	public async Task<HashSet<PermissionEnum>> GetPermissions(Guid userId)
+	public async Task<HashSet<PermissionType>> GetPermissions(Guid userId)
 	{
 		var userRoles = await Entities
 			.AsNoTracking()
@@ -27,7 +27,7 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 			.ToListAsync();
 
 		var permissions = userRoles
-			.SelectMany(role => role.RolePermissions.Select(rp => (PermissionEnum)rp.Permission.Id))
+			.SelectMany(role => role.RolePermissions.Select(rp => (PermissionType)rp.Permission.Id))
 			.ToHashSet();
 
 		return permissions;

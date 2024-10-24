@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using RecipeSharingSystem.Business.DTOs.Category;
 using RecipeSharingSystem.Business.Services.Interfaces;
-using RecipeSharingSystem.Core.Repositories;
 using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Interfaces.Repositories;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
-public class CategoryService(IUnitOfWork unitOfWork, IMapper mapper) : ICategoryService
+public class CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
+	: ICategoryService
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;

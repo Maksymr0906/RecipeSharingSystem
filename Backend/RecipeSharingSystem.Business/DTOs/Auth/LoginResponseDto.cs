@@ -4,5 +4,5 @@ public record LoginResponseDto(
 	string UserId,
 	string Email,
 	string Token,
-	List<string> Roles
+	ICollection<string> Roles
 );

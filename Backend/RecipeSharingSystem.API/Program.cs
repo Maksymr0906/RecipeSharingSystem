@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using RecipeSharingSystem.API.Extensions;
 using RecipeSharingSystem.Application;
 using RecipeSharingSystem.Infrastructure;
+using RecipeSharingSystem.Infrastructure.Auth;
 using RecipeSharingSystem.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);

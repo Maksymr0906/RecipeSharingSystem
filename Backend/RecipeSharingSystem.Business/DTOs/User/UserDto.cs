@@ -7,6 +7,6 @@ public class UserDto
 	public string Email { get; set; } = string.Empty;
 	public string PasswordHash { get; set; } = string.Empty;
 	public bool IsAdmin { get; set; }
-	public IEnumerable<Guid> CommentIds { get; set; } = [];
-	public IEnumerable<Guid> RatingIds { get; set; } = [];
+	public ICollection<Guid> CommentIds { get; set; } = [];
+	public ICollection<Guid> RatingIds { get; set; } = [];
 }

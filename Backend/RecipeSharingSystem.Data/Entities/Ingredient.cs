@@ -2,7 +2,7 @@
 
 public class Ingredient : BaseEntity
 {
-	public string Name { get; set; }
-	public string Slug { get; set; }
-	public ICollection<RecipeIngredient> RecipeIngredients { get; set;}
+	public string Name { get; set; } = string.Empty;
+	public string Slug { get; set; } = string.Empty;
+	public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = [];
 }
