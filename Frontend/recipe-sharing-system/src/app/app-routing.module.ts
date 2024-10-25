@@ -14,43 +14,53 @@ import { RecipePageComponent } from './public/components/recipe-page/recipe-page
 import { CategoryPageComponent } from './public/components/category-page/category-page.component';
 import { LoginPageComponent } from './public/components/login-page/login-page.component';
 import { RegistrationPageComponent } from './public/components/registration-page/registration-page.component';
+import { authGuard } from './features/auth/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'admin/categories',
-    component: CategoryListComponent
+    component: CategoryListComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'admin/categories/add',
-    component: AddCategoryComponent
+    component: AddCategoryComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'admin/categories/:id',
-    component: EditCategoryComponent
+    component: EditCategoryComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'admin/ingredients',
-    component: IngredientListComponent
+    component: IngredientListComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'admin/ingredients/add',
-    component: AddIngredientComponent
+    component: AddIngredientComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'admin/ingredients/:id',
-    component: EditIngredientComponent
+    component: EditIngredientComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'admin/recipes',
-    component: RecipeListComponent
+    component: RecipeListComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'admin/recipes/add',
-    component: AddRecipeComponent
+    component: AddRecipeComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'admin/recipes/:id',
-    component: EditRecipeComponent
+    component: EditRecipeComponent,
+    canActivate: [authGuard]
   },
   {
     path: '',
@@ -58,7 +68,7 @@ const routes: Routes = [
   },
   {
     path: 'recipe/:id',
-    component: RecipePageComponent
+    component: RecipePageComponent,
   },
   {
     path: 'category/:id',

@@ -48,6 +48,7 @@ public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper)
 		return _mapper.Map<IngredientDto>(ingredient);
 	}
 
+	// Consider changing to dto
 	public async Task<Ingredient> GetOrCreateIngredientAsync(string ingredientName)
 	{
 		var existingIngredient = await _unitOfWork.IngredientRepository.GetByNameAsync(ingredientName);

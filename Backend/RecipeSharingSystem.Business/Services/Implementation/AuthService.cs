@@ -43,7 +43,7 @@ public class AuthService(
 			user.Id.ToString(),
 			user.Email,
 			token,
-			[]
+			user.UserRoles.Select(ur => ur.Role.Name).ToList()
 		);
 
 		return response;

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { RecipePageComponent } from './public/components/recipe-page/recipe-page
 import { CategoryPageComponent } from './public/components/category-page/category-page.component';
 import { LoginPageComponent } from './public/components/login-page/login-page.component';
 import { RegistrationPageComponent } from './public/components/registration-page/registration-page.component';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,11 @@ import { RegistrationPageComponent } from './public/components/registration-page
     ReactiveFormsModule,
     MarkdownModule.forRoot(),
   ],
-  providers: [],
+  providers: [{
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

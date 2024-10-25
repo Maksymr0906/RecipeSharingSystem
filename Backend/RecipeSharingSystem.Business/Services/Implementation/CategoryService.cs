@@ -48,6 +48,7 @@ public class CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
 		return _mapper.Map<CategoryDto>(category);
 	}
 
+	// Consider changing to dto
 	public async Task<ICollection<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds)
 	{
 		return await _unitOfWork.CategoryRepository.GetCategoriesByIdsAsync(categoryIds);

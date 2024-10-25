@@ -48,7 +48,7 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="isAdmin">
           <a
             class="nav-link dropdown-toggle navbar-text"
             role="button"
@@ -89,9 +89,26 @@
         </li>
       </ul>
       <div class="nav-item d-flex gap-2">
-        <button class="btn btn-primary" [routerLink]="['login']">Login</button>
-        <button class="btn btn-primary" [routerLink]="['registration']">
+        <button
+          *ngIf="!isAuthenticated"
+          class="btn btn-primary"
+          [routerLink]="['login']"
+        >
+          Login
+        </button>
+        <button
+          *ngIf="!isAuthenticated"
+          class="btn btn-primary"
+          [routerLink]="['registration']"
+        >
           Register
+        </button>
+        <button
+          *ngIf="isAuthenticated"
+          class="btn btn-primary"
+          (click)="logout()"
+        >
+          Logout
         </button>
       </div>
     </div>

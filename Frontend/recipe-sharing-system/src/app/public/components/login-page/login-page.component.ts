@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginRequest } from 'src/app/features/auth/models/login-request.model';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 
@@ -8,11 +9,20 @@ import { AuthService } from 'src/app/features/auth/services/auth.service';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-  constructor(private authService: AuthService) {
+  model: LoginRequest = {
+    email: '',
+    password: ''
+  };
+
+  constructor(private authService: AuthService, private router: Router) {
 
   }
 
   onFormSubmit() {
-
+    this.authService.login(this.model).subscribe(response => {
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('roles', response.roles.join(','));
+      this.router.navigateByUrl('');
+    })
   }
 }
