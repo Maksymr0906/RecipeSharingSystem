@@ -48,7 +48,10 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>
-        <li class="nav-item dropdown" *ngIf="isAdmin">
+        <li
+          class="nav-item dropdown"
+          *ngIf="user !== undefined && user?.roles?.includes('Admin')"
+        >
           <a
             class="nav-link dropdown-toggle navbar-text"
             role="button"
@@ -89,27 +92,20 @@
         </li>
       </ul>
       <div class="nav-item d-flex gap-2">
-        <button
-          *ngIf="!isAuthenticated"
-          class="btn btn-primary"
-          [routerLink]="['login']"
-        >
-          Login
-        </button>
-        <button
-          *ngIf="!isAuthenticated"
-          class="btn btn-primary"
-          [routerLink]="['registration']"
-        >
-          Register
-        </button>
-        <button
-          *ngIf="isAuthenticated"
-          class="btn btn-primary"
-          (click)="logout()"
-        >
-          Logout
-        </button>
+        <ng-container *ngIf="user === undefined; else showLogout">
+          <button class="btn btn-primary" [routerLink]="['login']">
+            Login
+          </button>
+          <button class="btn btn-primary" [routerLink]="['registration']">
+            Register
+          </button>
+        </ng-container>
+        <ng-template #showLogout>
+          <div class="d-flex align-times-center">
+            <span>{{ user?.email }}</span>
+            <button class="btn btn-primary" (click)="onLogout()">Logout</button>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

@@ -20,8 +20,14 @@ export class LoginPageComponent {
 
   onFormSubmit() {
     this.authService.login(this.model).subscribe(response => {
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('roles', response.roles.join(','));
+      this.authService.setUser({
+          email: response.email,
+          roles: response.roles,
+          userId: response.userId
+      });
+      
+      this.authService.storeToken(response.token);
+
       this.router.navigateByUrl('');
     })
   }

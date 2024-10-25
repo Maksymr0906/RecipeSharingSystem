@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { User } from 'src/app/features/auth/models/user.model';
+import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { Category } from 'src/app/features/category/models/category.model';
 import { CategoryService } from 'src/app/features/category/services/category.service';
 
@@ -11,31 +13,24 @@ import { CategoryService } from 'src/app/features/category/services/category.ser
 })
 export class NavbarComponent implements OnInit {
   categories$?: Observable<Category[]>;
-  isAdmin = false;
-  isAuthenticated = false;
+  user?: User;
 
-  constructor(private categoryService: CategoryService, private router: Router) {
-
-  }
+  constructor(
+    private categoryService: CategoryService,
+    private router: Router,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
-     const roles = localStorage.getItem('roles')?.split(',') || [];
-    const token = localStorage.getItem('token');
+    this.authService.user().subscribe(response => {
+      this.user = response;
+    });
 
-    // Set authentication status and admin role
-    this.isAuthenticated = !!token;
-    this.isAdmin = roles.includes('Admin');
+    this.user = this.authService.getUser();
     this.categories$ = this.categoryService.getAllCategories();
   }
 
-  logout(): void {
-    // Clear user data from localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('roles');
-    this.isAuthenticated = false;
-    this.isAdmin = false;
-
-    // Navigate to the login page or home page
+  onLogout(): void {
+    this.authService.logout();
     this.router.navigate(['/']);
   }
 }
