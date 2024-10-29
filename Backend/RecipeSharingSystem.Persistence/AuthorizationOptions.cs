@@ -5,8 +5,6 @@ namespace RecipeSharingSystem.Persistence;
 public class AuthorizationOptions
 {
 	public RolePermissions[] RolePermissions { get; set; } = [];
-	public User[] Users { get; set; } = [];
-	public UserRole[] UserRoles { get; set; } = [];
 }
 
 public class RolePermissions

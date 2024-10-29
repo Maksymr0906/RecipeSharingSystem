@@ -101,8 +101,8 @@
           </button>
         </ng-container>
         <ng-template #showLogout>
-          <div class="d-flex align-times-center">
-            <span>{{ user?.email }}</span>
+          <div class="d-flex gap-2 align-items-center">
+            <p class="m-0">{{ user?.email }}</p>
             <button class="btn btn-primary" (click)="onLogout()">Logout</button>
           </div>
         </ng-template>

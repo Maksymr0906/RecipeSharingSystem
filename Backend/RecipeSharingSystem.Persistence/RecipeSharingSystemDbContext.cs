@@ -7,10 +7,12 @@ namespace RecipeSharingSystem.Persistence
 {
 	public class RecipeSharingSystemDbContext(
 		DbContextOptions<RecipeSharingSystemDbContext> options,
-		IOptions<AuthorizationOptions> authOptions) 
+		IOptions<AuthorizationOptions> authOptions,
+		IOptions<SeedDataOptions> seedDataOptions) 
 		: DbContext(options)
 	{
 		private readonly AuthorizationOptions _authorizationOptions = authOptions.Value;
+		private readonly SeedDataOptions _seedDataOptions = seedDataOptions.Value;
 
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Comment> Comments { get; set; }
@@ -30,11 +32,11 @@ namespace RecipeSharingSystem.Persistence
 		{
 			modelBuilder.ApplyConfigurationsFromAssembly(typeof(RecipeSharingSystemDbContext).Assembly);
 
-			modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(authOptions.Value));
+			modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(_authorizationOptions));
 
-			modelBuilder.ApplyConfiguration(new UserConfiguration(authOptions.Value));
+			modelBuilder.ApplyConfiguration(new UserConfiguration(_seedDataOptions));
 
-			modelBuilder.ApplyConfiguration(new UserRoleConfiguration(authOptions.Value));
+			modelBuilder.ApplyConfiguration(new UserRoleConfiguration(_seedDataOptions));
 		}
 	}
 }

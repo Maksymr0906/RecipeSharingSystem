@@ -24,6 +24,8 @@ import { CategoryPageComponent } from './public/components/category-page/categor
 import { LoginPageComponent } from './public/components/login-page/login-page.component';
 import { RegistrationPageComponent } from './public/components/registration-page/registration-page.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { RatingComponent } from './features/rating/rating/rating.component';
+import { RangePipe } from './shared/pipes/range.pipe';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     CategoryPageComponent,
     LoginPageComponent,
     RegistrationPageComponent,
+    RatingComponent,
+    RangePipe,
   ],
   imports: [
     BrowserModule,

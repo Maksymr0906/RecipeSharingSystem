@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Persistence;
 
-public partial class UserRoleConfiguration(AuthorizationOptions authorization)
+public partial class UserRoleConfiguration(SeedDataOptions seedDataOptions)
 	: IEntityTypeConfiguration<UserRole>
 {
-	private readonly AuthorizationOptions _authorization = authorization;
+	private readonly SeedDataOptions _seedDataOptions = seedDataOptions;
 
 	public void Configure(EntityTypeBuilder<UserRole> builder)
 	{
 		builder.HasKey(r => new { r.UserId, r.RoleId });
-		builder.HasData(_authorization.UserRoles);
+		builder.HasData(_seedDataOptions.UserRoles);
 	}
 }

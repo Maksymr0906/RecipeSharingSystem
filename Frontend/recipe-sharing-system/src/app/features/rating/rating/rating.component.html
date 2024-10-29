@@ -1,0 +1,12 @@
+<div class="d-flex align-items-center">
+  <ng-container *ngFor="let i of totalStars | range">
+    <i
+      class="bi"
+      [class.bi-star]="i >= (hoveredStar || rating)"
+      [class.bi-star-fill]="i < (hoveredStar || rating)"
+      (mouseenter)="onStarHover(i)"
+      (mouseleave)="onStarLeave()"
+      (click)="onStarClick(i)"
+    ></i>
+  </ng-container>
+</div>
