@@ -5,7 +5,7 @@ using RecipeSharingSystem.Core.Interfaces.Repositories;
 namespace RecipeSharingSystem.Persistence.Repositories;
 
 public class CategoryRepository(RecipeSharingSystemDbContext context)
-    : AbstractRepository<Category>(context), ICategoryRepository
+    : Repository<Category>(context), ICategoryRepository
 {
 	public async Task<List<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds)
     {

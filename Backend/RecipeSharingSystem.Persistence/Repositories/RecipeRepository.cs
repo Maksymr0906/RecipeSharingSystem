@@ -5,7 +5,7 @@ using RecipeSharingSystem.Core.Interfaces.Repositories;
 namespace RecipeSharingSystem.Persistence.Repositories;
 
 public class RecipeRepository(RecipeSharingSystemDbContext context)
-    : AbstractRepository<Recipe>(context), IRecipeRepository
+    : Repository<Recipe>(context), IRecipeRepository
 {
 	public async Task<ICollection<Recipe>> GetAllWithDetailsAsync()
     {

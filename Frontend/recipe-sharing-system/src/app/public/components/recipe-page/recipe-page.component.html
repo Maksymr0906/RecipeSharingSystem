@@ -4,7 +4,7 @@
     [style.backgroundImage]="'url(' + recipe.featuredImageUrl + ')'"
   ></div>
   <div class="container">
-    <app-rating></app-rating>
+    <app-rating-input></app-rating-input>
     <h1 class="recipe-title text-header">{{ recipe.title }}</h1>
     <ul class="ingredient-list">
       <ng-container *ngFor="let ingredient of recipe.ingredients">

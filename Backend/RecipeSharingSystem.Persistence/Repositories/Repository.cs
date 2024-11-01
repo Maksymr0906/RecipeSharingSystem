@@ -4,12 +4,12 @@ using RecipeSharingSystem.Core.Interfaces.Repositories;
 
 namespace RecipeSharingSystem.Persistence.Repositories;
 
-public class AbstractRepository<TEntity> : IAbstractRepository<TEntity> where TEntity : BaseEntity
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
 	private readonly RecipeSharingSystemDbContext _context;
 	private readonly DbSet<TEntity> _entities;
 
-	public AbstractRepository(RecipeSharingSystemDbContext context)
+	public Repository(RecipeSharingSystemDbContext context)
 	{
 		_context = context;
 		_entities = _context.Set<TEntity>();

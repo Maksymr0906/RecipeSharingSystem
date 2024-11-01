@@ -2,7 +2,7 @@
 
 namespace RecipeSharingSystem.Core.Interfaces.Repositories;
 
-public interface ICategoryRepository : IAbstractRepository<Category>
+public interface ICategoryRepository : IRepository<Category>
 {
     Task<List<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds);
 }

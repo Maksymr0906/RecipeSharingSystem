@@ -2,7 +2,7 @@
 
 namespace RecipeSharingSystem.Core.Interfaces.Repositories;
 
-public interface ICommentRepository : IAbstractRepository<Comment>
+public interface ICommentRepository : IRepository<Comment>
 {
 
 }

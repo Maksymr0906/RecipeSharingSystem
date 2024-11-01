@@ -2,7 +2,7 @@
 
 namespace RecipeSharingSystem.Core.Interfaces.Repositories;
 
-public interface IInstructionRepository : IAbstractRepository<Instruction>
+public interface IInstructionRepository : IRepository<Instruction>
 {
 
 }

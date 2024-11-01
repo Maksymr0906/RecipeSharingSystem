@@ -5,7 +5,7 @@ using RecipeSharingSystem.Core.Interfaces.Repositories;
 namespace RecipeSharingSystem.Persistence.Repositories;
 
 public class IngredientRepository(RecipeSharingSystemDbContext context)
-    : AbstractRepository<Ingredient>(context), IIngredientRepository
+    : Repository<Ingredient>(context), IIngredientRepository
 {
 	public async Task<Ingredient> GetByNameAsync(string name)
     {

@@ -6,7 +6,7 @@ using RecipeSharingSystem.Core.Interfaces.Repositories;
 namespace RecipeSharingSystem.Persistence.Repositories;
 
 public class UserRepository(RecipeSharingSystemDbContext context)
-	: AbstractRepository<User>(context), IUserRepository
+	: Repository<User>(context), IUserRepository
 {
 	public async Task<User> GetByEmail(string email)
 	{

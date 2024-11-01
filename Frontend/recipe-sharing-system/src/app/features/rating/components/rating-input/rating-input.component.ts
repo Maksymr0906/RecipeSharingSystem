@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-rating',
-  templateUrl: './rating.component.html',
-  styleUrls: ['./rating.component.css']
+  selector: 'app-rating-input',
+  templateUrl: './rating-input.component.html',
+  styleUrls: ['./rating-input.component.css']
 })
-export class RatingComponent {
+export class RatingInputComponent {
   readonly totalStars = 5;
   @Input() rating = 5;
   @Output() ratingChange = new EventEmitter<number>();

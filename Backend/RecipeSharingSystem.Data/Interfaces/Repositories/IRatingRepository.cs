@@ -2,7 +2,7 @@
 
 namespace RecipeSharingSystem.Core.Interfaces.Repositories;
 
-public interface IRatingRepository : IAbstractRepository<Rating>
+public interface IRatingRepository : IRepository<Rating>
 {
 
 }

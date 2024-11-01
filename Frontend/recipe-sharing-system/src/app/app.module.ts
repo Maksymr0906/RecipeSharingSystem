@@ -24,8 +24,9 @@ import { CategoryPageComponent } from './public/components/category-page/categor
 import { LoginPageComponent } from './public/components/login-page/login-page.component';
 import { RegistrationPageComponent } from './public/components/registration-page/registration-page.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-import { RatingComponent } from './features/rating/rating/rating.component';
 import { RangePipe } from './shared/pipes/range.pipe';
+import { RatingInputComponent } from './features/rating/components/rating-input/rating-input.component';
+import { RatingDisplayComponent } from './features/rating/components/rating-display/rating-display.component';
 
 @NgModule({
   declarations: [
@@ -47,8 +48,9 @@ import { RangePipe } from './shared/pipes/range.pipe';
     CategoryPageComponent,
     LoginPageComponent,
     RegistrationPageComponent,
-    RatingComponent,
     RangePipe,
+    RatingInputComponent,
+    RatingDisplayComponent,
   ],
   imports: [
     BrowserModule,

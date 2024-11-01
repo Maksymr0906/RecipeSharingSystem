@@ -1,0 +1,4 @@
+.bi {
+  color: #ffcc00; /* Customize star color */
+  pointer-events: none; /* Disable pointer events */
+}
