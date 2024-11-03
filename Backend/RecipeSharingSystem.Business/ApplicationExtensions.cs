@@ -14,7 +14,7 @@ public static class ApplicationExtensions
 		services.AddAutoMapper(typeof(AutomapperProfile));
 
 		services.AddScoped<ICategoryService, CategoryService>();
-		services.AddScoped<ICommentService, CommentService>();
+		services.AddScoped<IReviewService, ReviewService>();
 		services.AddScoped<IImageService, ImageService>();
 		services.AddScoped<IIngredientService, IngredientService>();
 		services.AddScoped<IInstructionService, InstructionService>();

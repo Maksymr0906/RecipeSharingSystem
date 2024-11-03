@@ -23,7 +23,7 @@
         <a [routerLink]="['/recipe/', recipe.id]" class="btn btn-primary">
           View more
         </a>
-        <app-rating-display></app-rating-display>
+        <p class="m-0">{{ recipe.rating }} <i class="bi bi-star"></i></p>
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RatingService } from '../../services/rating.service';
 
 @Component({
   selector: 'app-rating-input',
@@ -11,6 +12,10 @@ export class RatingInputComponent {
   @Output() ratingChange = new EventEmitter<number>();
 
   hoveredStar = 0;
+
+  constructor(private ratingService: RatingService) {
+
+  }
 
   onStarHover(starPosition: number) {
     this.hoveredStar = starPosition + 1;

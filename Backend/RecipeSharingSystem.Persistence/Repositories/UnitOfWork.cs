@@ -9,7 +9,7 @@ public class UnitOfWork : IUnitOfWork
     {
         _context = context;
         CategoryRepository = new CategoryRepository(_context);
-        CommentRepository = new CommentRepository(_context);
+        ReviewRepository = new ReviewRepository(_context);
         ImageRepository = new ImageRepository(_context);
         IngredientRepository = new IngredientRepository(_context);
         InstructionRepository = new InstructionRepository(_context);
@@ -21,7 +21,7 @@ public class UnitOfWork : IUnitOfWork
     public UnitOfWork(
         RecipeSharingSystemDbContext context,
         ICategoryRepository categoryRepository,
-        ICommentRepository commentRepository,
+        IReviewRepository reviewRepository,
         IImageRepository imageRepository,
         IIngredientRepository ingredientRepository,
         IInstructionRepository instructionRepository,
@@ -31,7 +31,7 @@ public class UnitOfWork : IUnitOfWork
     {
         _context = context;
         CategoryRepository = categoryRepository;
-        CommentRepository = commentRepository;
+		ReviewRepository = reviewRepository;
         ImageRepository = imageRepository;
         IngredientRepository = ingredientRepository;
         InstructionRepository = instructionRepository;
@@ -42,7 +42,7 @@ public class UnitOfWork : IUnitOfWork
 
     public ICategoryRepository CategoryRepository { get; set; }
 
-    public ICommentRepository CommentRepository { get; set; }
+    public IReviewRepository ReviewRepository { get; set; }
 
     public IImageRepository ImageRepository { get; set; }
 

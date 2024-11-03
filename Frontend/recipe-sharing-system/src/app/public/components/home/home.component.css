@@ -38,15 +38,13 @@
   transform: translate(-50%, -50%);
 }
 
-.recipe-description,
-.recipe-rating {
+.recipe-description {
   z-index: 2;
   position: absolute;
   display: none;
 }
 
-.recipe-container:hover .recipe-description,
-.recipe-container:hover .recipe-rating {
+.recipe-container:hover .recipe-description {
   display: block;
 }
 

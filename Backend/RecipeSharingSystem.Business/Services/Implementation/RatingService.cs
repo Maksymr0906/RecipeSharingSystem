@@ -47,4 +47,11 @@ public class RatingService(IUnitOfWork unitOfWork, IMapper mapper)
 		await _unitOfWork.SaveAsync();
 		return _mapper.Map<RatingDto>(rating);
 	}
+
+	public async Task<RatingDto> GetUserRecipeRatingAsync(UserRecipeRatingRequestDto model)
+	{
+		var rating = await _unitOfWork.RatingRepository.GetByUserAndRecipeId(model.userId, model.recipeId);
+		await _unitOfWork.SaveAsync();
+		return _mapper.Map<RatingDto>(rating);
+	}
 }

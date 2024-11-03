@@ -8,6 +8,7 @@ public class Recipe : BaseEntity
 	public string Slug { get; set; } = string.Empty;
 	public Guid InstructionId { get; set; }
 	public Instruction Instruction { get; set; }
+	public ICollection<Review> Reviews { get; set; } = [];
 	public ICollection<Rating> Ratings { get; set; } = [];
 	public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = [];
 	public ICollection<Category> Categories { get; set; } = [];

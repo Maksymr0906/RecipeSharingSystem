@@ -1,0 +1,25 @@
+<form #form="ngForm" (ngSubmit)="onFormSubmit()">
+  <h3>{{ recipeTitle }}</h3>
+  <p class="m-0">My Rating</p>
+  <app-rating-input [(rating)]="rating"></app-rating-input>
+  <p class="m-0">My Review</p>
+  <textarea
+    class="form-control mt-1 review-textarea"
+    name="reviewContent"
+    id="reviewContent"
+    placeholder="What did you think about this recipe?"
+    [(ngModel)]="content"
+  ></textarea>
+  <div class="d-flex gap-1 justify-content-end">
+    <button type="button" class="btn btn-primary mt-1" (click)="onCancel()">
+      Cancel
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary mt-1"
+      [disabled]="rating === 0"
+    >
+      Submit
+    </button>
+  </div>
+</form>

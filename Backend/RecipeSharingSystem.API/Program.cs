@@ -5,6 +5,7 @@ using RecipeSharingSystem.Application;
 using RecipeSharingSystem.Infrastructure;
 using RecipeSharingSystem.Infrastructure.Auth;
 using RecipeSharingSystem.Persistence;
+using RecipeSharingSystem.Persistence.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 

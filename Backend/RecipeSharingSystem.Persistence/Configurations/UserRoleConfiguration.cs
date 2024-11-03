@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using RecipeSharingSystem.Core.Entities;
-using RecipeSharingSystem.Persistence;
+using RecipeSharingSystem.Persistence.SeedData;
 
 public partial class UserRoleConfiguration(SeedDataOptions seedDataOptions)
 	: IEntityTypeConfiguration<UserRole>

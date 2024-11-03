@@ -26,7 +26,7 @@ import { RegistrationPageComponent } from './public/components/registration-page
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { RangePipe } from './shared/pipes/range.pipe';
 import { RatingInputComponent } from './features/rating/components/rating-input/rating-input.component';
-import { RatingDisplayComponent } from './features/rating/components/rating-display/rating-display.component';
+import { AddReviewComponent } from './features/review/components/add-review/add-review.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +50,7 @@ import { RatingDisplayComponent } from './features/rating/components/rating-disp
     RegistrationPageComponent,
     RangePipe,
     RatingInputComponent,
-    RatingDisplayComponent,
+    AddReviewComponent,
   ],
   imports: [
     BrowserModule,

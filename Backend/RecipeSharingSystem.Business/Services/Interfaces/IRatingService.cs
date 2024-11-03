@@ -9,4 +9,5 @@ public interface IRatingService
 	Task<RatingDto> GetRatingByIdAsync(Guid id);
 	Task<RatingDto> UpdateRatingAsync(Guid id, UpdateRatingRequestDto model);
 	Task<RatingDto> DeleteRatingAsync(Guid id);
+	Task<RatingDto> GetUserRecipeRatingAsync(UserRecipeRatingRequestDto model);
 }

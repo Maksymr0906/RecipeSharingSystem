@@ -3,23 +3,31 @@
     class="recipe-img"
     [style.backgroundImage]="'url(' + recipe.featuredImageUrl + ')'"
   ></div>
-  <div class="container">
-    <app-rating-input></app-rating-input>
+  <div class="container text-primary">
+    <p class="m-0">{{ recipe.rating }} <i class="bi bi-star"></i></p>
     <h1 class="recipe-title text-header">{{ recipe.title }}</h1>
+    <p>{{ recipe.shortDescription }}</p>
+    <h2 class="text-header">Ingredients</h2>
     <ul class="ingredient-list">
       <ng-container *ngFor="let ingredient of recipe.ingredients">
-        <li class="ingredient-item text-primary">
+        <li class="ingredient-item">
           {{ ingredient.quantity }} {{ ingredient.measurementUnit }}
           {{ ingredient.ingredientName }}
         </li>
       </ng-container>
     </ul>
-    <markdown
-      class="recipe-instruction text-primary"
-      [data]="instruction.content"
-    >
+    <h2 class="text-header">Instruction</h2>
+    <markdown class="recipe-instruction" [data]="instruction.content">
     </markdown>
-    <p>Comments here</p>
+    <div class="add-feedback-container col-6">
+      <div class="add-feedback-container-inner">
+        <app-add-review
+          [recipeId]="recipe.id"
+          [recipeTitle]="recipe.title"
+        ></app-add-review>
+      </div>
+    </div>
+    <p>Reviews</p>
   </div>
 </ng-container>
 <ng-template #NotFound>

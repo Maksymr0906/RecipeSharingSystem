@@ -1,6 +1,6 @@
 ﻿namespace RecipeSharingSystem.Core.Entities;
 
-public class RecipeIngredient : BaseEntity
+public class RecipeIngredient
 {
 	public Guid RecipeId { get; set; }
 	public Guid IngredientId { get; set; }

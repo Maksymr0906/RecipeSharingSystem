@@ -1,6 +1,6 @@
 ﻿namespace RecipeSharingSystem.Core.Entities;
 
-public class Comment : BaseEntity
+public class Review : BaseEntity
 {
 	public string Content { get; set; } = string.Empty;
 	public DateTime DateCreated { get; set; }

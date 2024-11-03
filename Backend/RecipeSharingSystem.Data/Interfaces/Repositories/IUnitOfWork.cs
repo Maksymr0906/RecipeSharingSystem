@@ -3,7 +3,7 @@
 public interface IUnitOfWork
 {
     ICategoryRepository CategoryRepository { get; }
-    ICommentRepository CommentRepository { get; }
+    IReviewRepository ReviewRepository { get; }
     IImageRepository ImageRepository { get; }
     IIngredientRepository IngredientRepository { get; }
     IInstructionRepository InstructionRepository { get; }

@@ -1,6 +1,6 @@
-﻿namespace RecipeSharingSystem.Business.DTOs.Comment;
+﻿namespace RecipeSharingSystem.Business.DTOs.Review;
 
-public record CommentDto(
+public record ReviewDto(
 	Guid Id,
 	string Content,
 	DateTime DateCreated,

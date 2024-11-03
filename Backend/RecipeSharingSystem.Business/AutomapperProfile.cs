@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using RecipeSharingSystem.Application.DTOs.Auth;
 using RecipeSharingSystem.Business.DTOs.Category;
-using RecipeSharingSystem.Business.DTOs.Comment;
+using RecipeSharingSystem.Business.DTOs.Review;
 using RecipeSharingSystem.Business.DTOs.Image;
 using RecipeSharingSystem.Business.DTOs.Ingredient;
 using RecipeSharingSystem.Business.DTOs.Instruction;
@@ -55,36 +55,36 @@ namespace RecipeSharingSystem.Business
 			// User
 			CreateMap<CreateUserRequestDto, User>()
 				.ForMember(u => u.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
-				.ForMember(u => u.Comments, opt => opt.Ignore())
+				.ForMember(u => u.Reviews, opt => opt.Ignore())
 				.ForMember(u => u.Ratings, opt => opt.Ignore());
 
 			CreateMap<UpdateUserRequestDto, User>()
-				.ForMember(u => u.Comments, opt => opt.Ignore())
+				.ForMember(u => u.Reviews, opt => opt.Ignore())
 				.ForMember(u => u.Ratings, opt => opt.Ignore());
 
 			CreateMap<User, UserDto>()
-				.ForMember(dto => dto.CommentIds, opt => opt.MapFrom(u => u.Comments.Select(c => c.Id)))
+				.ForMember(dto => dto.ReviewIds, opt => opt.MapFrom(u => u.Reviews.Select(c => c.Id)))
 				.ForMember(dto => dto.RatingIds, opt => opt.MapFrom(u => u.Ratings.Select(r => r.Id)));
 
 			CreateMap<RegisterRequestDto, User>()
 				.ForMember(u => u.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
 				.ForMember(u => u.PasswordHash, opt => opt.Ignore())
 				.ForMember(u => u.Ratings, opt => opt.Ignore())
-				.ForMember(u => u.Comments, opt => opt.Ignore());
+				.ForMember(u => u.Reviews, opt => opt.Ignore());
 
-			// Comment
-			CreateMap<CreateCommentRequestDto, Comment>()
+			// Review
+			CreateMap<CreateReviewRequestDto, Review>()
 				.ForMember(c => c.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
 				.ForMember(c => c.DateCreated, opt => opt.MapFrom(_ => DateTime.Now))
 				.ForMember(c => c.User, opt => opt.Ignore())
 				.ForMember(c => c.Recipe, opt => opt.Ignore());
 
-			CreateMap<UpdateCommentRequestDto, Comment>()
+			CreateMap<UpdateReviewRequestDto, Review>()
 				.ForMember(c => c.User, opt => opt.Ignore())
 				.ForMember(c => c.Recipe, opt => opt.Ignore())
 				.ForMember(c => c.DateCreated, opt => opt.Ignore());
 
-			CreateMap<Comment, CommentDto>();
+			CreateMap<Review, ReviewDto>();
 
 			// Rating
 			CreateMap<CreateRatingRequestDto, Rating>()
@@ -111,7 +111,7 @@ namespace RecipeSharingSystem.Business
 				.ForMember(r => r.Categories, opt => opt.Ignore());
 
 			CreateMap<Recipe, RecipeDto>()
-				.ForMember(dto => dto.RatingIds, opt => opt.MapFrom(r => r.Ratings.Select(rt => rt.Id)))
+				.ForMember(dto => dto.Rating, opt => opt.MapFrom(r => r.Ratings.Any() ? r.Ratings.Average(x => x.Value) : 0))
 				.ForMember(dto => dto.Ingredients, opt => opt.MapFrom(r => r.RecipeIngredients.Select(ri => new IngredientQuantityDto(ri.Ingredient.Name, ri.Quantity, ri.MeasurementUnit))))
 				.ForMember(dto => dto.CategoryIds, opt => opt.MapFrom(r => r.Categories.Select(c => c.Id)));
 		}

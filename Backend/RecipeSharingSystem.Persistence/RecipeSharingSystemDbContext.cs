@@ -2,10 +2,11 @@
 using Microsoft.Extensions.Options;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Persistence.Configurations;
+using RecipeSharingSystem.Persistence.SeedData;
 
 namespace RecipeSharingSystem.Persistence
 {
-	public class RecipeSharingSystemDbContext(
+    public class RecipeSharingSystemDbContext(
 		DbContextOptions<RecipeSharingSystemDbContext> options,
 		IOptions<AuthorizationOptions> authOptions,
 		IOptions<SeedDataOptions> seedDataOptions) 
@@ -15,7 +16,7 @@ namespace RecipeSharingSystem.Persistence
 		private readonly SeedDataOptions _seedDataOptions = seedDataOptions.Value;
 
 		public DbSet<Category> Categories { get; set; }
-		public DbSet<Comment> Comments { get; set; }
+		public DbSet<Review> Reviews { get; set; }
 		public DbSet<Image> Images { get; set; }
 		public DbSet<Ingredient> Ingredients { get; set; }
 		public DbSet<Instruction> Instructions { get; set; }
@@ -37,6 +38,22 @@ namespace RecipeSharingSystem.Persistence
 			modelBuilder.ApplyConfiguration(new UserConfiguration(_seedDataOptions));
 
 			modelBuilder.ApplyConfiguration(new UserRoleConfiguration(_seedDataOptions));
+
+			modelBuilder.ApplyConfiguration(new CategoryConfiguration(_seedDataOptions));
+
+			modelBuilder.ApplyConfiguration(new ImageConfiguration(_seedDataOptions));
+
+			modelBuilder.ApplyConfiguration(new IngredientConfiguration(_seedDataOptions));
+
+			modelBuilder.ApplyConfiguration(new InstructionConfiguration(_seedDataOptions));
+
+			modelBuilder.ApplyConfiguration(new RatingConfiguration(_seedDataOptions));
+
+			modelBuilder.ApplyConfiguration(new RecipeConfiguration(_seedDataOptions));
+
+			modelBuilder.ApplyConfiguration(new RecipeIngredientConfiguration(_seedDataOptions));
+
+			modelBuilder.ApplyConfiguration(new ReviewConfiguration(_seedDataOptions));
 		}
 	}
 }
