@@ -1,52 +1,50 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Business.DTOs.Review;
 using RecipeSharingSystem.Business.Services.Interfaces;
 
-namespace RecipeSharingSystem.API.Controllers
+namespace RecipeSharingSystem.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ReviewsController(IReviewService service)
+	: ControllerBase
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class ReviewsController : ControllerBase
+	private readonly IReviewService _service = service;
+
+	[Authorize(Policy = "CreatePolicy")]
+	[HttpPost]
+	public async Task<IActionResult> CreateReview([FromBody] CreateReviewRequestDto request)
 	{
-		private readonly IReviewService _service;
+		await _service.CreateReviewAsync(request);
+		return Ok();
+	}
 
-		public ReviewsController(IReviewService service)
+	[HttpGet("recipes/{recipeId:Guid}/users/{userId:Guid}")]
+	public async Task<IActionResult> GetUserReviewForRecipe([FromRoute] Guid recipeId, [FromRoute] Guid userId)
+	{
+		var review = await _service.GetUserRecipeReview(recipeId, userId);
+		if (review == null)
 		{
-			_service = service;
+			return NotFound();
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> CreateReview([FromBody] CreateReviewRequestDto request)
-		{
-			await _service.CreateReviewAsync(request);
-			return Ok();
-		}
+		return Ok(review);
+	}
 
-		[HttpGet("recipes/{recipeId:Guid}/users/{userId:Guid}")]
-		public async Task<IActionResult> GetUserReviewForRecipe([FromRoute] Guid recipeId, [FromRoute] Guid userId)
-		{
-			var review = await _service.GetUserRecipeReview(recipeId, userId);
-			if (review == null)
-			{
-				return NotFound();
-			}
+	[HttpGet("recipe/{recipeId:Guid}")]
+	public async Task<IActionResult> GetRecipeReviews([FromRoute] Guid recipeId)
+	{
+		var reviews = await _service.GetRecipeReviews(recipeId);
+		return Ok(reviews);
+	}
 
-			return Ok(review);
-		}
-
-		[HttpGet("recipe/{recipeId:Guid}")]
-		public async Task<IActionResult> GetRecipeReviews([FromRoute] Guid recipeId)
-		{
-			var reviews = await _service.GetRecipeReviews(recipeId);
-			return Ok(reviews);
-		}
-
-		[HttpPut("{id:Guid}")]
-		public async Task<IActionResult> UpdateReview([FromRoute] Guid id, [FromBody] UpdateReviewRequestDto request)
-		{
-			var rating = await _service.UpdateReviewAsync(id, request);
-			return Ok(rating);
-		}
+	[Authorize(Policy = "UpdatePolicy")]
+	[HttpPut("{id:Guid}")]
+	public async Task<IActionResult> UpdateReview([FromRoute] Guid id, [FromBody] UpdateReviewRequestDto request)
+	{
+		var review = await _service.UpdateReviewAsync(id, request);
+		return Ok(review);
 	}
 }
 

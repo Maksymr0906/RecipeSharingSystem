@@ -13,9 +13,8 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\RecipeSharingSystem.Business\RecipeSharingSystem.Application.csproj" />
+    <ProjectReference Include="..\RecipeSharingSystem.Application\RecipeSharingSystem.Application.csproj" />
     <ProjectReference Include="..\RecipeSharingSystem.Data\RecipeSharingSystem.Core.csproj" />
     <ProjectReference Include="..\RecipeSharingSystem.Infrastructure\RecipeSharingSystem.Infrastructure.csproj" />
     <ProjectReference Include="..\RecipeSharingSystem.Persistence\RecipeSharingSystem.Persistence.csproj" />

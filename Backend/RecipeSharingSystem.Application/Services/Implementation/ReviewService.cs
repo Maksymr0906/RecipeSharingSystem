@@ -35,6 +35,7 @@ public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper)
 	public async Task<ReviewDto> UpdateReviewAsync(Guid id, UpdateReviewRequestDto model)
 	{
 		var review = await _unitOfWork.ReviewRepository.GetByIdAsync(id);
+		review.Rating = model.Rating;
 		review.Content = model.Content;
 		review = await _unitOfWork.ReviewRepository.UpdateAsync(review);
 		await _unitOfWork.SaveAsync();

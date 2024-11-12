@@ -2,27 +2,26 @@
 using RecipeSharingSystem.Application.DTOs.Auth;
 using RecipeSharingSystem.Application.Services.Interfaces;
 
-namespace RecipeSharingSystem.API.Controllers
+namespace RecipeSharingSystem.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class AuthController(IAuthService authService)
+	: ControllerBase
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class AuthController(IAuthService authService)
-		: ControllerBase
+	private readonly IAuthService _authService = authService;
+
+	[HttpPost("register")]
+	public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
 	{
-		private readonly IAuthService _authService = authService;
+		await _authService.Register(request);
+		return Ok();
+	}
 
-		[HttpPost("register")]
-		public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
-		{
-			await _authService.Register(request);
-			return Ok();
-		}
-
-		[HttpPost("login")]
-		public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
-		{
-			var response = await _authService.Login(request);
-			return Ok(response);
-		}
+	[HttpPost("login")]
+	public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
+	{
+		var response = await _authService.Login(request);
+		return Ok(response);
 	}
 }
