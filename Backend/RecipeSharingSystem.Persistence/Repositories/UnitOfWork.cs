@@ -13,7 +13,6 @@ public class UnitOfWork : IUnitOfWork
         ImageRepository = new ImageRepository(_context);
         IngredientRepository = new IngredientRepository(_context);
         InstructionRepository = new InstructionRepository(_context);
-        RatingRepository = new RatingRepository(_context);
         RecipeRepository = new RecipeRepository(_context);
         UserRepository = new UserRepository(_context);
     }
@@ -25,7 +24,6 @@ public class UnitOfWork : IUnitOfWork
         IImageRepository imageRepository,
         IIngredientRepository ingredientRepository,
         IInstructionRepository instructionRepository,
-        IRatingRepository ratingRepository,
         IRecipeRepository recipeRepository,
         IUserRepository userRepository)
     {
@@ -35,7 +33,6 @@ public class UnitOfWork : IUnitOfWork
         ImageRepository = imageRepository;
         IngredientRepository = ingredientRepository;
         InstructionRepository = instructionRepository;
-        RatingRepository = ratingRepository;
         RecipeRepository = recipeRepository;
         UserRepository = userRepository;
     }
@@ -49,8 +46,6 @@ public class UnitOfWork : IUnitOfWork
     public IIngredientRepository IngredientRepository { get; set; }
 
     public IInstructionRepository InstructionRepository { get; set; }
-
-    public IRatingRepository RatingRepository { get; set; }
 
     public IRecipeRepository RecipeRepository { get; set; }
 

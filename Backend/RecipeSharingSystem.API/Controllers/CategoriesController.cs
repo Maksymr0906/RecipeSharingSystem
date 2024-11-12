@@ -16,6 +16,7 @@ namespace RecipeSharingSystem.API.Controllers
 			_service = service;
 		}
 
+		[Authorize(Policy = "CreatePolicy")]
 		[HttpPost]
 		public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
 		{
@@ -23,7 +24,6 @@ namespace RecipeSharingSystem.API.Controllers
 			return Ok(category);
 		}
 
-		[Authorize(Policy = "ReadPolicy")]
 		[HttpGet]
 		public async Task<IActionResult> GetAllCategories()
 		{
@@ -43,6 +43,7 @@ namespace RecipeSharingSystem.API.Controllers
 			return Ok(category);
 		}
 
+		[Authorize(Policy = "UpdatePolicy")]
 		[HttpPut("{id:Guid}")]
 		public async Task<IActionResult> UpdateCategory([FromRoute] Guid id, [FromBody] UpdateCategoryRequestDto request)
 		{
@@ -55,6 +56,7 @@ namespace RecipeSharingSystem.API.Controllers
 			return Ok(category);
 		}
 
+		[Authorize(Policy = "DeletePolicy")]
 		[HttpDelete("{id:Guid}")]
 		public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
 		{

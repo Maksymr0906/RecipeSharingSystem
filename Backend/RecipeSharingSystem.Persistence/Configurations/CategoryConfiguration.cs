@@ -12,6 +12,8 @@ public partial class CategoryConfiguration(SeedDataOptions seedDataOptions)
 
 	public void Configure(EntityTypeBuilder<Category> builder)
 	{
+		builder.HasIndex(c => c.Slug).IsUnique();
+
 		builder.HasData(_seedDataOptions.Categories);
 	}
 }

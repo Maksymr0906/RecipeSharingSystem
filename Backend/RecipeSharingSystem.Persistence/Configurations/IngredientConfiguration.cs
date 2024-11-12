@@ -12,6 +12,8 @@ public partial class IngredientConfiguration(SeedDataOptions seedDataOptions)
 
 	public void Configure(EntityTypeBuilder<Ingredient> builder)
 	{
+		builder.HasIndex(i => i.Slug).IsUnique();
+
 		builder.HasData(_seedDataOptions.Ingredients);
 	}
 }

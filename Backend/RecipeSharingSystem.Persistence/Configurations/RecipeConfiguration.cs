@@ -12,6 +12,8 @@ public partial class RecipeConfiguration(SeedDataOptions seedDataOptions)
 
 	public void Configure(EntityTypeBuilder<Recipe> builder)
 	{
+		builder.HasIndex(r => r.Slug).IsUnique();
+
 		builder.HasMany(r => r.Categories)
 			   .WithMany(c => c.Recipes)
 			   .UsingEntity<Dictionary<string, object>>(

@@ -22,7 +22,6 @@ public static class PersistenceExtenstions
 		services.AddScoped<IImageRepository, ImageRepository>();
 		services.AddScoped<IIngredientRepository, IngredientRepository>();
 		services.AddScoped<IInstructionRepository, InstructionRepository>();
-		services.AddScoped<IRatingRepository, RatingRepository>();
 		services.AddScoped<IRecipeRepository, RecipeRepository>();
 		services.AddScoped<IUserRepository, UserRepository>();
 

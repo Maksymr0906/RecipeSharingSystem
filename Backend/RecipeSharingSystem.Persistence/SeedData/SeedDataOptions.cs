@@ -13,6 +13,5 @@ public class SeedDataOptions
 	public RecipeCategorySeedData[] RecipeCategories {  get; init; } = [];
 	public InstructionSeedData[] Instructions { get; init; } = [];
 	public RecipeIngredientSeedData[] RecipeIngredients { get; init; } = [];
-	public RatingSeedData[] Ratings { get; init; } = [];
 	public ReviewSeedData[] Reviews { get; init; } = [];
 }

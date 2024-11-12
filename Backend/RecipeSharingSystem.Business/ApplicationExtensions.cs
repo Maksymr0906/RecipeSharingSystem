@@ -18,7 +18,6 @@ public static class ApplicationExtensions
 		services.AddScoped<IImageService, ImageService>();
 		services.AddScoped<IIngredientService, IngredientService>();
 		services.AddScoped<IInstructionService, InstructionService>();
-		services.AddScoped<IRatingService, RatingService>();
 		services.AddScoped<IRecipeService, RecipeService>();
 		services.AddScoped<IUserService, UserService>();
 		services.AddScoped<IAuthService, AuthService>();

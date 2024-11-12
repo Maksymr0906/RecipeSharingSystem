@@ -20,7 +20,6 @@ namespace RecipeSharingSystem.Persistence
 		public DbSet<Image> Images { get; set; }
 		public DbSet<Ingredient> Ingredients { get; set; }
 		public DbSet<Instruction> Instructions { get; set; }
-		public DbSet<Rating> Ratings { get; set; }
 		public DbSet<Recipe> Recipes { get; set; }
 		public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 		public DbSet<User> Users { get; set; }
@@ -46,8 +45,6 @@ namespace RecipeSharingSystem.Persistence
 			modelBuilder.ApplyConfiguration(new IngredientConfiguration(_seedDataOptions));
 
 			modelBuilder.ApplyConfiguration(new InstructionConfiguration(_seedDataOptions));
-
-			modelBuilder.ApplyConfiguration(new RatingConfiguration(_seedDataOptions));
 
 			modelBuilder.ApplyConfiguration(new RecipeConfiguration(_seedDataOptions));
 

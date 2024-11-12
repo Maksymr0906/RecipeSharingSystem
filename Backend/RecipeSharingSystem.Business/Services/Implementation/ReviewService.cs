@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using RecipeSharingSystem.Application.DTOs.Reviews;
 using RecipeSharingSystem.Business.DTOs.Review;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
@@ -23,8 +22,8 @@ public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper)
 
 	public async Task<ICollection<ReviewDto>> GetAllReviewsAsync()
 	{
-		var Reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
-		return _mapper.Map<ICollection<ReviewDto>>(Reviews);
+		var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+		return _mapper.Map<ICollection<ReviewDto>>(reviews);
 	}
 
 	public async Task<ReviewDto> GetReviewByIdAsync(Guid id)
@@ -35,8 +34,8 @@ public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper)
 
 	public async Task<ReviewDto> UpdateReviewAsync(Guid id, UpdateReviewRequestDto model)
 	{
-		var review = _mapper.Map<Review>(model);
-		review.Id = id;
+		var review = await _unitOfWork.ReviewRepository.GetByIdAsync(id);
+		review.Content = model.Content;
 		review = await _unitOfWork.ReviewRepository.UpdateAsync(review);
 		await _unitOfWork.SaveAsync();
 		return _mapper.Map<ReviewDto>(review);
@@ -49,10 +48,16 @@ public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper)
 		return _mapper.Map<ReviewDto>(review);
 	}
 
-	public async Task<ReviewDto> GetUserRecipeReview(UserRecipeReviewRequestDto model)
+	public async Task<ReviewDto> GetUserRecipeReview(Guid recipeId, Guid userId)
 	{
-		var review = await _unitOfWork.ReviewRepository.GetByUserAndRecipeId(model.userId, model.recipeId);
+		var review = await _unitOfWork.ReviewRepository.GetByUserAndRecipeId(userId, recipeId);
 		await _unitOfWork.SaveAsync();
 		return _mapper.Map<ReviewDto>(review);
+	}
+
+	public async Task<ICollection<ReviewDto>> GetRecipeReviews(Guid recipeId)
+	{
+		var reviews = await _unitOfWork.ReviewRepository.GetAllByRecipeId(recipeId);
+		return _mapper.Map<ICollection<ReviewDto>>(reviews);
 	}
 }

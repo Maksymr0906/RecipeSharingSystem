@@ -11,4 +11,8 @@ public class ReviewRepository(RecipeSharingSystemDbContext context)
 	{
 		return await Entities.FirstOrDefaultAsync(r => r.UserId == userId && r.RecipeId == recipeId);
 	}
+	public async Task<ICollection<Review>> GetAllByRecipeId(Guid recipeId)
+	{
+		return await Entities.Where(r => r.RecipeId == recipeId).ToListAsync();
+	}
 }

@@ -14,7 +14,7 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
             .Include(x => x.RecipeIngredients)
             .ThenInclude(x => x.Ingredient)
             .Include(x => x.Instruction)
-            .Include(x => x.Ratings)
+            .Include(x => x.Reviews)
             .ToListAsync();
 
         return recipes;
@@ -27,8 +27,9 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
             .Include(x => x.RecipeIngredients)
             .ThenInclude(x => x.Ingredient)
             .Include(x => x.Instruction)
-            .Include(x => x.Ratings)
-            .FirstOrDefaultAsync(r => r.Id == id);
+			.Include(x => x.Reviews)
+			.FirstOrDefaultAsync(r => r.Id == id);
+
         if (recipe == null)
         {
             throw new KeyNotFoundException();

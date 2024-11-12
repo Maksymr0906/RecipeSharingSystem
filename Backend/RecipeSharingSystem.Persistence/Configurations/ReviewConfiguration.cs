@@ -15,6 +15,12 @@ public partial class ReviewConfiguration(SeedDataOptions seedDataOptions)
 		builder.HasIndex(r => new { r.UserId, r.RecipeId })
 			   .IsUnique();
 
+		builder.Property(r => r.Rating)
+			   .IsRequired();
+
+		builder.Property(r => r.Content)
+			   .IsRequired(false);
+
 		builder.HasOne(r => r.User)
 			   .WithMany(u => u.Reviews)
 			   .HasForeignKey(r => r.UserId)

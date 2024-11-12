@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeSharingSystem.Core", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeSharingSystem.Application", "RecipeSharingSystem.Business\RecipeSharingSystem.Application.csproj", "{8D696080-0165-4705-B252-7D8FBBF81F75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeSharingSystem.Infrastructure", "RecipeSharingSystem.Infrastructure\RecipeSharingSystem.Infrastructure.csproj", "{D47C1932-A835-4746-B5F0-7F7B22770F3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeSharingSystem.Infrastructure", "RecipeSharingSystem.Infrastructure\RecipeSharingSystem.Infrastructure.csproj", "{D47C1932-A835-4746-B5F0-7F7B22770F3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeSharingSystem.Persistence", "RecipeSharingSystem.Persistence\RecipeSharingSystem.Persistence.csproj", "{D7F748B0-E925-4571-88CB-419B0D6410A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeSharingSystem.Persistence", "RecipeSharingSystem.Persistence\RecipeSharingSystem.Persistence.csproj", "{D7F748B0-E925-4571-88CB-419B0D6410A4}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A7246E53-FC02-4C74-AD2D-D0A4DE93248D} = {A7246E53-FC02-4C74-AD2D-D0A4DE93248D}
 	EndProjectSection

@@ -2,7 +2,8 @@
 
 public class Review : BaseEntity
 {
-	public string Content { get; set; } = string.Empty;
+	public int Rating { get; set; }
+	public string? Content { get; set; }
 	public DateTime DateCreated { get; set; }
 	public Guid UserId { get; set; }
 	public Guid RecipeId { get; set; }
