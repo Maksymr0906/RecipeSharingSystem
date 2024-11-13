@@ -24,11 +24,13 @@
   line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #123d6a;
 }
 
 .card-title {
   overflow: hidden;
   white-space: nowrap;
+  color: #ac3b61;
 }
 
 .card-image-container {

@@ -5,9 +5,9 @@
   ></div>
   <div class="container text-primary col-6">
     <app-rating-display [rating]="recipe.rating"></app-rating-display>
-    <h1 class="recipe-title text-header">{{ recipe.title }}</h1>
+    <h1 class="recipe-title">{{ recipe.title }}</h1>
     <p>{{ recipe.shortDescription }}</p>
-    <h2 class="text-header">Ingredients</h2>
+    <h2>Ingredients</h2>
     <ul class="ingredient-list">
       <ng-container *ngFor="let ingredient of recipe.ingredients">
         <li class="ingredient-item">
@@ -16,7 +16,7 @@
         </li>
       </ng-container>
     </ul>
-    <h2 class="text-header">Instruction</h2>
+    <h2>Instruction</h2>
     <markdown class="recipe-instruction" [data]="instruction.content">
     </markdown>
     <div class="add-feedback-container">
@@ -34,6 +34,6 @@
 </ng-container>
 <ng-template #NotFound>
   <div class="d-flex justify-content-center align-items-center">
-    <h1 class="display-6 text-header mt-3">Recipes not found!</h1>
+    <h1 class="display-6 mt-3">Recipes not found!</h1>
   </div>
 </ng-template>

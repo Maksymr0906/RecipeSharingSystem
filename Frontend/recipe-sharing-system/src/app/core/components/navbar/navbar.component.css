@@ -1,5 +1,6 @@
 .navbar {
-  background-color: #d8c3a5 !important;
+  background-color: #edc7b7 !important;
+  font-family: "Noto_Sans";
 }
 
 .navbar-brand {
@@ -8,7 +9,7 @@
 }
 
 .navbar-brand:hover {
-  color: #e85a4f;
+  color: #ac3b61;
 }
 
 .navbar-text {
@@ -16,9 +17,9 @@
 }
 
 .dropdown-menu {
-  background-color: #d8c3a5 !important;
+  background-color: #edc7b7 !important;
 }
 
 .dropdown-item:hover {
-  background-color: #e85a4f !important;
+  background-color: #dcb8a9 !important;
 }

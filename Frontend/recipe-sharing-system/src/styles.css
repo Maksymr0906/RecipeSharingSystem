@@ -28,8 +28,12 @@
   font-style: normal;
 }
 
+:root {
+  --color-background: #eae7dc;
+}
+
 body {
-  background-color: #eae7dc;
+  background-color: var(--color-background);
   color: #ffffff;
   font-family: "Roboto";
   font-weight: 400;
@@ -39,6 +43,7 @@ h1,
 h2 {
   font-family: "Noto_Sans";
   font-weight: 800;
+  color: #ac3b61;
 }
 
 h3,
@@ -47,34 +52,25 @@ h5,
 h6 {
   font-family: "Noto_Sans";
   font-weight: 700;
+  color: #ac3b61;
 }
 
 .btn-primary {
-  background-color: #e98074 !important;
-  border-color: #8e8d8a !important;
-  color: #ffffff !important;
+  background-color: #ac3b61;
+  border-color: #ad3a63;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background-color: #e85a4f !important;
-}
-
-.btn-secondary {
-  background-color: #d8c3a5 !important;
-  border-color: #8e8d8a !important;
-  color: #ffffff !important;
+  background-color: #862e4c;
 }
 
 .text-primary {
-  color: #000000f2 !important;
+  color: #123d6a !important;
 }
 
 .text-secondary {
   color: #cccccc !important;
-}
-
-.text-header {
-  color: #e85a4f !important;
 }
 
 .table-custom {
@@ -84,7 +80,7 @@ h6 {
 }
 
 .table-custom thead tr {
-  background-color: #e98074;
+  background-color: #ac3b61;
   color: #ffffff;
 }
 
@@ -94,7 +90,7 @@ h6 {
 }
 
 .table-custom tbody tr {
-  color: #8e8d8a;
+  color: #123d6a;
 }
 
 .table-custom tbody tr:nth-of-type(even) {
