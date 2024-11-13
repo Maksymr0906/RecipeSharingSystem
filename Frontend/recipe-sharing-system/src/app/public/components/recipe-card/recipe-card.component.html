@@ -1,29 +1,34 @@
 <ng-container *ngIf="recipe">
-  <div class="card" style="width: 18rem">
-    <img
-      [src]="recipe.featuredImageUrl"
-      class="card-img-top"
-      [alt]="recipe.title"
-    />
+  <div class="card h-100">
+    <div class="card-image-container">
+      <img
+        [src]="recipe.featuredImageUrl"
+        class="card-img-top object-fit-cover h-100"
+        [alt]="recipe.title"
+      />
+    </div>
     <div class="card-body">
-      <p class="text-secondary card-subtitle">
-        <ng-container *ngFor="let category of categories">
-          <a
-            [routerLink]="['/category', category.id]"
-            class="category-link text-uppercase text-decoration-none"
-            >{{ category.name }}
-          </a>
-        </ng-container>
-      </p>
-      <h5 class="card-title">{{ recipe.title }}</h5>
-      <p class="card-text">
-        {{ recipe.shortDescription }}
-      </p>
-      <div class="d-flex align-items-center justify-content-between">
+      <div>
+        <p class="text-secondary card-subtitle">
+          <ng-container *ngFor="let category of categories">
+            <a
+              [routerLink]="['/category', category.id]"
+              class="category-link text-uppercase text-decoration-none"
+              >{{ category.name }}
+            </a>
+          </ng-container>
+        </p>
+        <h5 class="card-title">{{ recipe.title }}</h5>
+        <p class="card-text">
+          {{ recipe.shortDescription }}
+        </p>
+      </div>
+
+      <div class="d-flex align-items-end justify-content-between">
         <a [routerLink]="['/recipe/', recipe.id]" class="btn btn-primary">
           View more
         </a>
-        <p class="m-0">{{ recipe.rating }} <i class="bi bi-star"></i></p>
+        <app-rating-display [rating]="recipe.rating"></app-rating-display>
       </div>
     </div>
   </div>

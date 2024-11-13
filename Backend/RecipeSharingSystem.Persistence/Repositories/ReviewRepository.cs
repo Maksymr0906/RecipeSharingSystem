@@ -9,10 +9,20 @@ public class ReviewRepository(RecipeSharingSystemDbContext context)
 {
 	public async Task<Review> GetByUserAndRecipeId(Guid userId, Guid recipeId)
 	{
-		return await Entities.FirstOrDefaultAsync(r => r.UserId == userId && r.RecipeId == recipeId);
+		return await Entities.Include(r => r.User).Include(r => r.Recipe).FirstOrDefaultAsync(r => r.UserId == userId && r.RecipeId == recipeId);
 	}
 	public async Task<ICollection<Review>> GetAllByRecipeId(Guid recipeId)
 	{
-		return await Entities.Where(r => r.RecipeId == recipeId).ToListAsync();
+		return await Entities.Include(r => r.User).Include(r => r.Recipe).Where(r => r.RecipeId == recipeId).ToListAsync();
+	}
+
+	public async Task<ICollection<Review>> GetAllWithDetails()
+	{
+		return await Entities.Include(r => r.User).Include(r => r.Recipe).ToListAsync();
+	}
+
+	public async Task<Review> GetByIdWithDetails(Guid id)
+	{
+		return await Entities.Include(r => r.User).Include(r => r.Recipe).FirstOrDefaultAsync(r => r.Id == id);
 	}
 }

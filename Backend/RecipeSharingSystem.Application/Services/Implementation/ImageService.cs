@@ -3,6 +3,7 @@ using RecipeSharingSystem.Business.DTOs.Image;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
@@ -52,6 +53,13 @@ public class ImageService(IUnitOfWork unitOfWork, IMapper mapper)
 		if (model.FileContent.Length > 10485760)
 		{
 			throw new ArgumentException("File size cannot be more than 10MB.");
+		}
+
+		using var memoryStream = new MemoryStream(model.FileContent);
+		using var image = SixLabors.ImageSharp.Image.Load<Rgba32>(memoryStream);
+		if (image.Width < 960 || image.Height < 960)
+		{
+			throw new ArgumentException("Image resolution must be at least 960x960.");
 		}
 	}
 }

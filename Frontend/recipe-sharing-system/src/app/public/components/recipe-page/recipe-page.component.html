@@ -3,8 +3,8 @@
     class="recipe-img"
     [style.backgroundImage]="'url(' + recipe.featuredImageUrl + ')'"
   ></div>
-  <div class="container text-primary">
-    <p class="m-0">{{ recipe.rating }} <i class="bi bi-star"></i></p>
+  <div class="container text-primary col-6">
+    <app-rating-display [rating]="recipe.rating"></app-rating-display>
     <h1 class="recipe-title text-header">{{ recipe.title }}</h1>
     <p>{{ recipe.shortDescription }}</p>
     <h2 class="text-header">Ingredients</h2>
@@ -19,7 +19,7 @@
     <h2 class="text-header">Instruction</h2>
     <markdown class="recipe-instruction" [data]="instruction.content">
     </markdown>
-    <div class="add-feedback-container col-6">
+    <div class="add-feedback-container">
       <div class="add-feedback-container-inner">
         <app-add-review
           [recipeId]="recipe.id"
@@ -27,7 +27,9 @@
         ></app-add-review>
       </div>
     </div>
-    <p>Reviews</p>
+    <div class="reviews-container">
+      <app-review-list [recipeId]="recipe.id"></app-review-list>
+    </div>
   </div>
 </ng-container>
 <ng-template #NotFound>

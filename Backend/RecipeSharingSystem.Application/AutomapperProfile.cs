@@ -79,7 +79,8 @@ namespace RecipeSharingSystem.Business
 				.ForMember(c => c.Recipe, opt => opt.Ignore())
 				.ForMember(c => c.DateCreated, opt => opt.Ignore());
 
-			CreateMap<Review, ReviewDto>();
+			CreateMap<Review, ReviewDto>()
+				.ForMember(rd => rd.UserName, opt => opt.MapFrom(r => r.User.UserName));
 
 			// Recipe
 			CreateMap<CreateRecipeRequestDto, Recipe>()

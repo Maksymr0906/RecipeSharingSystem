@@ -1,6 +1,52 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("assets/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Noto_Sans";
+  src: url("assets/fonts/Noto_Sans/static/NotoSans-SemiBold.ttf")
+    format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Noto_Sans";
+  src: url("assets/fonts/Noto_Sans/static/NotoSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Noto_Sans";
+  src: url("assets/fonts/Noto_Sans/static/NotoSans-ExtraBold.ttf")
+    format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
 body {
   background-color: #eae7dc;
   color: #ffffff;
+  font-family: "Roboto";
+  font-weight: 400;
+}
+
+h1,
+h2 {
+  font-family: "Noto_Sans";
+  font-weight: 800;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Noto_Sans";
+  font-weight: 700;
 }
 
 .btn-primary {
@@ -20,7 +66,7 @@ body {
 }
 
 .text-primary {
-  color: #8e8d8a !important;
+  color: #000000f2 !important;
 }
 
 .text-secondary {
@@ -64,4 +110,9 @@ body {
   z-index: 10;
   padding: 50px;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bi-star-fill {
+  color: #ffc107 !important;
+  transition: none !important;
 }

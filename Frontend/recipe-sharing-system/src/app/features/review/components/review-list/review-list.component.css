@@ -1,0 +1,31 @@
+.review-container {
+  padding: 10px;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.review-sender {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.review-metrics {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.review-timestamp {
+  margin: 0px;
+  color: #b1b1b1;
+}
+
+.review-content {
+  color: #333333;
+  font-size: 16px;
+}

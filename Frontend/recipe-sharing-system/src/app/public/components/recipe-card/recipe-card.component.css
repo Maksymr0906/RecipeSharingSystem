@@ -6,3 +6,32 @@
 .category-link:hover {
   color: #e85a4f;
 }
+
+.card {
+  width: 18rem;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-title {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.card-image-container {
+  height: 50%;
+  overflow: hidden;
+}

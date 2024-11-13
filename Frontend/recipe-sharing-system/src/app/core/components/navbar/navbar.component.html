@@ -101,9 +101,36 @@
           </button>
         </ng-container>
         <ng-template #showLogout>
-          <div class="d-flex gap-2 align-items-center">
-            <p class="m-0">{{ user?.email }}</p>
-            <button class="btn btn-primary" (click)="onLogout()">Logout</button>
+          <div class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle navbar-text"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ user?.email }}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item navbar-text .custom-dropdown-item">
+                  My Profile
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item navbar-text .custom-dropdown-item">
+                  Saved Recipes
+                </a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a
+                  class="dropdown-item navbar-text .custom-dropdown-item"
+                  (click)="onLogout()"
+                >
+                  Logout
+                </a>
+              </li>
+            </ul>
           </div>
         </ng-template>
       </div>

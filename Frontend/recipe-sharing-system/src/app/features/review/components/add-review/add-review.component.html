@@ -1,4 +1,4 @@
-<form #form="ngForm" (ngSubmit)="onFormSubmit()">
+<form *ngIf="isEditing" #form="ngForm" (ngSubmit)="onFormSubmit()">
   <h3>{{ recipeTitle }}</h3>
   <p class="m-0">My Rating</p>
   <app-rating-input [(rating)]="rating"></app-rating-input>
@@ -9,6 +9,7 @@
     id="reviewContent"
     placeholder="What did you think about this recipe?"
     [(ngModel)]="content"
+    [disabled]="rating === 0"
   ></textarea>
   <div class="d-flex gap-1 justify-content-end">
     <button type="button" class="btn btn-primary mt-1" (click)="onCancel()">
@@ -23,3 +24,9 @@
     </button>
   </div>
 </form>
+
+<ng-container *ngIf="!isEditing">
+  <h3>{{ recipeTitle }}</h3>
+  <p>My Rating: <app-rating-display [rating]="rating"></app-rating-display></p>
+  <a (click)="isEditing = true"><i class="bi bi-pencil-fill"></i> Edit</a>
+</ng-container>

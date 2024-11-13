@@ -27,6 +27,9 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { RangePipe } from './shared/pipes/range.pipe';
 import { RatingInputComponent } from './features/rating/components/rating-input/rating-input.component';
 import { AddReviewComponent } from './features/review/components/add-review/add-review.component';
+import { RatingDisplayComponent } from './features/rating/components/rating-display/rating-display.component';
+import { ReviewListComponent } from './features/review/components/review-list/review-list.component';
+import { RatingReadonlyInputComponent } from './features/rating/components/rating-readonly-input/rating-readonly-input.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,9 @@ import { AddReviewComponent } from './features/review/components/add-review/add-
     RangePipe,
     RatingInputComponent,
     AddReviewComponent,
+    RatingDisplayComponent,
+    ReviewListComponent,
+    RatingReadonlyInputComponent,
   ],
   imports: [
     BrowserModule,

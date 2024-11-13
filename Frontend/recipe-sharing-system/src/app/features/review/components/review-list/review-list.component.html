@@ -1,0 +1,19 @@
+<ng-container *ngIf="reviews$ | async as reviews">
+  <ng-container *ngFor="let review of reviews">
+    <div class="review-container">
+      <p class="review-sender">{{ review.userName }}</p>
+      <div class="review-metrics">
+        <app-rating-readonly-input
+          [rating]="review.rating"
+        ></app-rating-readonly-input>
+        <p class="review-timestamp">
+          {{ review.dateCreated | date : "short" }}
+        </p>
+      </div>
+      <div class="review-content">
+        <p class="review-content">{{ review.content }}</p>
+      </div>
+    </div>
+    <hr class="my-3" />
+  </ng-container>
+</ng-container>

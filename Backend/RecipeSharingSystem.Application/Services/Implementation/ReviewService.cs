@@ -22,19 +22,19 @@ public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper)
 
 	public async Task<ICollection<ReviewDto>> GetAllReviewsAsync()
 	{
-		var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+		var reviews = await _unitOfWork.ReviewRepository.GetAllWithDetails();
 		return _mapper.Map<ICollection<ReviewDto>>(reviews);
 	}
 
 	public async Task<ReviewDto> GetReviewByIdAsync(Guid id)
 	{
-		var review = await _unitOfWork.ReviewRepository.GetByIdAsync(id);
+		var review = await _unitOfWork.ReviewRepository.GetByIdWithDetails(id);
 		return _mapper.Map<ReviewDto>(review);
 	}
 
 	public async Task<ReviewDto> UpdateReviewAsync(Guid id, UpdateReviewRequestDto model)
 	{
-		var review = await _unitOfWork.ReviewRepository.GetByIdAsync(id);
+		var review = await _unitOfWork.ReviewRepository.GetByIdWithDetails(id);
 		review.Rating = model.Rating;
 		review.Content = model.Content;
 		review = await _unitOfWork.ReviewRepository.UpdateAsync(review);
