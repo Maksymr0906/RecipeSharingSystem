@@ -28,14 +28,14 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Category
+            Categories
           </a>
           <ul class="dropdown-menu">
             <ng-container *ngIf="categories$ | async as categories">
               <ng-container *ngFor="let category of categories">
                 <li>
                   <a
-                    class="dropdown-item navbar-text .custom-dropdown-item"
+                    class="dropdown-item navbar-text"
                     [routerLink]="['/category', category.id]"
                   >
                     {{ category.name }}
@@ -45,8 +45,54 @@
             </ng-container>
           </ul>
         </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle navbar-text"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Ingredients
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item navbar-text"> Item </a>
+            </li>
+            <li>
+              <a class="dropdown-item navbar-text"> Item </a>
+            </li>
+            <li>
+              <a class="dropdown-item navbar-text"> Item </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle navbar-text"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            About Us
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item navbar-text" [routerLink]="['/about-us']">
+                The Best-Recipes
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item navbar-text"
+                [routerLink]="['/add-recipe-guide']"
+              >
+                How to add a recipe
+              </a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link">Random Recipe</a>
         </li>
         <li
           class="nav-item dropdown"
@@ -63,7 +109,7 @@
           <ul class="dropdown-menu">
             <li>
               <a
-                class="dropdown-item navbar-text .custom-dropdown-item"
+                class="dropdown-item navbar-text"
                 [routerLink]="['admin/categories']"
               >
                 Category
@@ -71,7 +117,7 @@
             </li>
             <li>
               <a
-                class="dropdown-item navbar-text .custom-dropdown-item"
+                class="dropdown-item navbar-text"
                 [routerLink]="['admin/ingredients']"
               >
                 Ingredient
@@ -79,15 +125,20 @@
             </li>
             <li>
               <a
-                class="dropdown-item navbar-text .custom-dropdown-item"
+                class="dropdown-item navbar-text"
                 [routerLink]="['admin/recipes']"
               >
                 Recipe
               </a>
             </li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li>
+              <a
+                class="dropdown-item navbar-text"
+                [routerLink]="['admin/reviews']"
+              >
+                Reviews
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -112,21 +163,23 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item navbar-text .custom-dropdown-item">
-                  My Profile
-                </a>
+                <a class="dropdown-item navbar-text"> My Profile </a>
               </li>
               <li>
-                <a class="dropdown-item navbar-text .custom-dropdown-item">
-                  Saved Recipes
-                </a>
+                <a class="dropdown-item navbar-text"> Favorite Recipes </a>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
                 <a
-                  class="dropdown-item navbar-text .custom-dropdown-item"
-                  (click)="onLogout()"
+                  class="dropdown-item navbar-text"
+                  [routerLink]="['recipes/add']"
                 >
+                  Add Recipe
+                </a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item navbar-text" (click)="onLogout()">
                   Logout
                 </a>
               </li>

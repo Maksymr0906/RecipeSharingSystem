@@ -30,6 +30,10 @@ import { AddReviewComponent } from './features/review/components/add-review/add-
 import { RatingDisplayComponent } from './features/rating/components/rating-display/rating-display.component';
 import { ReviewListComponent } from './features/review/components/review-list/review-list.component';
 import { RatingReadonlyInputComponent } from './features/rating/components/rating-readonly-input/rating-readonly-input.component';
+import { AboutUsPageComponent } from './public/components/about-us-page/about-us-page.component';
+import { AddRecipeGuidePageComponent } from './public/components/add-recipe-guide-page/add-recipe-guide-page.component';
+import { FavoriteRecipesListComponent } from './features/favorite-recipes/components/favorite-recipes-list/favorite-recipes-list.component';
+import { FavoriteToggleButtonComponent } from './features/favorite-recipes/components/favorite-toggle-button/favorite-toggle-button.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +61,10 @@ import { RatingReadonlyInputComponent } from './features/rating/components/ratin
     RatingDisplayComponent,
     ReviewListComponent,
     RatingReadonlyInputComponent,
+    AboutUsPageComponent,
+    AddRecipeGuidePageComponent,
+    FavoriteRecipesListComponent,
+    FavoriteToggleButtonComponent,
   ],
   imports: [
     BrowserModule,

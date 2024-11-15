@@ -9,6 +9,7 @@ import { CategoryService } from '../../category/services/category.service';
 import { AddInstructionRequest } from '../../instruction/models/add-instruction-request.model';
 import { InstructionService } from '../../instruction/services/instruction.service';
 import { IngredientQuantity } from '../models/ingredient-quantity.model';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-add-recipe',
@@ -25,11 +26,14 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
   addRecipeSubscription?: Subscription;
   addInstructionSubscription?: Subscription;
 
+  user = this.authService.getUser();
+
   constructor(
     private imageService: ImageService,
     private recipeService: RecipeService,
     private categoryService: CategoryService,
     private instructionService: InstructionService,
+    private authService: AuthService,
     private router: Router
   ) {
     this.recipeModel = {
@@ -37,6 +41,7 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
       shortDescription: '',
       slug: '',
       instructionId: '',
+      authorId: '',
       featuredImageUrl: '',
       categoryIds: [],
       ingredients: []
@@ -50,11 +55,14 @@ export class AddRecipeComponent implements OnInit, OnDestroy {
   onFormSubmit() {
     this.addInstructionSubscription = this.instructionService.addInstruction(this.instructionModel).subscribe(instruction => {
       this.recipeModel.instructionId = instruction.id;
+      if (this.user) {
+        this.recipeModel.authorId = this.user?.userId;
+      }
       this.recipeModel.ingredients = this.ingredients;
       console.log(this.recipeModel.ingredients);
       this.addRecipeSubscription = this.recipeService.addRecipe(this.recipeModel).subscribe(
         _ => {
-          this.router.navigateByUrl('/admin/recipes');
+          this.router.navigateByUrl('/');
         }
       );
     });

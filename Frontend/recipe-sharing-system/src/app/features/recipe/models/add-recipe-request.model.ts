@@ -6,6 +6,7 @@ export interface AddRecipeRequest {
     slug: string;
     featuredImageUrl: string;
     instructionId: string;
+    authorId: string;
     categoryIds: string[];
     ingredients: IngredientQuantity[];
 }

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Review } from '../../models/review.model';
 import { AddReviewRequest } from '../../models/add-review-request.model';
 import { UpdateReviewRequest } from '../../models/update-review-request.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-review',
@@ -37,7 +38,8 @@ export class AddReviewComponent implements OnInit, OnDestroy {
 
   constructor(
     private reviewService: ReviewService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
   
   ngOnInit(): void {
@@ -83,6 +85,9 @@ export class AddReviewComponent implements OnInit, OnDestroy {
 
         this.updateReviewSubscription = this.reviewService.updateReview(this.reviewModel.id, model).subscribe();
       }
+    }
+    else {
+      this.router.navigateByUrl('login');
     }
   }
 }

@@ -15,6 +15,8 @@ import { CategoryPageComponent } from './public/components/category-page/categor
 import { LoginPageComponent } from './public/components/login-page/login-page.component';
 import { RegistrationPageComponent } from './public/components/registration-page/registration-page.component';
 import { authGuard } from './features/auth/guards/auth.guard';
+import { AboutUsPageComponent } from './public/components/about-us-page/about-us-page.component';
+import { AddRecipeGuidePageComponent } from './public/components/add-recipe-guide-page/add-recipe-guide-page.component';
 
 const routes: Routes = [
   {
@@ -53,9 +55,8 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: 'admin/recipes/add',
-    component: AddRecipeComponent,
-    canActivate: [authGuard]
+    path: 'recipes/add',
+    component: AddRecipeComponent
   },
   {
     path: 'admin/recipes/:id',
@@ -81,6 +82,14 @@ const routes: Routes = [
   {
     path: 'registration',
     component: RegistrationPageComponent
+  },
+  {
+    path: 'about-us',
+    component: AboutUsPageComponent
+  },
+  {
+    path: 'add-recipe-guide',
+    component: AddRecipeGuidePageComponent
   }
 ];
 
