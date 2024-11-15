@@ -29,7 +29,13 @@
 }
 
 :root {
-  --color-background: #eae7dc;
+  --color-background: #faf4ea;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
@@ -37,6 +43,7 @@ body {
   color: #ffffff;
   font-family: "Roboto";
   font-weight: 400;
+  font-size: 16px;
 }
 
 h1,
@@ -65,12 +72,18 @@ h6 {
   background-color: #862e4c;
 }
 
+.btn-primary:disabled {
+  background-color: #ac3b61;
+  border-color: #ad3a63;
+  color: #ffffff;
+}
+
 .text-primary {
-  color: #123d6a !important;
+  color: #31261a !important;
 }
 
 .text-secondary {
-  color: #cccccc !important;
+  color: #465929 !important;
 }
 
 .table-custom {
