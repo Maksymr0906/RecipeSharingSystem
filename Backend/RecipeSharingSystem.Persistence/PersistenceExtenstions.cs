@@ -24,6 +24,7 @@ public static class PersistenceExtenstions
 		services.AddScoped<IInstructionRepository, InstructionRepository>();
 		services.AddScoped<IRecipeRepository, RecipeRepository>();
 		services.AddScoped<IUserRepository, UserRepository>();
+		services.AddScoped<IUserFavoriteRecipeRepository, UserFavoriteRecipeRepository>();
 
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
 

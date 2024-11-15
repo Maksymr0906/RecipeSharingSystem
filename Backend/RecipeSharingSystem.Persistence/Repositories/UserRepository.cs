@@ -10,7 +10,7 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 {
 	public async Task<User> GetByEmail(string email)
 	{
-		var user = await Entities.Include(x => x.UserRoles).ThenInclude(x => x.Role).FirstOrDefaultAsync(x => x.Email == email);
+		var user = await Entities.Include(x => x.FavoriteRecipes).Include(x => x.UserRoles).ThenInclude(x => x.Role).FirstOrDefaultAsync(x => x.Email == email);
 		return user;
 	}
 

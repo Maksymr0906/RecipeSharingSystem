@@ -15,7 +15,8 @@ public class UnitOfWork : IUnitOfWork
         InstructionRepository = new InstructionRepository(_context);
         RecipeRepository = new RecipeRepository(_context);
         UserRepository = new UserRepository(_context);
-    }
+		UserFavoriteRecipeRepository = new UserFavoriteRecipeRepository(_context);
+	}
 
     public UnitOfWork(
         RecipeSharingSystemDbContext context,
@@ -25,7 +26,8 @@ public class UnitOfWork : IUnitOfWork
         IIngredientRepository ingredientRepository,
         IInstructionRepository instructionRepository,
         IRecipeRepository recipeRepository,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+		IUserFavoriteRecipeRepository userFavoriteRecipeRepository)
     {
         _context = context;
         CategoryRepository = categoryRepository;
@@ -35,7 +37,8 @@ public class UnitOfWork : IUnitOfWork
         InstructionRepository = instructionRepository;
         RecipeRepository = recipeRepository;
         UserRepository = userRepository;
-    }
+        UserFavoriteRecipeRepository = userFavoriteRecipeRepository;
+	}
 
     public ICategoryRepository CategoryRepository { get; set; }
 
@@ -51,7 +54,9 @@ public class UnitOfWork : IUnitOfWork
 
     public IUserRepository UserRepository { get; set; }
 
-    public async Task SaveAsync()
+	public IUserFavoriteRecipeRepository UserFavoriteRecipeRepository { get; set; }
+
+	public async Task SaveAsync()
     {
         await _context.SaveChangesAsync();
     }

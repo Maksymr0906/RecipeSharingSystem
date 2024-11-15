@@ -9,5 +9,6 @@ public interface IUnitOfWork
     IInstructionRepository InstructionRepository { get; }
     IRecipeRepository RecipeRepository { get; }
     IUserRepository UserRepository { get; }
+    IUserFavoriteRecipeRepository UserFavoriteRecipeRepository { get; }
     Task SaveAsync();
 }

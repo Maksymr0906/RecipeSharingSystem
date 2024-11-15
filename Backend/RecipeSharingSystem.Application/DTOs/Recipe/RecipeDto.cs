@@ -8,6 +8,7 @@ public class RecipeDto
 	public string Slug { get; set; } = string.Empty;
 	public string FeaturedImageUrl { get; set; } = string.Empty;
 	public Guid InstructionId { get; set; }
+	public Guid AuthorId { get; set; }
 	public float Rating { get; set; }
 	public ICollection<Guid> CategoryIds { get; set; } = [];
 	public ICollection<IngredientQuantityDto> Ingredients { get; set; } = [];

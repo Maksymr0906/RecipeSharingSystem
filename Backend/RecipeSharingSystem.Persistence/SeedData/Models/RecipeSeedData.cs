@@ -8,4 +8,5 @@ public record RecipeSeedData
 	public required string FeaturedImageUrl { get; init; }
 	public required string Slug { get; init; }
 	public required Guid InstructionId { get; init; }
+	public required Guid AuthorId { get; init; }
 }

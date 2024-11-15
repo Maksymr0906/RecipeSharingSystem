@@ -27,6 +27,7 @@ namespace RecipeSharingSystem.Persistence
 		public DbSet<Permission> Permissions { get; set; }
 		public DbSet<RolePermission> RolePermissions { get; set; }
 		public DbSet<UserRole> UserRoles { get; set; }
+		public DbSet<UserFavoriteRecipe> UserFavoriteRecipes { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -51,6 +52,8 @@ namespace RecipeSharingSystem.Persistence
 			modelBuilder.ApplyConfiguration(new RecipeIngredientConfiguration(_seedDataOptions));
 
 			modelBuilder.ApplyConfiguration(new ReviewConfiguration(_seedDataOptions));
+			
+			modelBuilder.ApplyConfiguration(new UserFavoriteRecipeConfiguration(_seedDataOptions));
 		}
 	}
 }

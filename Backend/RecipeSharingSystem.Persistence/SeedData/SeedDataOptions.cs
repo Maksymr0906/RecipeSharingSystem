@@ -14,4 +14,5 @@ public class SeedDataOptions
 	public InstructionSeedData[] Instructions { get; init; } = [];
 	public RecipeIngredientSeedData[] RecipeIngredients { get; init; } = [];
 	public ReviewSeedData[] Reviews { get; init; } = [];
+	public UserFavoriteRecipeSeedData[] UserFavoriteRecipes { get; init; } = [];
 }

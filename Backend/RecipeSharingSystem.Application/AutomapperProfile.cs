@@ -60,6 +60,7 @@ namespace RecipeSharingSystem.Business
 				.ForMember(u => u.Reviews, opt => opt.Ignore());
 
 			CreateMap<User, UserDto>()
+				.ForMember(dto => dto.FavoriteRecipeIds, opt => opt.MapFrom(u => u.FavoriteRecipes.Select(r => r.RecipeId)))
 				.ForMember(dto => dto.ReviewIds, opt => opt.MapFrom(u => u.Reviews.Select(c => c.Id)));
 
 			CreateMap<RegisterRequestDto, User>()
