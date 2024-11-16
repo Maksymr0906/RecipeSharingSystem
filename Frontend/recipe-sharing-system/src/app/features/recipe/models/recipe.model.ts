@@ -8,6 +8,7 @@ export interface Recipe {
     featuredImageUrl: string;
     instructionId: string;
     authorId: string;
+    authorUserName: string;
     rating: number;
     categoryIds: string[];
     ingredients: IngredientQuantity[];

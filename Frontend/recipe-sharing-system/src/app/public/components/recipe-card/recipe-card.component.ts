@@ -17,6 +17,7 @@ export class RecipeCardComponent implements OnInit {
       featuredImageUrl: '',
       instructionId: '',
       authorId: '',
+      authorUserName: '',
       rating: 0,
       categoryIds: [],
       ingredients: []

@@ -15,7 +15,8 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
             .ThenInclude(x => x.Ingredient)
             .Include(x => x.Instruction)
             .Include(x => x.Reviews)
-            .ToListAsync();
+			.Include(x => x.Author)
+			.ToListAsync();
 
         return recipes;
     }
@@ -28,6 +29,7 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
 			.ThenInclude(x => x.Ingredient)
 			.Include(x => x.Instruction)
 			.Include(x => x.Reviews)
+            .Include(x => x.Author)
 			.FirstOrDefaultAsync(r => r.Slug == slug);
 	}
 
@@ -39,6 +41,7 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
             .ThenInclude(x => x.Ingredient)
             .Include(x => x.Instruction)
 			.Include(x => x.Reviews)
+			.Include(x => x.Author)
 			.FirstOrDefaultAsync(r => r.Id == id);
 
         if (recipe == null)

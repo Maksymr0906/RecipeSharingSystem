@@ -100,6 +100,7 @@ namespace RecipeSharingSystem.Business
 						? Math.Round(r.Reviews.Average(review => review.Rating), 1)
 						: 0
 				))
+				.ForMember(dto => dto.AuthorUserName, opt => opt.MapFrom(r => r.Author.UserName))
 				.ForMember(dto => dto.Ingredients, opt => opt.MapFrom(r => r.RecipeIngredients.Select(ri => new IngredientQuantityDto(ri.Ingredient.Name, ri.Quantity, ri.MeasurementUnit))))
 				.ForMember(dto => dto.CategoryIds, opt => opt.MapFrom(r => r.Categories.Select(c => c.Id)));
 		}
