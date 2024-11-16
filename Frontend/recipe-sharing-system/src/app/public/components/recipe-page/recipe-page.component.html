@@ -3,40 +3,62 @@
     class="recipe-img"
     [style.backgroundImage]="'url(' + recipe.featuredImageUrl + ')'"
   ></div>
-  <div class="container text-primary col-6">
-    <app-rating-display [rating]="recipe.rating"></app-rating-display>
-    <h1 class="recipe-title">{{ recipe.title }}</h1>
-    <p>{{ recipe.shortDescription }}</p>
-    <app-favorite-toggle-button
-      [recipeId]="recipe.id"
-    ></app-favorite-toggle-button>
-    <h2>Ingredients</h2>
-    <ul class="ingredient-list">
-      <ng-container *ngFor="let ingredient of recipe.ingredients">
-        <li class="ingredient-item">
-          {{ ingredient.quantity }} {{ ingredient.measurementUnit }}
-          {{ ingredient.ingredientName }}
-        </li>
-      </ng-container>
-    </ul>
-    <h2>Instruction</h2>
-    <markdown class="recipe-instruction" [data]="instruction.content">
-    </markdown>
-    <div class="add-feedback-container">
-      <div class="add-feedback-container-inner">
+
+  <div class="container text-primary col-6 mt-3">
+    <app-rating-display
+      class="recipe-rating"
+      [rating]="recipe.rating"
+    ></app-rating-display>
+
+    <header class="recipe-header">
+      <div>
+        <h1 class="recipe-title">{{ recipe.title }}</h1>
+        <p class="recipe-author">by {{ recipe.authorUserName }}</p>
+      </div>
+
+      <app-favorite-toggle-button
+        [recipeId]="recipe.id"
+      ></app-favorite-toggle-button>
+    </header>
+    <p class="recipe-description">{{ recipe.shortDescription }}</p>
+
+    <section>
+      <h2>Ingredients</h2>
+      <ul class="ingredient-list">
+        <ng-container *ngFor="let ingredient of recipe.ingredients">
+          <li class="ingredient-item">
+            <span>{{ ingredient.quantity }}</span>
+            <span> {{ ingredient.measurementUnit }}</span>
+            <span class="ingredient-name">
+              {{ ingredient.ingredientName }}</span
+            >
+          </li>
+        </ng-container>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Instructions</h2>
+      <markdown class="recipe-instruction" [data]="instruction.content">
+      </markdown>
+    </section>
+
+    <section class="add-feedback-section">
+      <div class="add-feedback-section-inner">
         <app-add-review
           [recipeId]="recipe.id"
           [recipeTitle]="recipe.title"
         ></app-add-review>
       </div>
-    </div>
-    <div class="reviews-container">
+    </section>
+
+    <section>
       <app-review-list [recipeId]="recipe.id"></app-review-list>
-    </div>
+    </section>
   </div>
 </ng-container>
 <ng-template #NotFound>
   <div class="d-flex justify-content-center align-items-center">
-    <h1 class="display-6 mt-3">Recipes not found!</h1>
+    <h1 class="mt-3">Recipe not found!</h1>
   </div>
 </ng-template>
