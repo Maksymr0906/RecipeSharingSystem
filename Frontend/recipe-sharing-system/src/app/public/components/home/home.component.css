@@ -97,3 +97,58 @@
 .hero-title-brand {
   color: #819b57;
 }
+
+.category-container {
+  position: relative;
+  padding: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.category-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.6)
+  );
+  border-radius: inherit;
+  opacity: 0.4;
+  transition: opacity 0.4s ease;
+}
+
+.category-container:hover::before {
+  opacity: 1;
+}
+
+.category-title {
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+}
+
+.featured-category-container {
+  width: 70rem;
+  min-height: 65vh;
+}
+
+.category-card-container {
+  min-height: 16vh;
+  width: 30rem;
+}
+
+.category-card-container:not(:last-child) {
+  margin-bottom: 1vh;
+}

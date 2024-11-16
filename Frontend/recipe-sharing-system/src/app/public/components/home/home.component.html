@@ -12,6 +12,7 @@
   </div>
 </section>
 <section class="mt-5 container">
+  <h2><i class="bi bi-balloon-fill"></i> Recipes for You</h2>
   <div class="d-flex gap-3">
     <ng-container *ngIf="recipes$ | async as recipes; else NotFound">
       <div
@@ -50,11 +51,31 @@
     </ng-template>
   </div>
 </section>
-<section class="categories-section">
-  <div class="mt-5 container">
-    <h2>Explore by Category</h2>
+<section class="mt-5 container">
+  <h2><i class="bi bi-tag-fill"></i> Explore by Category</h2>
+  <div class="d-flex gap-3">
+    <div>
+      <ng-container *ngFor="let category of categories; let i = index">
+        <div
+          *ngIf="i < 4"
+          class="category-container category-card-container"
+          [style.backgroundImage]="'url(' + category.featuredImageUrl + ')'"
+          [routerLink]="['/category/', category.slug]"
+        >
+          <h4 class="category-title">{{ category.name }}</h4>
+        </div>
+      </ng-container>
+    </div>
+    <div
+      class="category-container featured-category-container"
+      [style.backgroundImage]="'url(' + categories[4].featuredImageUrl + ')'"
+      [routerLink]="['/category/', categories[4].slug]"
+    >
+      <h4 class="category-title">{{ categories[4].name }}</h4>
+    </div>
   </div>
 </section>
+
 <section class="mt-5 about-us-section text-primary">
   <div class="container">
     <h2><i class="bi bi-people-fill"></i> Join Our Community</h2>
