@@ -34,6 +34,7 @@ import { AboutUsPageComponent } from './public/components/about-us-page/about-us
 import { AddRecipeGuidePageComponent } from './public/components/add-recipe-guide-page/add-recipe-guide-page.component';
 import { FavoriteRecipesListComponent } from './features/favorite-recipes/components/favorite-recipes-list/favorite-recipes-list.component';
 import { FavoriteToggleButtonComponent } from './features/favorite-recipes/components/favorite-toggle-button/favorite-toggle-button.component';
+import { FooterComponent } from './core/components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { FavoriteToggleButtonComponent } from './features/favorite-recipes/compo
     AddRecipeGuidePageComponent,
     FavoriteRecipesListComponent,
     FavoriteToggleButtonComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

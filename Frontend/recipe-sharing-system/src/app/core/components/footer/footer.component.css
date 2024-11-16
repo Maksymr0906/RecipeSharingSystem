@@ -1,0 +1,126 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+:host {
+  display: block;
+}
+
+.footer {
+  font-family: "Noto_Sans", sans-serif;
+  position: relative;
+  padding: 32px 0;
+  background-image: url("/assets/images/footer-background.png");
+  background-color: #edc7b7;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.footer::before,
+.footer::after {
+  position: absolute;
+  bottom: 0;
+  background-repeat: no-repeat;
+  content: "";
+}
+
+.footer::before {
+  left: 0;
+  width: 180px;
+  height: 120px;
+  background-image: url("/assets/images/decor-bread-small.png");
+}
+
+.footer::after {
+  right: 0;
+  width: 380px;
+  height: 190px;
+  background-image: url("/assets/images/decor-bread-large.png");
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.footer-logo {
+  text-decoration: none;
+  font-size: 30px;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.footer-logo:hover {
+  color: #edc7b7;
+}
+
+.footer-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-nav,
+.footer-address {
+  display: flex;
+  gap: 20px;
+  flex-basis: 50%;
+  text-align: left;
+}
+
+.footer-logo-container,
+.footer-menu {
+  flex-basis: 50%;
+}
+
+.footer-address-list {
+  flex-basis: 50%;
+}
+
+.footer-address-link {
+  display: block;
+  margin-bottom: 16px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 300;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-address-link:hover {
+  color: #edc7b7;
+}
+
+.footer-address-copyright {
+  color: var(--color-secondary-brand);
+  font-size: 14px;
+}
+
+.footer-address-icon-container {
+  display: flex;
+  gap: 22px;
+}
+
+.footer-address-icon {
+  color: #ffffff;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.footer-address-icon:hover {
+  color: #edc7b7;
+}
+
+.link {
+  color: #ffffff;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #edc7b7;
+}
