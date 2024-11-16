@@ -16,7 +16,9 @@ export class RegistrationPageComponent {
   };
 
   constructor(private authService: AuthService, private router: Router) {
-
+    if (this.authService.getUser()) {
+      this.router.navigate(['']);
+    }
   }
 
   onFormSubmit() {

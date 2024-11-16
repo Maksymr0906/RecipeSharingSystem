@@ -4,16 +4,12 @@ ul {
   list-style-type: none;
 }
 
-:host {
-  display: block;
-}
-
 .footer {
   font-family: "Noto_Sans", sans-serif;
   position: relative;
   padding: 32px 0;
   background-image: url("/assets/images/footer-background.png");
-  background-color: #edc7b7;
+  background-color: #dcb8a9;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
