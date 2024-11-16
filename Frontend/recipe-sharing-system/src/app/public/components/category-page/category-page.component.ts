@@ -12,7 +12,7 @@ import { RecipeService } from 'src/app/features/recipe/services/recipe.service';
   styleUrls: ['./category-page.component.css']
 })
 export class CategoryPageComponent implements OnInit, OnDestroy {
-  categoryId: string | null = null;
+  categorySlug: string | null = null;
   category: Category = {
     id: '',
     name: '',
@@ -32,11 +32,11 @@ export class CategoryPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeSubscription = this.route.paramMap.subscribe(params => {
-      this.categoryId = params.get('id')
-      if (this.categoryId) {
-        this.recipes$ = this.recipeService.getRecipesByCategoryId(this.categoryId);
-        this.categoryService.getCategoryById(this.categoryId).subscribe(category => {
+      this.categorySlug = params.get('slug')
+      if (this.categorySlug) {
+        this.categoryService.getCategoryBySlug(this.categorySlug).subscribe(category => {
           this.category = category;
+          this.recipes$ = this.recipeService.getRecipesByCategoryId(category.id);
         })
       }
     })

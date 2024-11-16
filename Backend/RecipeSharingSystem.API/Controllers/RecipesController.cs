@@ -73,4 +73,16 @@ public class RecipesController(IRecipeService service)
 
 		return Ok(recipe);
 	}
+
+	[HttpGet("slug/{slug}")]
+	public async Task<IActionResult> GetRecipeBySlug([FromRoute] string slug)
+	{
+		var recipe = await _service.GetRecipeBySlugAsync(slug);
+		if (recipe == null)
+		{
+			return NotFound();
+		}
+
+		return Ok(recipe);
+	}
 }

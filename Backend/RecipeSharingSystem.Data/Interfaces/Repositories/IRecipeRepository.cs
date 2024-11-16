@@ -6,4 +6,5 @@ public interface IRecipeRepository : IRepository<Recipe>
 {
     Task<Recipe> GetWithDetailsByIdAsync(Guid id);
     Task<ICollection<Recipe>> GetAllWithDetailsAsync();
+    Task<Recipe> GetBySlugAsync(string slug);
 }

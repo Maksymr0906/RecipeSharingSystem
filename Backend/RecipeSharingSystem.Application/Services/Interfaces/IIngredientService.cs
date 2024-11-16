@@ -11,4 +11,5 @@ public interface IIngredientService
 	Task<IngredientDto> UpdateIngredientAsync(Guid id, UpdateIngredientRequestDto model);
 	Task<IngredientDto> DeleteIngredientAsync(Guid id);
 	Task<Ingredient> GetOrCreateIngredientAsync(string ingredientName);
+	Task<IngredientDto> GetIngredientBySlugAsync(string slug);
 }

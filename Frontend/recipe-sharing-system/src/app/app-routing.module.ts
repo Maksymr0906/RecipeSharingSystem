@@ -69,11 +69,11 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'recipe/:id',
+    path: 'recipe/:slug',
     component: RecipePageComponent,
   },
   {
-    path: 'category/:id',
+    path: 'category/:slug',
     component: CategoryPageComponent
   },
   {

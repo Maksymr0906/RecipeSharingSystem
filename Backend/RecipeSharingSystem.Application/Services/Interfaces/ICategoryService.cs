@@ -11,4 +11,5 @@ public interface ICategoryService
 	Task<CategoryDto> UpdateCategoryAsync(Guid id, UpdateCategoryRequestDto model);
 	Task<CategoryDto> DeleteCategoryAsync(Guid id);
 	Task<ICollection<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds);
+	Task<CategoryDto> GetCategoryBySlugAsync(string slug);
 }

@@ -5,7 +5,7 @@ using RecipeSharingSystem.Core.Interfaces.Repositories;
 namespace RecipeSharingSystem.Persistence.Repositories;
 
 public class CategoryRepository(RecipeSharingSystemDbContext context)
-    : Repository<Category>(context), ICategoryRepository
+	: Repository<Category>(context), ICategoryRepository
 {
 	public async Task<List<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds)
     {
@@ -14,8 +14,14 @@ public class CategoryRepository(RecipeSharingSystemDbContext context)
             return new List<Category>();
         }
 
-        return await Context.Categories
+        return await Entities
             .Where(c => categoryIds.Contains(c.Id))
             .ToListAsync();
     }
+
+	public async Task<Category> GetCategoryBySlugAsync(string slug)
+	{
+        return await Entities.
+            FirstOrDefaultAsync(c => c.Slug == slug);
+	}
 }

@@ -53,4 +53,11 @@ public class CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
 	{
 		return await _unitOfWork.CategoryRepository.GetCategoriesByIdsAsync(categoryIds);
 	}
+
+	public async Task<CategoryDto> GetCategoryBySlugAsync(string slug)
+	{
+		var category = await _unitOfWork.CategoryRepository.GetCategoryBySlugAsync(slug);
+
+		return _mapper.Map<CategoryDto>(category);
+	}
 }

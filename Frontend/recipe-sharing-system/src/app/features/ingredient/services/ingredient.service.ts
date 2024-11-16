@@ -32,4 +32,8 @@ export class IngredientService {
   deleteIngredient(id: string): Observable<Ingredient> {
     return this.http.delete<Ingredient>(`${environment.apiBaseUrl}/api/ingredients/${id}`);
   }
+
+  getIngredientBySlug(slug: string): Observable<Ingredient> {
+    return this.http.get<Ingredient>(`${environment.apiBaseUrl}/api/ingredients/slug/${slug}`);
+  }
 }

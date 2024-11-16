@@ -5,7 +5,7 @@ using RecipeSharingSystem.Core.Interfaces.Repositories;
 namespace RecipeSharingSystem.Persistence.Repositories;
 
 public class IngredientRepository(RecipeSharingSystemDbContext context)
-    : Repository<Ingredient>(context), IIngredientRepository
+	: Repository<Ingredient>(context), IIngredientRepository
 {
 	public async Task<Ingredient> GetByNameAsync(string name)
     {
@@ -18,4 +18,10 @@ public class IngredientRepository(RecipeSharingSystemDbContext context)
             .Where(ingredient => names.Contains(ingredient.Name))
             .ToListAsync();
     }
+
+	public async Task<Ingredient> GetBySlugAsync(string slug)
+	{
+		return await Entities.
+			FirstOrDefaultAsync(c => c.Slug == slug);
+	}
 }

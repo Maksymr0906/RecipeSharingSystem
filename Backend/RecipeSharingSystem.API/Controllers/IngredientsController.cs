@@ -20,7 +20,6 @@ public class IngredientsController(IIngredientService service)
 		return Ok(ingredient);
 	}
 
-	[Authorize(Policy = "DeletePolicy")]
 	[HttpGet]
 	public async Task<IActionResult> GetAllIngredients()
 	{
@@ -58,6 +57,18 @@ public class IngredientsController(IIngredientService service)
 	public async Task<IActionResult> DeleteIngredient([FromRoute] Guid id)
 	{
 		var ingredient = await _service.DeleteIngredientAsync(id);
+		if (ingredient == null)
+		{
+			return NotFound();
+		}
+
+		return Ok(ingredient);
+	}
+
+	[HttpGet("slug/{slug}")]
+	public async Task<IActionResult> GetIngredientBySlug([FromRoute] string slug)
+	{
+		var ingredient = await _service.GetIngredientBySlugAsync(slug);
 		if (ingredient == null)
 		{
 			return NotFound();

@@ -64,4 +64,16 @@ public class CategoriesController(ICategoryService service)
 
 		return Ok(category);
 	}
+
+	[HttpGet("slug/{slug}")]
+	public async Task<IActionResult> GetCategoryBySlug([FromRoute] string slug)
+	{
+		var category = await _service.GetCategoryBySlugAsync(slug);
+		if (category == null)
+		{
+			return NotFound();
+		}
+
+		return Ok(category);
+	}
 }

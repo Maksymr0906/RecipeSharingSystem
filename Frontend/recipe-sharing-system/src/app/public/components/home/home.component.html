@@ -18,7 +18,7 @@
         class="recipe-container featured-recipe-container"
         *ngIf="recipes.length > 0"
         [style.backgroundImage]="'url(' + recipes[0].featuredImageUrl + ')'"
-        [routerLink]="['/recipe/', recipes[0].id]"
+        [routerLink]="['/recipe/', recipes[0].slug]"
       >
         <h4 class="recipe-title">
           {{ recipes[0].title }}
@@ -34,7 +34,7 @@
           [style.backgroundImage]="
             'url(' + recipes[i + 1].featuredImageUrl + ')'
           "
-          [routerLink]="['/recipe/', recipes[i + 1].id]"
+          [routerLink]="['/recipe/', recipes[i + 1].slug]"
         >
           <h4 class="recipe-title">{{ recipe.title }}</h4>
           <p class="recipe-description">

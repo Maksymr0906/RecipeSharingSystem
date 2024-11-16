@@ -11,4 +11,5 @@ public interface IRecipeService
 	Task<ICollection<RecipeDto>> GetRecipesByCategoryId(Guid categoryId);
 	Task<RecipeDto> UpdateRecipeAsync(Guid id, UpdateRecipeRequestDto model);
 	Task<RecipeDto> DeleteRecipeAsync(Guid id);
+	Task<RecipeDto> GetRecipeBySlugAsync(string slug);
 }

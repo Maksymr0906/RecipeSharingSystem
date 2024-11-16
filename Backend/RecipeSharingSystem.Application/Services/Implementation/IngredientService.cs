@@ -62,4 +62,11 @@ public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper)
 		await _unitOfWork.SaveAsync();
 		return newIngredient;
 	}
+
+	public async Task<IngredientDto> GetIngredientBySlugAsync(string slug)
+	{
+		var ingredient = await _unitOfWork.IngredientRepository.GetBySlugAsync(slug);
+
+		return _mapper.Map<IngredientDto>(ingredient);
+	}
 }

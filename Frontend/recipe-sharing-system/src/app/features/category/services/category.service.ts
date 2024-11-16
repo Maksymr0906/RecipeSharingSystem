@@ -31,4 +31,8 @@ export class CategoryService {
   deleteCategory(id: string): Observable<Category> {
     return this.http.delete<Category>(`${environment.apiBaseUrl}/api/categories/${id}`);
   }
+
+  getCategoryBySlug(slug: string): Observable<Category> {
+    return this.http.get<Category>(`${environment.apiBaseUrl}/api/categories/slug/${slug}`);
+  }
 }

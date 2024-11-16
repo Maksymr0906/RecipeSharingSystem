@@ -107,4 +107,11 @@ public class RecipeService(
 			.ToList();
 		return _mapper.Map<ICollection<RecipeDto>>(categoryRecipes);
 	}
+
+	public async Task<RecipeDto> GetRecipeBySlugAsync(string slug)
+	{
+		var recipe = await _unitOfWork.RecipeRepository.GetBySlugAsync(slug);
+
+		return _mapper.Map<RecipeDto>(recipe);
+	}
 }

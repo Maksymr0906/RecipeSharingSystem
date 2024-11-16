@@ -12,14 +12,14 @@ import { RecipeService } from 'src/app/features/recipe/services/recipe.service';
   styleUrls: ['./recipe-page.component.css']
 })
 export class RecipePageComponent implements OnInit, OnDestroy {
-  id: string | null = null;
+  slug: string | null = null;
   recipe?: Recipe;
   instruction: Instruction = {
     id: '',
     content: ''
   };
 
-  getRecipeByIdSubscription?: Subscription;
+  getRecipeBySlugSubscription?: Subscription;
   getInstructionByIdSubscription?: Subscription;
 
   constructor(
@@ -29,10 +29,10 @@ export class RecipePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.slug = this.route.snapshot.paramMap.get('slug');
 
-    if (this.id) {
-      this.getRecipeByIdSubscription = this.recipeService.getRecipeById(this.id).subscribe(recipe => {
+    if (this.slug) {
+      this.getRecipeBySlugSubscription = this.recipeService.getRecipeBySlug(this.slug).subscribe(recipe => {
         this.recipe = recipe;
         this.getInstructionByIdSubscription = this.instructionService.getInstructionById(this.recipe.instructionId).subscribe(instruction => {
           this.instruction = instruction;
@@ -42,7 +42,7 @@ export class RecipePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.getRecipeByIdSubscription?.unsubscribe();
+    this.getRecipeBySlugSubscription?.unsubscribe();
     this.getInstructionByIdSubscription?.unsubscribe();
   }
 }
