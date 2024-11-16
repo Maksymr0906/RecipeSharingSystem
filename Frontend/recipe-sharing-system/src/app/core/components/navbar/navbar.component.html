@@ -166,7 +166,12 @@
                 <a class="dropdown-item navbar-text"> My Profile </a>
               </li>
               <li>
-                <a class="dropdown-item navbar-text"> Favorite Recipes </a>
+                <a
+                  class="dropdown-item navbar-text"
+                  [routerLink]="['favorites']"
+                >
+                  Favorite Recipes
+                </a>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>

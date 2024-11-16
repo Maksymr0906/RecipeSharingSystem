@@ -7,6 +7,9 @@
     <app-rating-display [rating]="recipe.rating"></app-rating-display>
     <h1 class="recipe-title">{{ recipe.title }}</h1>
     <p>{{ recipe.shortDescription }}</p>
+    <app-favorite-toggle-button
+      [recipeId]="recipe.id"
+    ></app-favorite-toggle-button>
     <h2>Ingredients</h2>
     <ul class="ingredient-list">
       <ng-container *ngFor="let ingredient of recipe.ingredients">

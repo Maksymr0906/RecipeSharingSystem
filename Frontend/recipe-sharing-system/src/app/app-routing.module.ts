@@ -17,6 +17,7 @@ import { RegistrationPageComponent } from './public/components/registration-page
 import { authGuard } from './features/auth/guards/auth.guard';
 import { AboutUsPageComponent } from './public/components/about-us-page/about-us-page.component';
 import { AddRecipeGuidePageComponent } from './public/components/add-recipe-guide-page/add-recipe-guide-page.component';
+import { FavoriteRecipesListComponent } from './features/favorite-recipes/components/favorite-recipes-list/favorite-recipes-list.component';
 
 const routes: Routes = [
   {
@@ -90,6 +91,10 @@ const routes: Routes = [
   {
     path: 'add-recipe-guide',
     component: AddRecipeGuidePageComponent
+  },
+  {
+    path: 'favorites',
+    component: FavoriteRecipesListComponent
   }
 ];
 

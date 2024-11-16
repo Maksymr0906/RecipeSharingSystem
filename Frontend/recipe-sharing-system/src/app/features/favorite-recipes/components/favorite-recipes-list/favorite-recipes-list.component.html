@@ -1,1 +1,19 @@
-<p>favorite-recipes-list works!</p>
+<div class="container mt-3">
+  <h1 class="mb-3"><i class="bi bi-heart-fill"></i> Favorite Recipes</h1>
+  <ng-container *ngIf="recipes$ | async as recipes; else NotFound">
+    <div *ngIf="recipes.length > 0; else NotFoundContent" class="row">
+      <ng-container *ngFor="let recipe of recipes; let i = index">
+        <div class="col-md-3 mb-3 d-flex justify-content-center">
+          <app-recipe-card [recipe]="recipe"></app-recipe-card>
+        </div>
+        <div *ngIf="(i + 1) % 4 === 0" class="w-100"></div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template #NotFound>
+    <p class="text-primary">Loading your favorite recipes...</p>
+  </ng-template>
+  <ng-template #NotFoundContent>
+    <p class="text-primary">You don't have any favorite recipes yet</p>
+  </ng-template>
+</div>

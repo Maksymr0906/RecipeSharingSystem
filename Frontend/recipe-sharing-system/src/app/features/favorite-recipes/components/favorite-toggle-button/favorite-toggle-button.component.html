@@ -1,1 +1,4 @@
-<p>favorite-toggle-button works!</p>
+<button class="btn btn-primary" (click)="toggleFavorite()">
+  <i [class]="recipeStatus.isFavorite ? 'bi bi-heart-fill' : 'bi bi-heart'"></i>
+  Favorite
+</button>
