@@ -35,6 +35,7 @@ import { AddRecipeGuidePageComponent } from './public/components/add-recipe-guid
 import { FavoriteRecipesListComponent } from './features/favorite-recipes/components/favorite-recipes-list/favorite-recipes-list.component';
 import { FavoriteToggleButtonComponent } from './features/favorite-recipes/components/favorite-toggle-button/favorite-toggle-button.component';
 import { FooterComponent } from './core/components/footer/footer.component';
+import { PersonalProfilePageComponent } from './public/components/personal-profile-page/personal-profile-page.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { FooterComponent } from './core/components/footer/footer.component';
     FavoriteRecipesListComponent,
     FavoriteToggleButtonComponent,
     FooterComponent,
+    PersonalProfilePageComponent,
   ],
   imports: [
     BrowserModule,

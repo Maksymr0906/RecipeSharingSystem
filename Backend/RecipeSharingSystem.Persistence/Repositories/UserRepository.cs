@@ -32,4 +32,13 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 
 		return permissions;
 	}
+
+	public async Task<User> GetByIdWithDetails(Guid id)
+	{
+		return await Entities
+			.Include(x => x.AuthoredRecipes)
+			.Include(x => x.FavoriteRecipes)
+			.Include(x => x.Reviews)
+			.FirstOrDefaultAsync(x => x.Id == id);
+	}
 }

@@ -5,6 +5,7 @@ import { User } from 'src/app/features/auth/models/user.model';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { Category } from 'src/app/features/category/models/category.model';
 import { CategoryService } from 'src/app/features/category/services/category.service';
+import { RecipeService } from 'src/app/features/recipe/services/recipe.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,11 +15,13 @@ import { CategoryService } from 'src/app/features/category/services/category.ser
 export class NavbarComponent implements OnInit {
   categories$?: Observable<Category[]>;
   user?: User;
+  slug?: string;
 
   constructor(
     private categoryService: CategoryService,
     private router: Router,
-    private authService: AuthService) {}
+    private authService: AuthService,
+    private recipeService: RecipeService) { }
 
   ngOnInit(): void {
     this.authService.user().subscribe(response => {
@@ -27,6 +30,10 @@ export class NavbarComponent implements OnInit {
 
     this.user = this.authService.getUser();
     this.categories$ = this.categoryService.getAllCategories();
+
+    this.recipeService.getRandomRecipes(1).subscribe(response => {
+      this.slug = response.at(0)?.slug;
+    })
   }
 
   onLogout(): void {

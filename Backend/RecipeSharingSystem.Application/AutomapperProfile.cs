@@ -52,16 +52,21 @@ namespace RecipeSharingSystem.Business
 			CreateMap<Instruction, InstructionDto>();
 
 			// User
-			CreateMap<CreateUserRequestDto, User>()
-				.ForMember(u => u.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
-				.ForMember(u => u.Reviews, opt => opt.Ignore());
-
 			CreateMap<UpdateUserRequestDto, User>()
-				.ForMember(u => u.Reviews, opt => opt.Ignore());
+				.ForMember(dest => dest.UserName, opt => opt.Condition((src, dest, srcMember) => src.UserName != null))
+				.ForMember(dest => dest.Email, opt => opt.Condition((src, dest, srcMember) => src.Email != null))
+				.ForMember(dest => dest.FirstName, opt => opt.Condition((src, dest, srcMember) => src.FirstName != null))
+				.ForMember(dest => dest.LastName, opt => opt.Condition((src, dest, srcMember) => src.LastName != null))
+				.ForMember(dest => dest.DateOfBirth, opt => opt.Condition((src, dest, srcMember) => src.DateOfBirth != null))
+				.ForMember(dest => dest.PostalCode, opt => opt.Condition((src, dest, srcMember) => src.PostalCode != null));
 
 			CreateMap<User, UserDto>()
-				.ForMember(dto => dto.FavoriteRecipeIds, opt => opt.MapFrom(u => u.FavoriteRecipes.Select(r => r.RecipeId)))
-				.ForMember(dto => dto.ReviewIds, opt => opt.MapFrom(u => u.Reviews.Select(c => c.Id)));
+				.ForMember(dest => dest.AuthoredRecipeIds,
+					opt => opt.MapFrom(src => src.AuthoredRecipes.Select(r => r.Id)))
+				.ForMember(dest => dest.FavoriteRecipeIds,
+					opt => opt.MapFrom(src => src.FavoriteRecipes.Select(fr => fr.RecipeId)))
+				.ForMember(dest => dest.ReviewIds,
+					opt => opt.MapFrom(src => src.Reviews.Select(r => r.Id)));
 
 			CreateMap<RegisterRequestDto, User>()
 				.ForMember(u => u.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))

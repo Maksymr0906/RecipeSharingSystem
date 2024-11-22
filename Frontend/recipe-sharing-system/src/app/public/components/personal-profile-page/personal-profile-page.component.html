@@ -1,0 +1,72 @@
+<div class="container text-primary">
+  <h1>Personal info</h1>
+  <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+    <div class="d-flex gap-3">
+      <div class="col-4">
+        <label for="userEmail">Email</label>
+        <input
+          id="userEmail"
+          name="userEmail"
+          [(ngModel)]="editUserRequest.email"
+          class="form-control"
+          type="text"
+        />
+      </div>
+      <div class="col-4">
+        <label for="userName">User Name</label>
+        <input
+          id="userName"
+          name="userName"
+          [(ngModel)]="editUserRequest.userName"
+          class="form-control"
+          type="text"
+        />
+      </div>
+    </div>
+    <div class="d-flex gap-3">
+      <div class="col-4">
+        <label for="userFirstName">First Name</label>
+        <input
+          id="userFirstName"
+          name="userFirstName"
+          [(ngModel)]="editUserRequest.firstName"
+          class="form-control"
+          type="text"
+        />
+      </div>
+      <div class="col-4">
+        <label for="userLastName">Last Name</label>
+        <input
+          id="userLastName"
+          name="userLastName"
+          [(ngModel)]="editUserRequest.lastName"
+          class="form-control"
+          type="text"
+        />
+      </div>
+    </div>
+    <div class="d-flex gap-3">
+      <div class="col-4">
+        <label for="userDateOfBirth">Date of birth</label>
+        <input
+          id="userDateOfBirth"
+          name="userDateOfBirth"
+          [(ngModel)]="dateOfBirthString"
+          class="form-control"
+          type="date"
+        />
+      </div>
+      <div class="col-4">
+        <label for="userPostalCode">Postal Code</label>
+        <input
+          id="userPostalCode"
+          name="userPostalCode"
+          [(ngModel)]="editUserRequest.postalCode"
+          class="form-control"
+          type="text"
+        />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+  </form>
+</div>

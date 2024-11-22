@@ -7,4 +7,5 @@ public interface IUserRepository : IRepository<User>
 {
     Task<User> GetByEmail(string email);
     Task<HashSet<PermissionType>> GetPermissions(Guid userId);
+    Task<User> GetByIdWithDetails(Guid id);
 }

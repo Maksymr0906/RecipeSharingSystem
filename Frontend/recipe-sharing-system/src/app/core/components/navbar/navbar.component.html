@@ -92,7 +92,9 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link">Random Recipe</a>
+          <a class="nav-link" [routerLink]="['/recipe/', slug]">
+            Recipe for you
+          </a>
         </li>
         <li
           class="nav-item dropdown"
@@ -163,7 +165,12 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item navbar-text"> My Profile </a>
+                <a
+                  class="dropdown-item navbar-text"
+                  [routerLink]="['personal-profile']"
+                >
+                  My Profile
+                </a>
               </li>
               <li>
                 <a

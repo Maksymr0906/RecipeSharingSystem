@@ -18,6 +18,7 @@ import { authGuard } from './features/auth/guards/auth.guard';
 import { AboutUsPageComponent } from './public/components/about-us-page/about-us-page.component';
 import { AddRecipeGuidePageComponent } from './public/components/add-recipe-guide-page/add-recipe-guide-page.component';
 import { FavoriteRecipesListComponent } from './features/favorite-recipes/components/favorite-recipes-list/favorite-recipes-list.component';
+import { PersonalProfilePageComponent } from './public/components/personal-profile-page/personal-profile-page.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,10 @@ const routes: Routes = [
   {
     path: 'favorites',
     component: FavoriteRecipesListComponent
+  },
+  {
+    path: 'personal-profile',
+    component: PersonalProfilePageComponent
   }
 ];
 
