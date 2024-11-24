@@ -1,0 +1,20 @@
+<div class="container mt-3">
+  <form #form="ngForm" class="d-flex" (ngSubmit)="onFormSubmit()">
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Search"
+      aria-label="Search"
+      name="query"
+      [(ngModel)]="query"
+    />
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+  <ng-container *ngIf="recipes && recipes.length > 0">
+    <h2 class="mt-3">Found {{ recipes.length }} recipes</h2>
+    <app-display-recipes-page
+      [recipes]="recipes"
+      [pageSize]="8"
+    ></app-display-recipes-page>
+  </ng-container>
+</div>

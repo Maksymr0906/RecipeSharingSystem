@@ -19,6 +19,7 @@ export class RecipePageComponent implements OnInit, OnDestroy {
     content: ''
   };
 
+  routeParamsSubscription?: Subscription;
   getRecipeBySlugSubscription?: Subscription;
   getInstructionByIdSubscription?: Subscription;
 
@@ -29,20 +30,29 @@ export class RecipePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.slug = this.route.snapshot.paramMap.get('slug');
-
-    if (this.slug) {
-      this.getRecipeBySlugSubscription = this.recipeService.getRecipeBySlug(this.slug).subscribe(recipe => {
-        this.recipe = recipe;
-        this.getInstructionByIdSubscription = this.instructionService.getInstructionById(this.recipe.instructionId).subscribe(instruction => {
-          this.instruction = instruction;
-        });
-      });
-    }
+    this.routeParamsSubscription = this.route.params.subscribe(params => {
+      this.slug = params['slug'];
+      if (this.slug) {
+        this.fetchRecipeAndInstruction(this.slug);
+      }
+    });
   }
 
   ngOnDestroy(): void {
+    this.routeParamsSubscription?.unsubscribe();
     this.getRecipeBySlugSubscription?.unsubscribe();
     this.getInstructionByIdSubscription?.unsubscribe();
+  }
+
+  fetchRecipeAndInstruction(slug: string): void {
+    this.getRecipeBySlugSubscription = this.recipeService.getRecipeBySlug(slug).subscribe(recipe => {
+      this.recipe = recipe;
+
+      if (this.recipe?.instructionId) {
+        this.getInstructionByIdSubscription = this.instructionService.getInstructionById(this.recipe.instructionId).subscribe(instruction => {
+          this.instruction = instruction;
+        });
+      }
+    });
   }
 }

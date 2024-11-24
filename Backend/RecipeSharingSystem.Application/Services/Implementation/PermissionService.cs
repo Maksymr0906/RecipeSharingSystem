@@ -1,6 +1,6 @@
-﻿using RecipeSharingSystem.Application.Services.Interfaces;
-using RecipeSharingSystem.Core.Enums;
+﻿using RecipeSharingSystem.Core.Enums;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
+using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Application.Services.Implementation;
 

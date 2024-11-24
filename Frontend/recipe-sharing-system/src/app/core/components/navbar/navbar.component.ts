@@ -36,6 +36,13 @@ export class NavbarComponent implements OnInit {
     })
   }
 
+  onRecipeForYouClicked() {
+    this.recipeService.getRandomRecipes(1).subscribe(response => {
+      this.slug = response.at(0)?.slug;
+      this.router.navigateByUrl(`/recipe/${this.slug}`);
+    })
+  }
+
   onLogout(): void {
     this.authService.logout();
     this.router.navigate(['/']);

@@ -1,6 +1,6 @@
 ﻿using RecipeSharingSystem.Core.Enums;
 
-namespace RecipeSharingSystem.Application.Services.Interfaces;
+namespace RecipeSharingSystem.Core.Interfaces.Services;
 
 public interface IPermissionService
 {

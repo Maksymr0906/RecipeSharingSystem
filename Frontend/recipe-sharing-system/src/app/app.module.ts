@@ -36,6 +36,9 @@ import { FavoriteRecipesListComponent } from './features/favorite-recipes/compon
 import { FavoriteToggleButtonComponent } from './features/favorite-recipes/components/favorite-toggle-button/favorite-toggle-button.component';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { PersonalProfilePageComponent } from './public/components/personal-profile-page/personal-profile-page.component';
+import { AllRecipesPageComponent } from './public/components/all-recipes-page/all-recipes-page.component';
+import { SearchRecipesComponent } from './features/recipe/search-recipes/search-recipes.component';
+import { DisplayRecipesPageComponent } from './public/components/display-recipes-page/display-recipes-page.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,9 @@ import { PersonalProfilePageComponent } from './public/components/personal-profi
     FavoriteToggleButtonComponent,
     FooterComponent,
     PersonalProfilePageComponent,
+    AllRecipesPageComponent,
+    SearchRecipesComponent,
+    DisplayRecipesPageComponent,
   ],
   imports: [
     BrowserModule,

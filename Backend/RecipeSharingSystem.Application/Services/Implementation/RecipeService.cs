@@ -114,4 +114,15 @@ public class RecipeService(
 
 		return _mapper.Map<RecipeDto>(recipe);
 	}
+
+	public async Task<ICollection<RecipeDto>> SearchRecipesAsync(string query)
+	{
+		var searchTerms = query.Trim()
+			.ToLower()
+			.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+		var recipes = await _unitOfWork.RecipeRepository.SearchRecipesAsync(searchTerms);
+
+		return _mapper.Map<ICollection<RecipeDto>>(recipes);
+	}
 }

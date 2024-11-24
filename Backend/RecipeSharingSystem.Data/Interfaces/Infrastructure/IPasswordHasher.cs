@@ -1,4 +1,4 @@
-﻿namespace RecipeSharingSystem.Application.Interfaces;
+﻿namespace RecipeSharingSystem.Core.Interfaces.Infrastructure;
 
 public interface IPasswordHasher
 {

@@ -26,3 +26,16 @@
 .dropdown-item:hover {
   background-color: #dcb8a9 !important;
 }
+
+.recipe-for-you-link:hover {
+  cursor: pointer;
+}
+
+.search-item-icon {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.search-item-icon:hover {
+  color: #a18268;
+}

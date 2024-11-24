@@ -19,6 +19,8 @@ import { AboutUsPageComponent } from './public/components/about-us-page/about-us
 import { AddRecipeGuidePageComponent } from './public/components/add-recipe-guide-page/add-recipe-guide-page.component';
 import { FavoriteRecipesListComponent } from './features/favorite-recipes/components/favorite-recipes-list/favorite-recipes-list.component';
 import { PersonalProfilePageComponent } from './public/components/personal-profile-page/personal-profile-page.component';
+import { AllRecipesPageComponent } from './public/components/all-recipes-page/all-recipes-page.component';
+import { SearchRecipesComponent } from './features/recipe/search-recipes/search-recipes.component';
 
 const routes: Routes = [
   {
@@ -100,6 +102,14 @@ const routes: Routes = [
   {
     path: 'personal-profile',
     component: PersonalProfilePageComponent
+  },
+  {
+    path: 'all-recipes',
+    component: AllRecipesPageComponent
+  },
+  {
+    path: 'search',
+    component: SearchRecipesComponent
   }
 ];
 

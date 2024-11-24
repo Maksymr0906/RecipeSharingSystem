@@ -4,6 +4,7 @@ using RecipeSharingSystem.Application.Services.Interfaces;
 using RecipeSharingSystem.Business;
 using RecipeSharingSystem.Business.Services.Implementation;
 using RecipeSharingSystem.Business.Services.Interfaces;
+using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Application;
 

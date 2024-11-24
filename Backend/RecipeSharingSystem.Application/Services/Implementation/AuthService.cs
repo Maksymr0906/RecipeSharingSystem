@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using RecipeSharingSystem.Application.DTOs.Auth;
-using RecipeSharingSystem.Application.Interfaces;
 using RecipeSharingSystem.Application.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
 
 namespace RecipeSharingSystem.Application.Services.Implementation;

@@ -1,0 +1,27 @@
+<ng-container *ngIf="recipes.length > 0">
+  <div class="row">
+    <ng-container *ngFor="let recipe of paginatedRecipes; let i = index">
+      <div class="col-md-3 mb-3 d-flex justify-content-center">
+        <app-recipe-card [recipe]="recipe"></app-recipe-card>
+      </div>
+      <div *ngIf="(i + 1) % 4 === 0" class="w-100"></div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<div class="d-flex justify-content-center gap-1">
+  <button
+    class="btn btn-primary"
+    (click)="previousPage()"
+    [disabled]="!canGoPrevious"
+  >
+    <i class="bi bi-arrow-left"></i>
+  </button>
+  <button class="btn btn-primary" (click)="nextPage()" [disabled]="!canGoNext">
+    <i class="bi bi-arrow-right"></i>
+  </button>
+</div>
+
+<div class="text-primary page-number-text">
+  Page {{ currentPage }} of {{ totalPages }}
+</div>

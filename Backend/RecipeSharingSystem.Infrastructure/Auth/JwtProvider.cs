@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using RecipeSharingSystem.Application.Interfaces;
 using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

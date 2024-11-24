@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RecipeSharingSystem.Application\RecipeSharingSystem.Application.csproj" />
+    <ProjectReference Include="..\RecipeSharingSystem.Data\RecipeSharingSystem.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using RecipeSharingSystem.Core.Entities;
 
-namespace RecipeSharingSystem.Application.Interfaces;
+namespace RecipeSharingSystem.Core.Interfaces.Infrastructure;
+
 public interface IJwtProvider
 {
 	string Generate(User user);

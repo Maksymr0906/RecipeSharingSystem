@@ -1,4 +1,4 @@
-﻿using RecipeSharingSystem.Application.Interfaces;
+﻿using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 
 namespace RecipeSharingSystem.Infrastructure.Auth;
 

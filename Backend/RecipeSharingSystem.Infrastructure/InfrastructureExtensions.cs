@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RecipeSharingSystem.Application.Interfaces;
+using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 using RecipeSharingSystem.Infrastructure.Auth;
 
 namespace RecipeSharingSystem.Infrastructure;

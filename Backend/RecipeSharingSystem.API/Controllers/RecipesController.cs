@@ -85,4 +85,17 @@ public class RecipesController(IRecipeService service)
 
 		return Ok(recipe);
 	}
+
+	[HttpGet("search")]
+	public async Task<IActionResult> SearchRecipes([FromQuery] string query)
+	{
+		if (string.IsNullOrWhiteSpace(query))
+		{
+			return BadRequest("Search query cannot be empty");
+		}
+
+		var response = await _service.SearchRecipesAsync(query);
+		return Ok(response);
+	}
+
 }
