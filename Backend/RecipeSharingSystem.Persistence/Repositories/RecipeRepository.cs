@@ -23,7 +23,7 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
 
 	public async Task<Recipe> GetBySlugAsync(string slug)
 	{
-		return await Entities
+		var recipe = await Entities
 			.Include(x => x.Categories)
 			.Include(x => x.RecipeIngredients)
 			.ThenInclude(x => x.Ingredient)
@@ -31,6 +31,13 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
 			.Include(x => x.Reviews)
             .Include(x => x.Author)
 			.FirstOrDefaultAsync(r => r.Slug == slug);
+
+		if (recipe == null)
+		{
+			throw new KeyNotFoundException();
+		}
+
+		return recipe;
 	}
 
 	public async Task<Recipe> GetWithDetailsByIdAsync(Guid id)
@@ -71,7 +78,9 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
 				r.ShortDescription.ToLower().Contains(searchTerm) ||
 				r.Instruction.Content.ToLower().Contains(searchTerm) ||
 				r.RecipeIngredients.Any(ri =>
-					ri.Ingredient.Name.ToLower().Contains(searchTerm))
+					ri.Ingredient.Name.ToLower().Contains(searchTerm)) ||
+				r.Categories.Any(c => 
+					c.Name.ToLower().Contains(searchTerm))
 			);
 		}
 

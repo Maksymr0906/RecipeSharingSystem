@@ -7,8 +7,6 @@ namespace RecipeSharingSystem.Persistence.Repositories;
 public class UserFavoriteRecipeRepository(RecipeSharingSystemDbContext context)
 	: IUserFavoriteRecipeRepository
 {
-	private readonly RecipeSharingSystemDbContext _context = context;
-
 	private readonly DbSet<UserFavoriteRecipe> _entities = context.Set<UserFavoriteRecipe>();
 
 	public async Task AddRecipeToFavorites(Guid userId, Guid recipeId)

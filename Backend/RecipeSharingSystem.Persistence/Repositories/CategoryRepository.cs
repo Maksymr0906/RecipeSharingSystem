@@ -7,6 +7,7 @@ namespace RecipeSharingSystem.Persistence.Repositories;
 public class CategoryRepository(RecipeSharingSystemDbContext context)
 	: Repository<Category>(context), ICategoryRepository
 {
+    // refactor
 	public async Task<List<Category>> GetCategoriesByIdsAsync(IEnumerable<Guid> categoryIds)
     {
         if (categoryIds == null || !categoryIds.Any())
@@ -21,7 +22,12 @@ public class CategoryRepository(RecipeSharingSystemDbContext context)
 
 	public async Task<Category> GetCategoryBySlugAsync(string slug)
 	{
-        return await Entities.
-            FirstOrDefaultAsync(c => c.Slug == slug);
+        var category = await Entities.FirstOrDefaultAsync(c => c.Slug == slug);
+        if (category == null)
+        {
+            throw new KeyNotFoundException();
+        }
+
+        return category;
 	}
 }

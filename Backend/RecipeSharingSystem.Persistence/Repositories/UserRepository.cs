@@ -10,7 +10,17 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 {
 	public async Task<User> GetByEmail(string email)
 	{
-		var user = await Entities.Include(x => x.FavoriteRecipes).Include(x => x.UserRoles).ThenInclude(x => x.Role).FirstOrDefaultAsync(x => x.Email == email);
+		var user = await Entities
+			.Include(x => x.FavoriteRecipes)
+			.Include(x => x.UserRoles)
+				.ThenInclude(x => x.Role)
+			.FirstOrDefaultAsync(x => x.Email == email);
+		
+		if (user == null)
+		{
+			throw new KeyNotFoundException();
+		}
+		
 		return user;
 	}
 
@@ -35,10 +45,17 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 
 	public async Task<User> GetByIdWithDetails(Guid id)
 	{
-		return await Entities
+		var user = await Entities
 			.Include(x => x.AuthoredRecipes)
 			.Include(x => x.FavoriteRecipes)
 			.Include(x => x.Reviews)
 			.FirstOrDefaultAsync(x => x.Id == id);
+
+		if (user == null)
+		{
+			throw new KeyNotFoundException();
+		}
+
+		return user;
 	}
 }

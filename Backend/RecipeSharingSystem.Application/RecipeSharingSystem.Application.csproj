@@ -17,7 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Validation\" />
+    <Folder Include="Validation\Category\" />
+    <Folder Include="Validation\Auth\" />
+    <Folder Include="Validation\Image\" />
+    <Folder Include="Validation\Ingredient\" />
+    <Folder Include="Validation\Instruction\" />
+    <Folder Include="Validation\User\" />
+    <Folder Include="Validation\Review\" />
+    <Folder Include="Validation\Recipe\" />
   </ItemGroup>
 
 </Project>

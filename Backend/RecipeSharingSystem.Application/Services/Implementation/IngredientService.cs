@@ -57,7 +57,12 @@ public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper)
 			return existingIngredient;
 		}
 
-		var newIngredient = new Ingredient { Name = ingredientName, Slug = ingredientName.ToLower() + "-ingredient" };
+		var newIngredient = new Ingredient 
+		{ 
+			Name = ingredientName, 
+			Slug = string.Join("-", ingredientName.ToLower().Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries)) 
+		};
+		
 		newIngredient = await _unitOfWork.IngredientRepository.CreateAsync(newIngredient);
 		await _unitOfWork.SaveAsync();
 		return newIngredient;
