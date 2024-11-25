@@ -9,22 +9,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RecipeSharingSystem.Data\RecipeSharingSystem.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Validation\Category\" />
-    <Folder Include="Validation\Auth\" />
-    <Folder Include="Validation\Image\" />
-    <Folder Include="Validation\Ingredient\" />
-    <Folder Include="Validation\Instruction\" />
-    <Folder Include="Validation\User\" />
-    <Folder Include="Validation\Review\" />
-    <Folder Include="Validation\Recipe\" />
   </ItemGroup>
 
 </Project>

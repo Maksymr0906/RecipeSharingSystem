@@ -1,7 +1,7 @@
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using RecipeSharingSystem.API.Extensions;
-using RecipeSharingSystem.Application;
+using RecipeSharingSystem.Application.Extensions;
 using RecipeSharingSystem.Infrastructure;
 using RecipeSharingSystem.Infrastructure.Auth;
 using RecipeSharingSystem.Persistence;
@@ -21,6 +21,7 @@ services.AddHttpContextAccessor();
 services
 	.AddPersistence(configuration)
 	.AddApplication()
+	.AddValidators()
 	.AddInfrastructure();
 
 services.AddApiAuthentication(configuration);
