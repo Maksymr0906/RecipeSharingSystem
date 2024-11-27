@@ -36,31 +36,48 @@ public static class ApiExtensions
 
 		services.AddAuthorization(options =>
 		{
-			options.AddPolicy("CreatePolicy", policy =>
-			{
-				policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+			AddGenericPolicy(options, "CreatePolicy", PermissionType.Create);
+			AddGenericPolicy(options, "ReadPolicy", PermissionType.Read);
+			AddGenericPolicy(options, "UpdatePolicy", PermissionType.Update);
+			AddGenericPolicy(options, "DeletePolicy", PermissionType.Delete);
 
-				policy.Requirements.Add(new PermissionRequirement([PermissionType.Create]));
-			});
-
-			options.AddPolicy("ReadPolicy", policy =>
-			{
-				policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-
-				policy.Requirements.Add(new PermissionRequirement([PermissionType.Read]));
-			});
-			options.AddPolicy("UpdatePolicy", policy =>
-			{
-				policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-
-				policy.Requirements.Add(new PermissionRequirement([PermissionType.Update]));
-			});
-			options.AddPolicy("DeletePolicy", policy =>
-			{
-				policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-
-				policy.Requirements.Add(new PermissionRequirement([PermissionType.Delete]));
-			});
+			AddSpecificPolicies(options);
 		});
+	}
+
+	private static void AddGenericPolicy(
+		AuthorizationOptions options,
+		string policyName,
+		PermissionType permissionType)
+	{
+		options.AddPolicy(policyName, policy =>
+		{
+			policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+			policy.Requirements.Add(new PermissionRequirement([permissionType]));
+		});
+	}
+
+	private static void AddSpecificPolicies(AuthorizationOptions options)
+	{
+		var specificPolicies = new[]
+		{
+			("CreateRecipePolicy", PermissionType.CreateRecipe),
+			("CreateIngredientPolicy", PermissionType.CreateIngredient),
+			("CreateInstructionPolicy", PermissionType.CreateInstruction),
+			("UpdateRecipePolicy", PermissionType.UpdateRecipe),
+			("UpdateIngredientPolicy", PermissionType.UpdateIngredient),
+			("UpdateInstructionPolicy", PermissionType.UpdateInstruction),
+			("DeleteRecipePolicy", PermissionType.DeleteRecipe),
+			("DeleteInstructionPolicy", PermissionType.DeleteInstruction)
+		};
+
+		foreach (var (policyName, permissionType) in specificPolicies)
+		{
+			options.AddPolicy(policyName, policy =>
+			{
+				policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+				policy.Requirements.Add(new PermissionRequirement([permissionType]));
+			});
+		}
 	}
 }

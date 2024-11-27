@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Business.DTOs.Ingredient;
 using RecipeSharingSystem.Business.Services.Interfaces;
@@ -12,12 +13,20 @@ public class IngredientsController(IIngredientService service)
 {
 	private readonly IIngredientService _service = service;
 
-	[Authorize(Policy = "CreatePolicy")]
+	[Authorize(Policy = "CreateIngredientPolicy")]
 	[HttpPost]
 	public async Task<IActionResult> CreateIngredient([FromBody] CreateIngredientRequestDto request)
 	{
-		var ingredient = await _service.CreateIngredientAsync(request);
-		return Ok(ingredient);
+		try
+		{
+			var ingredient = await _service.CreateIngredientAsync(request);
+
+			return Ok(ingredient);
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
 	[HttpGet]
@@ -39,17 +48,24 @@ public class IngredientsController(IIngredientService service)
 		return Ok(ingredient);
 	}
 
-	[Authorize(Policy = "UpdatePolicy")]
+	[Authorize(Policy = "UpdateIngredientPolicy")]
 	[HttpPut("{id:Guid}")]
 	public async Task<IActionResult> UpdateIngredient([FromRoute] Guid id, [FromBody] UpdateIngredientRequestDto request)
 	{
-		var ingredient = await _service.UpdateIngredientAsync(id, request);
-		if (ingredient == null)
+		try
 		{
-			return NotFound();
-		}
+			var ingredient = await _service.UpdateIngredientAsync(id, request);
+			if (ingredient == null)
+			{
+				return NotFound();
+			}
 
-		return Ok(ingredient);
+			return Ok(ingredient);
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
 	[Authorize(Policy = "DeletePolicy")]

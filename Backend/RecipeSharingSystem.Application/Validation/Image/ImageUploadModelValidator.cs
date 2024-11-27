@@ -1,37 +1,51 @@
 ﻿using FluentValidation;
+using RecipeSharingSystem.Application.Validation;
 using RecipeSharingSystem.Business.DTOs.Image;
-
-namespace RecipeSharingSystem.Application.Validation.Image;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 public class ImageUploadModelValidator : BaseValidator<ImageUploadModel>
 {
 	public ImageUploadModelValidator()
 	{
-		RuleFor(x => x.FileName)
-			.NotEmpty()
-			.MaximumLength(255)
-			.WithMessage("File name is required and must be less than 255 characters");
-
 		RuleFor(x => x.FileExtension)
-			.NotEmpty()
-			.Matches(@"^\.[a-zA-Z0-9]+$")
-			.WithMessage("File extension must start with a dot and contain only alphanumeric characters");
-
-		RuleFor(x => x.Title)
-			.MaximumLength(200)
-			.WithMessage("Title must be less than 200 characters");
-
-		RuleFor(x => x.LocalPath)
-			.NotEmpty()
-			.WithMessage("Local path is required");
-
-		RuleFor(x => x.UrlPath)
-			.Must(url => Uri.TryCreate(url, UriKind.Absolute, out _))
-			.WithMessage("URL path must be a valid absolute URL");
+			.NotEmpty().WithMessage("File extension is required.")
+			.Must(BeAnAllowedExtension).WithMessage("Unsupported file format.");
 
 		RuleFor(x => x.FileContent)
-			.NotNull()
-			.Must(content => content != null && content.Length > 0)
-			.WithMessage("File content is required");
+			.NotNull().WithMessage("File content is missing.")
+			.Must(BeValidFileSize).WithMessage("File size cannot be more than 10MB.")
+			.Must(BeValidImage).WithMessage("Invalid image file.");
+	}
+
+	private bool BeAnAllowedExtension(string fileExtension)
+	{
+		if (string.IsNullOrEmpty(fileExtension)) return false;
+
+		var allowedExtensions = new List<string> { ".jpg", ".jpeg", ".png" };
+		return allowedExtensions.Contains(fileExtension.ToLower());
+	}
+
+	private bool BeValidFileSize(byte[] fileContent)
+	{
+		if (fileContent == null) return false;
+		return fileContent.Length > 0 && fileContent.Length <= 10485760; // 10MB
+	}
+
+	private bool BeValidImage(byte[] fileContent)
+	{
+		if (fileContent == null || fileContent.Length == 0) return false;
+
+		try
+		{
+			using var memoryStream = new MemoryStream(fileContent);
+			using var image = Image.Load<Rgba32>(memoryStream);
+
+			return image.Width >= 960 && image.Height >= 960;
+		}
+		catch
+		{
+			return false;
+		}
 	}
 }

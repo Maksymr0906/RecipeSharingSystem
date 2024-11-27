@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Business.DTOs.Review;
 using RecipeSharingSystem.Business.Services.Interfaces;
@@ -16,8 +17,16 @@ public class ReviewsController(IReviewService service)
 	[HttpPost]
 	public async Task<IActionResult> CreateReview([FromBody] CreateReviewRequestDto request)
 	{
-		await _service.CreateReviewAsync(request);
-		return Ok();
+		try
+		{
+			await _service.CreateReviewAsync(request);
+
+			return Ok();
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
 	[HttpGet("recipes/{recipeId:Guid}/users/{userId:Guid}")]
@@ -43,8 +52,16 @@ public class ReviewsController(IReviewService service)
 	[HttpPut("{id:Guid}")]
 	public async Task<IActionResult> UpdateReview([FromRoute] Guid id, [FromBody] UpdateReviewRequestDto request)
 	{
-		var review = await _service.UpdateReviewAsync(id, request);
-		return Ok(review);
+		try
+		{
+			var review = await _service.UpdateReviewAsync(id, request);
+
+			return Ok(review);
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 }
 

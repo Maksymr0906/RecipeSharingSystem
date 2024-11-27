@@ -20,9 +20,7 @@ public class RegisterRequestDtoValidator : BaseValidator<RegisterRequestDto>
 
 		RuleFor(x => x.Password)
 			.NotEmpty().WithMessage("Password is required.")
-			.MinimumLength(8).WithMessage("Password must be at least 8 characters long.")
-			.MaximumLength(50).WithMessage("Password must not exceed 50 characters.")
-			.Matches(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$")
-			.WithMessage("Password must contain at least one letter, one number, and one special character.");
+			.MinimumLength(5).WithMessage("Password must be at least 5 characters long.")
+			.MaximumLength(50).WithMessage("Password must not exceed 50 characters.");
 	}
 }

@@ -11,6 +11,7 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 	public async Task<User> GetByEmail(string email)
 	{
 		var user = await Entities
+			.AsNoTracking()
 			.Include(x => x.FavoriteRecipes)
 			.Include(x => x.UserRoles)
 				.ThenInclude(x => x.Role)
@@ -18,7 +19,7 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 		
 		if (user == null)
 		{
-			throw new KeyNotFoundException();
+			throw new KeyNotFoundException($"No user found with email: {email}");
 		}
 		
 		return user;
@@ -46,6 +47,7 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 	public async Task<User> GetByIdWithDetails(Guid id)
 	{
 		var user = await Entities
+			.AsNoTracking()
 			.Include(x => x.AuthoredRecipes)
 			.Include(x => x.FavoriteRecipes)
 			.Include(x => x.Reviews)
@@ -53,7 +55,7 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 
 		if (user == null)
 		{
-			throw new KeyNotFoundException();
+			throw new KeyNotFoundException($"No user found with ID: {id}");
 		}
 
 		return user;

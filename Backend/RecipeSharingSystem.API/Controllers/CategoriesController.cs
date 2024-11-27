@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Business.DTOs.Category;
 using RecipeSharingSystem.Business.Services.Interfaces;
@@ -16,8 +17,16 @@ public class CategoriesController(ICategoryService service)
 	[HttpPost]
 	public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
 	{
-		var category = await _service.CreateCategoryAsync(request);
-		return Ok(category);
+		try
+		{
+			var category = await _service.CreateCategoryAsync(request);
+
+			return Ok(category);
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
 	[HttpGet]
@@ -43,13 +52,20 @@ public class CategoriesController(ICategoryService service)
 	[HttpPut("{id:Guid}")]
 	public async Task<IActionResult> UpdateCategory([FromRoute] Guid id, [FromBody] UpdateCategoryRequestDto request)
 	{
-		var category = await _service.UpdateCategoryAsync(id, request);
-		if (category == null)
+		try
 		{
-			return NotFound();
-		}
+			var category = await _service.UpdateCategoryAsync(id, request);
+			if (category == null)
+			{
+				return NotFound();
+			}
 
-		return Ok(category);
+			return Ok(category);
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
 	[Authorize(Policy = "DeletePolicy")]

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Business.DTOs.Image;
 using RecipeSharingSystem.Business.Services.Interfaces;
@@ -38,7 +39,7 @@ public class ImagesController(IImageService service, IWebHostEnvironment webHost
 			var image = await _service.CreateImageAsync(imageUploadModel);
 			return Ok(image);
 		}
-		catch (ArgumentException ex)
+		catch (ValidationException ex)
 		{
 			return BadRequest(ex.Message);
 		}

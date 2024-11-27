@@ -3,17 +3,21 @@ using RecipeSharingSystem.Business.DTOs.Ingredient;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
+using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
-public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper)
+public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper, IValidationService validationService)
 	: IIngredientService
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
+	private readonly IValidationService _validationService = validationService;
 
 	public async Task<IngredientDto> CreateIngredientAsync(CreateIngredientRequestDto model)
 	{
+		await _validationService.ValidateAsync(model);
+
 		var ingredient = _mapper.Map<Ingredient>(model);
 		ingredient = await _unitOfWork.IngredientRepository.CreateAsync(ingredient);
 		await _unitOfWork.SaveAsync();
@@ -34,6 +38,8 @@ public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper)
 
 	public async Task<IngredientDto> UpdateIngredientAsync(Guid id, UpdateIngredientRequestDto model)
 	{
+		await _validationService.ValidateAsync(model);
+
 		var ingredient = _mapper.Map<Ingredient>(model);
 		ingredient.Id = id;
 		ingredient = await _unitOfWork.IngredientRepository.UpdateAsync(ingredient);

@@ -3,6 +3,7 @@ using RecipeSharingSystem.Business.DTOs.Recipe;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
+using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
@@ -10,16 +11,20 @@ public class RecipeService(
 	IUnitOfWork unitOfWork,
 	IMapper mapper,
 	ICategoryService categoryService,
-	IIngredientService ingredientService
+	IIngredientService ingredientService,
+	IValidationService validationService
 	) : IRecipeService
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
 	private readonly ICategoryService _categoryService = categoryService;
 	private readonly IIngredientService _ingredientService = ingredientService;
+	private readonly IValidationService _validationService = validationService;
 
 	public async Task<RecipeDto> CreateRecipeAsync(CreateRecipeRequestDto model)
-	{ 
+	{
+		await _validationService.ValidateAsync(model);
+
 		var categories = await _categoryService.GetCategoriesByIdsAsync(model.CategoryIds);
 		var recipe = _mapper.Map<Recipe>(model);
 		recipe.Categories = categories;
@@ -56,6 +61,8 @@ public class RecipeService(
 
 	public async Task<RecipeDto> UpdateRecipeAsync(Guid id, UpdateRecipeRequestDto model)
 	{
+		await _validationService.ValidateAsync(model);
+
 		var existingRecipe = await _unitOfWork.RecipeRepository.GetWithDetailsByIdAsync(id);
 		if (existingRecipe == null)
 		{

@@ -1,19 +1,24 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using RecipeSharingSystem.Business.DTOs.Category;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
+using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
-public class CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
+public class CategoryService(IUnitOfWork unitOfWork, IMapper mapper, IValidationService validationService)
 	: ICategoryService
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
+	private readonly IValidationService _validationService = validationService;
 
 	public async Task<CategoryDto> CreateCategoryAsync(CreateCategoryRequestDto model)
 	{
+		await _validationService.ValidateAsync(model);
+
 		var category = _mapper.Map<Category>(model);
 		category = await _unitOfWork.CategoryRepository.CreateAsync(category);
 		await _unitOfWork.SaveAsync();
@@ -34,6 +39,8 @@ public class CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
 
 	public async Task<CategoryDto> UpdateCategoryAsync(Guid id, UpdateCategoryRequestDto model)
 	{
+		await _validationService.ValidateAsync(model);
+
 		var category = _mapper.Map<Category>(model);
 		category.Id = id;
 		category = await _unitOfWork.CategoryRepository.UpdateAsync(category);

@@ -3,17 +3,21 @@ using RecipeSharingSystem.Business.DTOs.Review;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
+using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
-public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper)
+public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper, IValidationService validationService)
 	: IReviewService
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
+	private readonly IValidationService _validationService = validationService;
 
 	public async Task<ReviewDto> CreateReviewAsync(CreateReviewRequestDto model)
 	{
+		await _validationService.ValidateAsync(model);
+
 		var review = _mapper.Map<Review>(model);
 		review = await _unitOfWork.ReviewRepository.CreateAsync(review);
 		await _unitOfWork.SaveAsync();
@@ -34,6 +38,8 @@ public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper)
 
 	public async Task<ReviewDto> UpdateReviewAsync(Guid id, UpdateReviewRequestDto model)
 	{
+		await _validationService.ValidateAsync(model);
+
 		var review = await _unitOfWork.ReviewRepository.GetByIdWithDetails(id);
 		review.Rating = model.Rating;
 		review.Content = model.Content;

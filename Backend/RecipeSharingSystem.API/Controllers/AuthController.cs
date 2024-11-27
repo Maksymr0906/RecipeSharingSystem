@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Application.DTOs.Auth;
 using RecipeSharingSystem.Application.Services.Interfaces;
 
@@ -14,14 +15,30 @@ public class AuthController(IAuthService authService)
 	[HttpPost("register")]
 	public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
 	{
-		await _authService.Register(request);
-		return Ok();
+		try
+		{
+			await _authService.Register(request);
+
+			return Ok();
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
 	[HttpPost("login")]
 	public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
 	{
-		var response = await _authService.Login(request);
-		return Ok(response);
+		try
+		{
+			var response = await _authService.Login(request);
+
+			return Ok(response);
+		}
+		catch(ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 }

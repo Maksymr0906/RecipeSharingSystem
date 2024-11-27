@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Business.DTOs.Instruction;
 using RecipeSharingSystem.Business.Services.Interfaces;
@@ -12,12 +13,20 @@ public class InstructionsController(IInstructionService service)
 {
 	private readonly IInstructionService _service = service;
 
-	[Authorize(Policy = "CreatePolicy")]
+	[Authorize(Policy = "CreateInstructionPolicy")]
 	[HttpPost]
 	public async Task<IActionResult> CreateInstruction([FromBody] CreateInstructionRequestDto request)
 	{
-		var instruction = await _service.CreateInstructionAsync(request);
-		return Ok(instruction);
+		try
+		{
+			var instruction = await _service.CreateInstructionAsync(request);
+			
+			return Ok(instruction);
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
 	[HttpGet]
@@ -39,20 +48,27 @@ public class InstructionsController(IInstructionService service)
 		return Ok(instruction);
 	}
 
-	[Authorize(Policy = "UpdatePolicy")]
+	[Authorize(Policy = "UpdateInstructionPolicy")]
 	[HttpPut("{id:Guid}")]
 	public async Task<IActionResult> UpdateInstruction([FromRoute] Guid id, [FromBody] UpdateInstructionRequestDto request)
 	{
-		var instruction = await _service.UpdateInstructionAsync(id, request);
-		if (instruction == null)
+		try
 		{
-			return NotFound();
-		}
+			var instruction = await _service.UpdateInstructionAsync(id, request);
+			if (instruction == null)
+			{
+				return NotFound();
+			}
 
-		return Ok(instruction);
+			return Ok(instruction);
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
-	[Authorize(Policy = "DeletePolicy")]
+	[Authorize(Policy = "DeleteInstructionPolicy")]
 	[HttpDelete("{id:Guid}")]
 	public async Task<IActionResult> DeleteInstruction([FromRoute] Guid id)
 	{

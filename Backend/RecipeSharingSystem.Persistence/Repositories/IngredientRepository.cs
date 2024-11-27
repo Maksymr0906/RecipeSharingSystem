@@ -7,23 +7,30 @@ namespace RecipeSharingSystem.Persistence.Repositories;
 public class IngredientRepository(RecipeSharingSystemDbContext context)
 	: Repository<Ingredient>(context), IIngredientRepository
 {
-    // refactor
 	public async Task<Ingredient> GetByNameAsync(string name)
     {
-        return await Entities.FirstOrDefaultAsync(ingredient => ingredient.Name == name);
-    }
+		if (string.IsNullOrWhiteSpace(name))
+		{
+			throw new ArgumentException("Ingredient name cannot be null or empty.", nameof(name));
+		}
 
-    // refactor
-    public async Task<IEnumerable<Ingredient>> GetByNamesAsync(IEnumerable<string> names)
-    {
-        return await Entities
-            .Where(ingredient => names.Contains(ingredient.Name))
-            .ToListAsync();
-    }
+		var ingredient = await Entities
+				.AsNoTracking()
+				.FirstOrDefaultAsync(i =>
+					i.Name.ToLower().Trim() == name.ToLower().Trim());
+
+		if (ingredient == null)
+		{
+			throw new KeyNotFoundException($"No ingredient found with name: {name}");
+		}
+
+		return ingredient;
+	}
 
 	public async Task<Ingredient> GetBySlugAsync(string slug)
 	{
-		var ingredient = await Entities.FirstOrDefaultAsync(c => c.Slug == slug);
+		var ingredient = await Entities.AsNoTracking().FirstOrDefaultAsync(c => c.Slug == slug);
+
         if (ingredient == null)
         {
             throw new KeyNotFoundException();

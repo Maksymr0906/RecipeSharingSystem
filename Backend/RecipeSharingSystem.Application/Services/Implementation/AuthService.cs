@@ -4,6 +4,7 @@ using RecipeSharingSystem.Application.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
+using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Application.Services.Implementation;
 
@@ -11,15 +12,19 @@ public class AuthService(
 	IUnitOfWork unitOfWork,
 	IMapper mapper,
 	IPasswordHasher passwordHasher,
-	IJwtProvider jwtProvider) : IAuthService
+	IJwtProvider jwtProvider,
+	IValidationService validationService) : IAuthService
 {
 	private readonly IPasswordHasher _passwordHasher = passwordHasher;
 	private readonly IJwtProvider _jwtProvider = jwtProvider;
+	private readonly IValidationService _validationService = validationService;
 	private readonly IMapper _mapper = mapper;
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
 	public async Task Register(RegisterRequestDto model)
 	{
+		await _validationService.ValidateAsync(model);
+
 		var hashedPassword = _passwordHasher.Generate(model.Password);
 		var user = _mapper.Map<User>(model);
 		user.PasswordHash = hashedPassword;
@@ -29,6 +34,8 @@ public class AuthService(
 
 	public async Task<LoginResponseDto> Login(LoginRequestDto model)
 	{
+		await _validationService.ValidateAsync(model);
+
 		var user = await _unitOfWork.UserRepository.GetByEmail(model.Email);
 		var result = _passwordHasher.Verify(model.Password, user.PasswordHash);
 		if (result == false)

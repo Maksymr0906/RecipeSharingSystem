@@ -11,18 +11,26 @@ public class UserFavoriteRecipeRepository(RecipeSharingSystemDbContext context)
 
 	public async Task AddRecipeToFavorites(Guid userId, Guid recipeId)
 	{
-		var favorite = new UserFavoriteRecipe
+		try
 		{
-			UserId = userId,
-			RecipeId = recipeId
-		};
+			var favorite = new UserFavoriteRecipe
+			{
+				UserId = userId,
+				RecipeId = recipeId
+			};
 
-		await _entities.AddAsync(favorite);
+			await _entities.AddAsync(favorite);
+		}
+		catch(DbUpdateException ex)
+		{
+			throw new InvalidOperationException($"Error creating entity: {ex.Message}", ex);
+		}
 	}
 
 	public async Task<ICollection<Recipe>> GetFavoriteRecipesForUserAsync(Guid userId)
 	{
 		return await _entities
+			.AsNoTracking()
 			.Include(f => f.Recipe)
 			.ThenInclude(r => r.Categories)
 			.Include(f => f.Recipe.Reviews)
@@ -40,6 +48,7 @@ public class UserFavoriteRecipeRepository(RecipeSharingSystemDbContext context)
 	public async Task RemoveRecipeFromFavorites(Guid userId, Guid recipeId)
 	{
 		var favorite = await _entities
+			.AsNoTracking()
 			.FirstOrDefaultAsync(f => f.UserId == userId && f.RecipeId == recipeId);
 
 		if (favorite == null)
@@ -47,6 +56,13 @@ public class UserFavoriteRecipeRepository(RecipeSharingSystemDbContext context)
 			throw new KeyNotFoundException("Favorite recipe not found.");
 		}
 
-		_entities.Remove(favorite);
+		try
+		{
+			_entities.Remove(favorite);
+		}
+		catch (DbUpdateException ex)
+		{
+			throw new InvalidOperationException($"Error deleting entity: {ex.Message}", ex);
+		}
 	}
 }

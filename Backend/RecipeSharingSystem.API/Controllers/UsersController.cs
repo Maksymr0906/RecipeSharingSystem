@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Business.DTOs.User;
 using RecipeSharingSystem.Business.Services.Interfaces;
 
@@ -30,8 +31,16 @@ namespace RecipeSharingSystem.API.Controllers
 		[HttpPut("{id:Guid}")]
 		public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequestDto request)
 		{
-			await _service.UpdateUserAsync(id, request);
-			return Ok();
+			try
+			{
+				await _service.UpdateUserAsync(id, request);
+
+				return Ok();
+			}
+			catch (ValidationException ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 	}
 }

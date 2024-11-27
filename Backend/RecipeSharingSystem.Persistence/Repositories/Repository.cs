@@ -25,8 +25,20 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 			throw new ArgumentNullException(nameof(entity));
 		}
 
-		await _entities.AddAsync(entity);
-		return entity;
+		if (await _entities.AnyAsync(e => e.Id == entity.Id))
+		{
+			throw new InvalidOperationException($"An entity with ID {entity.Id} already exists.");
+		}
+
+		try
+		{
+			await _entities.AddAsync(entity);
+			return entity;
+		}
+		catch (DbUpdateException ex)
+		{
+			throw new InvalidOperationException($"Error creating entity: {ex.Message}", ex);
+		}
 	}
 
 	public async Task<TEntity> DeleteByIdAsync(Guid id)
@@ -34,24 +46,39 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 		var entity = await _entities.FindAsync(id);
 		if (entity == null)
 		{
-			throw new KeyNotFoundException();
+			throw new KeyNotFoundException($"Entity with ID {id} not found.");
 		}
 
-		_entities.Remove(entity);
-		return entity;
+		try
+		{
+			_entities.Remove(entity);
+			return entity;
+		}
+		catch (DbUpdateException ex)
+		{
+			throw new InvalidOperationException($"Error deleting entity: {ex.Message}", ex);
+		}
 	}
 
 	public async Task<ICollection<TEntity>> GetAllAsync()
 	{
-		return await _entities.ToListAsync();
+		try
+		{
+			return await _entities.AsNoTracking().ToListAsync();
+		}
+		catch (Exception ex)
+		{
+			throw new InvalidOperationException($"Error retrieving entities: {ex.Message}", ex);
+		}
 	}
 
 	public async Task<TEntity> GetByIdAsync(Guid id)
 	{
 		var entity = await _entities.FindAsync(id);
+
 		if (entity == null)
 		{
-			throw new KeyNotFoundException();
+			throw new KeyNotFoundException($"Entity with ID {id} not found.");
 		}
 
 		return entity;
@@ -59,7 +86,25 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 
 	public async Task<TEntity> UpdateAsync(TEntity entity)
 	{
-		_entities.Update(entity);
-		return entity;
+		if (entity == null)
+		{
+			throw new ArgumentNullException(nameof(entity), "Entity cannot be null.");
+		}
+
+		var existingEntity = await _entities.FindAsync(entity.Id);
+		if (existingEntity == null)
+		{
+			throw new KeyNotFoundException($"Entity with ID {entity.Id} not found.");
+		}
+
+		try
+		{
+			_entities.Update(entity);
+			return entity;
+		}
+		catch (DbUpdateException ex)
+		{
+			throw new InvalidOperationException($"Error updating entity: {ex.Message}", ex);
+		}
 	}
 }

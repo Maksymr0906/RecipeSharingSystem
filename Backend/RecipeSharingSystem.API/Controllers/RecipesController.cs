@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Business.DTOs.Recipe;
 using RecipeSharingSystem.Business.Services.Interfaces;
@@ -12,12 +13,19 @@ public class RecipesController(IRecipeService service)
 {
 	private readonly IRecipeService _service = service;
 
-	[Authorize(Policy = "CreatePolicy")]
+	[Authorize(Policy = "CreateRecipePolicy")]
 	[HttpPost]
 	public async Task<IActionResult> CreateRecipe([FromBody] CreateRecipeRequestDto request)
 	{
-		var recipe = await _service.CreateRecipeAsync(request);
-		return Ok(recipe);
+		try
+		{
+			var recipe = await _service.CreateRecipeAsync(request);
+			return Ok(recipe);
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
 	[HttpGet]
@@ -48,20 +56,27 @@ public class RecipesController(IRecipeService service)
 		return Ok(recipes);
 	}
 
-	[Authorize(Policy = "UpdatePolicy")]
+	[Authorize(Policy = "UpdateRecipePolicy")]
 	[HttpPut("{id:Guid}")]
 	public async Task<IActionResult> UpdateRecipe([FromRoute] Guid id, [FromBody] UpdateRecipeRequestDto request)
 	{
-		var recipe = await _service.UpdateRecipeAsync(id, request);
-		if (recipe == null)
+		try
 		{
-			return NotFound();
-		}
+			var recipe = await _service.UpdateRecipeAsync(id, request);
+			if (recipe == null)
+			{
+				return NotFound();
+			}
 
-		return Ok(recipe);
+			return Ok(recipe);
+		}
+		catch (ValidationException ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
-	[Authorize(Policy = "DeletePolicy")]
+	[Authorize(Policy = "DeleteRecipePolicy")]
 	[HttpDelete("{id:Guid}")]
 	public async Task<IActionResult> DeleteRecipe([FromRoute] Guid id)
 	{
@@ -97,5 +112,4 @@ public class RecipesController(IRecipeService service)
 		var response = await _service.SearchRecipesAsync(query);
 		return Ok(response);
 	}
-
 }
