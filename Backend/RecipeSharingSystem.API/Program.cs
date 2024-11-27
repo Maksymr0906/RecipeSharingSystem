@@ -32,7 +32,6 @@ builder.Services.AddSwaggerGen(c =>
 {
 	c.SwaggerDoc("v1", new OpenApiInfo { Title = "Recipe Sharing System", Version = "v1" });
 
-	// Configure JWT authentication for Swagger
 	c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 	{
 		In = ParameterLocation.Header,

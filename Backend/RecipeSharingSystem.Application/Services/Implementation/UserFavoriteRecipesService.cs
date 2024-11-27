@@ -14,12 +14,14 @@ public class UserFavoriteRecipesService(IUnitOfWork unitOfWork, IMapper mapper)
 	public async Task AddRecipeToFavorites(Guid userId, Guid recipeId)
 	{
 		await _unitOfWork.UserFavoriteRecipeRepository.AddRecipeToFavorites(userId, recipeId);
+
 		await _unitOfWork.SaveAsync();
 	}
 
 	public async Task<ICollection<RecipeDto>> GetFavoriteRecipesForUser(Guid userId)
 	{
 		var recipes = await _unitOfWork.UserFavoriteRecipeRepository.GetFavoriteRecipesForUserAsync(userId);
+
 		return _mapper.Map<ICollection<RecipeDto>>(recipes);
 	}
 
@@ -31,6 +33,7 @@ public class UserFavoriteRecipesService(IUnitOfWork unitOfWork, IMapper mapper)
 	public async Task RemoveRecipeFromFavorites(Guid userId, Guid recipeId)
 	{
 		await _unitOfWork.UserFavoriteRecipeRepository.RemoveRecipeFromFavorites(userId, recipeId);
+
 		await _unitOfWork.SaveAsync();
 	}
 }

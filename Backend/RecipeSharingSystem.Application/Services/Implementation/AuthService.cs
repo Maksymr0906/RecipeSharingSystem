@@ -26,9 +26,13 @@ public class AuthService(
 		await _validationService.ValidateAsync(model);
 
 		var hashedPassword = _passwordHasher.Generate(model.Password);
+		
 		var user = _mapper.Map<User>(model);
+		
 		user.PasswordHash = hashedPassword;
+		
 		await _unitOfWork.UserRepository.CreateAsync(user);
+		
 		await _unitOfWork.SaveAsync();
 	}
 
@@ -37,6 +41,7 @@ public class AuthService(
 		await _validationService.ValidateAsync(model);
 
 		var user = await _unitOfWork.UserRepository.GetByEmail(model.Email);
+		
 		var result = _passwordHasher.Verify(model.Password, user.PasswordHash);
 		if (result == false)
 		{

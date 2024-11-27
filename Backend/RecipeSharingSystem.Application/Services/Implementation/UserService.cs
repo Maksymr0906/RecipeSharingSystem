@@ -18,12 +18,14 @@ public class UserService(IUnitOfWork unitOfWork, IMapper mapper, IValidationServ
 	public async Task<ICollection<UserDto>> GetAllUsersAsync()
 	{
 		var users = await _unitOfWork.UserRepository.GetAllAsync();
+
 		return _mapper.Map<ICollection<UserDto>>(users);
 	}
 
 	public async Task<UserDto> GetUserByIdAsync(Guid id)
 	{
 		var users = await _unitOfWork.UserRepository.GetByIdWithDetails(id);
+
 		return _mapper.Map<UserDto>(users);
 	}
 
@@ -32,9 +34,11 @@ public class UserService(IUnitOfWork unitOfWork, IMapper mapper, IValidationServ
 		await _validationService.ValidateAsync(model);
 
 		var existingUser = await _unitOfWork.UserRepository.GetByIdWithDetails(id);
+
 		_mapper.Map(model, existingUser);
 
 		await _unitOfWork.UserRepository.UpdateAsync(existingUser);
+
 		await _unitOfWork.SaveAsync();
 
 		return _mapper.Map<UserDto>(existingUser);
@@ -43,12 +47,9 @@ public class UserService(IUnitOfWork unitOfWork, IMapper mapper, IValidationServ
 	public async Task<UserDto> DeleteUserAsync(Guid id)
 	{
 		var user = await _unitOfWork.UserRepository.DeleteByIdAsync(id);
-		await _unitOfWork.SaveAsync();
-		return _mapper.Map<UserDto>(user);
-	}
 
-	public async Task<HashSet<PermissionType>> GetUserPermissions(Guid userId)
-	{
-		return await _unitOfWork.UserRepository.GetPermissions(userId);
+		await _unitOfWork.SaveAsync();
+
+		return _mapper.Map<UserDto>(user);
 	}
 }

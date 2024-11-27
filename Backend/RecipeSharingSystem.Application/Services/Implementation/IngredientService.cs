@@ -19,20 +19,25 @@ public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper, IValidati
 		await _validationService.ValidateAsync(model);
 
 		var ingredient = _mapper.Map<Ingredient>(model);
+		
 		ingredient = await _unitOfWork.IngredientRepository.CreateAsync(ingredient);
+		
 		await _unitOfWork.SaveAsync();
+		
 		return _mapper.Map<IngredientDto>(ingredient);
 	}
 
 	public async Task<ICollection<IngredientDto>> GetAllIngredientsAsync()
 	{
 		var ingredients = await _unitOfWork.IngredientRepository.GetAllAsync();
+		
 		return _mapper.Map<ICollection<IngredientDto>>(ingredients);
 	}
 
 	public async Task<IngredientDto> GetIngredientByIdAsync(Guid id)
 	{
 		var ingredient = await _unitOfWork.IngredientRepository.GetByIdAsync(id);
+		
 		return _mapper.Map<IngredientDto>(ingredient);
 	}
 
@@ -41,20 +46,25 @@ public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper, IValidati
 		await _validationService.ValidateAsync(model);
 
 		var ingredient = _mapper.Map<Ingredient>(model);
+		
 		ingredient.Id = id;
+		
 		ingredient = await _unitOfWork.IngredientRepository.UpdateAsync(ingredient);
+		
 		await _unitOfWork.SaveAsync();
+		
 		return _mapper.Map<IngredientDto>(ingredient);
 	}
 
 	public async Task<IngredientDto> DeleteIngredientAsync(Guid id)
 	{
 		var ingredient = await _unitOfWork.IngredientRepository.DeleteByIdAsync(id);
+		
 		await _unitOfWork.SaveAsync();
+		
 		return _mapper.Map<IngredientDto>(ingredient);
 	}
 
-	// Consider changing to dto
 	public async Task<Ingredient> GetOrCreateIngredientAsync(string ingredientName)
 	{
 		var existingIngredient = await _unitOfWork.IngredientRepository.GetByNameAsync(ingredientName);
@@ -70,7 +80,9 @@ public class IngredientService(IUnitOfWork unitOfWork, IMapper mapper, IValidati
 		};
 		
 		newIngredient = await _unitOfWork.IngredientRepository.CreateAsync(newIngredient);
+
 		await _unitOfWork.SaveAsync();
+		
 		return newIngredient;
 	}
 

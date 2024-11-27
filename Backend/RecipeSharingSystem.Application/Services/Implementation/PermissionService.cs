@@ -4,13 +4,13 @@ using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Application.Services.Implementation;
 
-public class PermissionService(IUserRepository usersRepository)
+public class PermissionService(IUnitOfWork unitOfWork)
 	: IPermissionService
 {
-	private readonly IUserRepository _usersRepository = usersRepository;
+	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
 	public async Task<HashSet<PermissionType>> GetPermissionsAsync(Guid userId)
 	{
-		return await _usersRepository.GetPermissions(userId);
+		return await _unitOfWork.UserRepository.GetPermissions(userId);
 	}
 }
