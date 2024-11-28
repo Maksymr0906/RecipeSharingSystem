@@ -19,11 +19,6 @@ public class IngredientRepository(RecipeSharingSystemDbContext context)
 				.FirstOrDefaultAsync(i =>
 					i.Name.ToLower().Trim() == name.ToLower().Trim());
 
-		if (ingredient == null)
-		{
-			throw new KeyNotFoundException($"No ingredient found with name: {name}");
-		}
-
 		return ingredient;
 	}
 

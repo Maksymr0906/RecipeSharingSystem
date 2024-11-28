@@ -9,9 +9,12 @@ public enum PermissionType
 	CreateRecipe = 5,
 	CreateIngredient = 6,
 	CreateInstruction = 7,
-	UpdateRecipe = 8,
-	UpdateIngredient = 9,
-	UpdateInstruction = 10,
-	DeleteRecipe = 11,
-	DeleteInstruction = 12
+	CreateReview = 8,
+	UpdateRecipe = 9,
+	UpdateIngredient = 10,
+	UpdateInstruction = 11,
+	UpdateReview = 12,
+	DeleteRecipe = 13,
+	DeleteInstruction = 14,
+	DeleteReview = 15
 }

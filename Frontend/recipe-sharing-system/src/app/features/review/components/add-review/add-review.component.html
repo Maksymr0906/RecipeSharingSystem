@@ -11,17 +11,26 @@
     [(ngModel)]="content"
     [disabled]="rating === 0"
   ></textarea>
-  <div class="d-flex gap-1 justify-content-end">
-    <button type="button" class="btn btn-primary mt-1" (click)="onCancel()">
-      Cancel
-    </button>
+  <div class="d-flex justify-content-between">
     <button
-      type="submit"
       class="btn btn-primary mt-1"
-      [disabled]="rating === 0"
+      [disabled]="!reviewModel.id"
+      (click)="onDelete(reviewModel.id)"
     >
-      Submit
+      Delete review
     </button>
+    <div class="d-flex gap-1 justify-content-end">
+      <button type="button" class="btn btn-primary mt-1" (click)="onCancel()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary mt-1"
+        [disabled]="rating === 0"
+      >
+        Submit
+      </button>
+    </div>
   </div>
 </form>
 

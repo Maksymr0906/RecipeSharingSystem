@@ -22,7 +22,6 @@ public class CategoryRepository(RecipeSharingSystemDbContext context)
         try
         {
 			return await Entities
-				.AsNoTracking()
 				.Where(c => categoryIds.Contains(c.Id))
 				.ToListAsync();
 		}

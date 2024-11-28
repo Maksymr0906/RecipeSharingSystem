@@ -29,7 +29,7 @@ public partial class ReviewConfiguration(SeedDataOptions seedDataOptions)
 		builder.HasOne(r => r.Recipe)
 			   .WithMany(r => r.Reviews)
 			   .HasForeignKey(r => r.RecipeId)
-			   .OnDelete(DeleteBehavior.Restrict);
+			   .OnDelete(DeleteBehavior.Cascade);
 
 		builder.HasData(_seedDataOptions.Reviews);
 	}

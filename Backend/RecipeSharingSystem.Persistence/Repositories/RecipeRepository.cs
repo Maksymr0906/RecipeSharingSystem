@@ -47,38 +47,37 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
 
 	public async Task<ICollection<Recipe>> SearchRecipesAsync(string[] searchTerms)
 	{
-		var normalizedSearchTerms = searchTerms
-			.Where(term => !string.IsNullOrWhiteSpace(term))
-			.Select(term => term.ToLower().Trim())
-			.Distinct()
-			.ToArray();
-
 		try
 		{
-			var baseQuery = GetBaseRecipeQuery();
-			var query = baseQuery.AsQueryable();
+			var query = GetBaseRecipeQuery();
 
-			foreach (var term in normalizedSearchTerms)
+			foreach (var term in searchTerms)
 			{
+				var searchTerm = term.ToLower();
 				query = query.Where(r =>
-					r.Title.ToLower().Contains(term) ||
-					r.ShortDescription.ToLower().Contains(term) ||
-					r.Instruction.Content.ToLower().Contains(term) ||
+					r.Title.ToLower().Contains(searchTerm) ||
+					r.ShortDescription.ToLower().Contains(searchTerm) ||
+					r.Instruction.Content.ToLower().Contains(searchTerm) ||
 					r.RecipeIngredients.Any(ri =>
-						ri.Ingredient.Name.ToLower().Contains(term)) ||
-					r.Categories.Any(c =>
-						c.Name.ToLower().Contains(term))
+						ri.Ingredient.Name.ToLower().Contains(searchTerm)) ||
+					r.Categories.Any(c => 
+						c.Name.ToLower().Contains(searchTerm))
 				);
 			}
 
-			var orderedResults = query
-					.Select(r => new
-					{
-						Recipe = r,
-						Priority = CalculateSearchPriority(r, normalizedSearchTerms[0])
-					})
-					.OrderBy(x => x.Priority)
-					.Select(x => x.Recipe);
+			var orderedResults = query.Select(r => new
+				{
+					Recipe = r,
+					Priority = (
+						r.Title.ToLower().Contains(searchTerms[0].ToLower()) ? 1 :
+						r.ShortDescription.ToLower().Contains(searchTerms[0].ToLower()) ? 2 :
+						r.Instruction.Content.ToLower().Contains(searchTerms[0].ToLower()) ? 3 :
+						r.RecipeIngredients.Any(ri =>
+							ri.Ingredient.Name.ToLower().Contains(searchTerms[0].ToLower())) ? 4 : 5
+					)
+				})
+				.OrderBy(x => x.Priority)
+				.Select(x => x.Recipe);
 
 			return await orderedResults.ToListAsync();
 		}
@@ -91,30 +90,11 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
 	private IQueryable<Recipe> GetBaseRecipeQuery()
 	{
 		return Entities
-			.AsNoTracking()
 			.Include(x => x.Categories)
 			.Include(x => x.RecipeIngredients)
 				.ThenInclude(x => x.Ingredient)
 			.Include(x => x.Instruction)
 			.Include(x => x.Reviews)
 			.Include(x => x.Author);
-	}
-
-	private int CalculateSearchPriority(Recipe recipe, string primarySearchTerm)
-	{
-		if (recipe.Title.ToLower().Contains(primarySearchTerm))
-			return 1;
-		if (recipe.ShortDescription.ToLower().Contains(primarySearchTerm))
-			return 2;
-		if (recipe.Instruction.Content.ToLower().Contains(primarySearchTerm))
-			return 3;
-		if (recipe.RecipeIngredients.Any(ri =>
-			ri.Ingredient.Name.ToLower().Contains(primarySearchTerm)))
-			return 4;
-		if (recipe.Categories.Any(c =>
-			c.Name.ToLower().Contains(primarySearchTerm)))
-			return 5;
-
-		return 6;
 	}
 }

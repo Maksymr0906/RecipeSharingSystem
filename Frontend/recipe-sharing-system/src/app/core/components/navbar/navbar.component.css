@@ -11,8 +11,13 @@
 .navbar-brand:hover {
   color: #a18268;
 }
+
 .nav-link {
   color: #ffffff !important;
+}
+
+.nav-link:hover {
+  color: #a18268 !important;
 }
 
 .navbar-text {

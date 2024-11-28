@@ -56,6 +56,14 @@ public class RecipesController(IRecipeService service)
 		return Ok(recipes);
 	}
 
+	[HttpGet("author/{authorId:Guid}")]
+	public async Task<IActionResult> GetRecipesByAuthorId([FromRoute] Guid authorId)
+	{
+		var recipes = await _service.GetRecipesByAuthorId(authorId);
+
+		return Ok(recipes);
+	}
+
 	[Authorize(Policy = "UpdateRecipePolicy")]
 	[HttpPut("{id:Guid}")]
 	public async Task<IActionResult> UpdateRecipe([FromRoute] Guid id, [FromBody] UpdateRecipeRequestDto request)

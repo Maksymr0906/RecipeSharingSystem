@@ -21,6 +21,7 @@ import { FavoriteRecipesListComponent } from './features/favorite-recipes/compon
 import { PersonalProfilePageComponent } from './public/components/personal-profile-page/personal-profile-page.component';
 import { AllRecipesPageComponent } from './public/components/all-recipes-page/all-recipes-page.component';
 import { SearchRecipesComponent } from './features/recipe/search-recipes/search-recipes.component';
+import { AuthoredRecipesPageComponent } from './public/components/authored-recipes-page/authored-recipes-page.component';
 
 const routes: Routes = [
   {
@@ -63,9 +64,8 @@ const routes: Routes = [
     component: AddRecipeComponent
   },
   {
-    path: 'admin/recipes/:id',
+    path: 'recipes/:id',
     component: EditRecipeComponent,
-    canActivate: [authGuard]
   },
   {
     path: '',
@@ -110,6 +110,10 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchRecipesComponent
+  },
+  {
+    path: 'authored-recipes',
+    component: AuthoredRecipesPageComponent
   }
 ];
 

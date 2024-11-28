@@ -13,7 +13,7 @@ public class ReviewsController(IReviewService service)
 {
 	private readonly IReviewService _service = service;
 
-	[Authorize(Policy = "CreatePolicy")]
+	[Authorize(Policy = "CreateReviewPolicy")]
 	[HttpPost]
 	public async Task<IActionResult> CreateReview([FromBody] CreateReviewRequestDto request)
 	{
@@ -48,7 +48,7 @@ public class ReviewsController(IReviewService service)
 		return Ok(reviews);
 	}
 
-	[Authorize(Policy = "UpdatePolicy")]
+	[Authorize(Policy = "UpdateReviewPolicy")]
 	[HttpPut("{id:Guid}")]
 	public async Task<IActionResult> UpdateReview([FromRoute] Guid id, [FromBody] UpdateReviewRequestDto request)
 	{
@@ -62,6 +62,19 @@ public class ReviewsController(IReviewService service)
 		{
 			return BadRequest(ex.Message);
 		}
+	}
+
+	[Authorize(Policy = "DeleteReviewPolicy")]
+	[HttpDelete("{id:Guid}")]
+	public async Task<IActionResult> DeleteReview([FromRoute] Guid id)
+	{
+		var review = await _service.DeleteReviewAsync(id);
+		if (review == null)
+		{
+			return NotFound();
+		}
+
+		return Ok(review);
 	}
 }
 

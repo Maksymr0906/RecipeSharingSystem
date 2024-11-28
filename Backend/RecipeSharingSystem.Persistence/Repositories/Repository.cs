@@ -91,7 +91,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEnti
 			throw new ArgumentNullException(nameof(entity), "Entity cannot be null.");
 		}
 
-		var existingEntity = await _entities.FindAsync(entity.Id);
+		var existingEntity = await _entities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
 		if (existingEntity == null)
 		{
 			throw new KeyNotFoundException($"Entity with ID {entity.Id} not found.");

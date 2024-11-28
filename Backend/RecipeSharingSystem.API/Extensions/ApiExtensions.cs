@@ -64,11 +64,14 @@ public static class ApiExtensions
 			("CreateRecipePolicy", PermissionType.CreateRecipe),
 			("CreateIngredientPolicy", PermissionType.CreateIngredient),
 			("CreateInstructionPolicy", PermissionType.CreateInstruction),
+			("CreateReviewPolicy", PermissionType.CreateReview),
 			("UpdateRecipePolicy", PermissionType.UpdateRecipe),
 			("UpdateIngredientPolicy", PermissionType.UpdateIngredient),
 			("UpdateInstructionPolicy", PermissionType.UpdateInstruction),
+			("UpdateReviewPolicy", PermissionType.UpdateReview),
 			("DeleteRecipePolicy", PermissionType.DeleteRecipe),
-			("DeleteInstructionPolicy", PermissionType.DeleteInstruction)
+			("DeleteInstructionPolicy", PermissionType.DeleteInstruction),
+			("DeleteReviewPolicy", PermissionType.DeleteReview)
 		};
 
 		foreach (var (policyName, permissionType) in specificPolicies)

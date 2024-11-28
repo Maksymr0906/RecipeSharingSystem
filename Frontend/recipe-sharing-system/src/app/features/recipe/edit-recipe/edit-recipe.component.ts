@@ -59,7 +59,8 @@ export class EditRecipeComponent implements OnInit, OnDestroy {
         if (this.recipeId) {
           this.updateRecipeSubscription = this.recipeService.updateRecipe(this.recipeId, this.recipeModel).subscribe(
             _ => {
-              this.router.navigateByUrl('/admin/recipes');
+              this.router.navigateByUrl('');
+              scroll(0, 0);
             }
           );
         }

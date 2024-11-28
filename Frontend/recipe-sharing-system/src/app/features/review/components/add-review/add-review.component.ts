@@ -65,6 +65,24 @@ export class AddReviewComponent implements OnInit, OnDestroy {
     this.content = '';
   }
 
+  onDelete(id: string) {
+    if (id) {
+      this.reviewService.deleteReview(id).subscribe(() => {
+        this.rating = 0;
+        this.content = '';
+        this.reviewModel = {
+          id: '',
+          rating: 0,
+          dateCreated: new Date(),
+          content: '',
+          userName: '',
+          userId: '',
+          recipeId: ''
+        };
+      });
+    }
+  }
+
   onFormSubmit() {
     if (this.user) {
       if (this.reviewModel.rating === 0) {

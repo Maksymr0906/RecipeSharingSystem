@@ -48,4 +48,8 @@ export class RecipeService {
   getSearchRecipes(query: string): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${environment.apiBaseUrl}/api/recipes/search?query=${query}`);
   }
+
+  getAuthoredRecipes(authorId: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${environment.apiBaseUrl}/api/recipes/author/${authorId}`);
+  }
 }

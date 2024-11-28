@@ -39,6 +39,7 @@ import { PersonalProfilePageComponent } from './public/components/personal-profi
 import { AllRecipesPageComponent } from './public/components/all-recipes-page/all-recipes-page.component';
 import { SearchRecipesComponent } from './features/recipe/search-recipes/search-recipes.component';
 import { DisplayRecipesPageComponent } from './public/components/display-recipes-page/display-recipes-page.component';
+import { AuthoredRecipesPageComponent } from './public/components/authored-recipes-page/authored-recipes-page.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { DisplayRecipesPageComponent } from './public/components/display-recipes
     AllRecipesPageComponent,
     SearchRecipesComponent,
     DisplayRecipesPageComponent,
+    AuthoredRecipesPageComponent,
   ],
   imports: [
     BrowserModule,

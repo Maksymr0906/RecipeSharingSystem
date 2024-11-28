@@ -1,0 +1,30 @@
+.card {
+  width: 18rem;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #123d6a;
+}
+
+.card-title {
+  overflow: hidden;
+  white-space: nowrap;
+  color: #ac3b61;
+}
+
+.card-image-container {
+  height: 50%;
+  overflow: hidden;
+}

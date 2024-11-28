@@ -28,4 +28,8 @@ export class ReviewService {
   getRecipeReviews(recipeId: string): Observable<Review[]> {
     return this.http.get<Review[]>(`${environment.apiBaseUrl}/api/reviews/recipe/${recipeId}`);
   }
+
+  deleteReview(id: string): Observable<Review> {
+    return this.http.delete<Review>(`${environment.apiBaseUrl}/api/reviews/${id}`);
+  }
 }
