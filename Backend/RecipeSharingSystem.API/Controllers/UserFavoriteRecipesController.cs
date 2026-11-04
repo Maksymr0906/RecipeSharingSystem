@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RecipeSharingSystem.Application.DTOs.Recipe;
 using RecipeSharingSystem.Application.Services.Interfaces;
 
 namespace RecipeSharingSystem.API.Controllers;
 
+[Authorize]
 [Route("api/users/{userId:guid}/favorites")]
 [ApiController]
 public class UserFavoriteRecipes(IUserFavoriteRecipesService service)

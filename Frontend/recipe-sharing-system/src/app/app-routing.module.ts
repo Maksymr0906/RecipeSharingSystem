@@ -15,6 +15,7 @@ import { CategoryPageComponent } from './public/components/category-page/categor
 import { LoginPageComponent } from './public/components/login-page/login-page.component';
 import { RegistrationPageComponent } from './public/components/registration-page/registration-page.component';
 import { authGuard } from './features/auth/guards/auth.guard';
+import { userGuard } from './features/auth/guards/user.guard';
 import { AboutUsPageComponent } from './public/components/about-us-page/about-us-page.component';
 import { AddRecipeGuidePageComponent } from './public/components/add-recipe-guide-page/add-recipe-guide-page.component';
 import { FavoriteRecipesListComponent } from './features/favorite-recipes/components/favorite-recipes-list/favorite-recipes-list.component';
@@ -61,11 +62,13 @@ const routes: Routes = [
   },
   {
     path: 'recipes/add',
-    component: AddRecipeComponent
+    component: AddRecipeComponent,
+    canActivate: [userGuard]
   },
   {
     path: 'recipes/:id',
     component: EditRecipeComponent,
+    canActivate: [userGuard]
   },
   {
     path: '',
@@ -97,11 +100,13 @@ const routes: Routes = [
   },
   {
     path: 'favorites',
-    component: FavoriteRecipesListComponent
+    component: FavoriteRecipesListComponent,
+    canActivate: [userGuard]
   },
   {
     path: 'personal-profile',
-    component: PersonalProfilePageComponent
+    component: PersonalProfilePageComponent,
+    canActivate: [userGuard]
   },
   {
     path: 'all-recipes',
@@ -113,7 +118,8 @@ const routes: Routes = [
   },
   {
     path: 'authored-recipes',
-    component: AuthoredRecipesPageComponent
+    component: AuthoredRecipesPageComponent,
+    canActivate: [userGuard]
   }
 ];
 

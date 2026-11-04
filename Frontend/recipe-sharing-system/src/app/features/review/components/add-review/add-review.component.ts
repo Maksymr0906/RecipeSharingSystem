@@ -43,14 +43,22 @@ export class AddReviewComponent implements OnInit, OnDestroy {
   ) { }
   
   ngOnInit(): void {
-    if (this.user) {
-      this.reviewService.getUserRecipeReview(this.recipeId, this.user.userId).subscribe(review => {
-        this.reviewModel = review;
-        this.rating = review.rating;
+    this.loadReview();
+  }
 
-        if (review.content) {
-          this.content = review.content;
-        }
+  // A 404 simply means that the user has not reviewed this recipe yet.
+  private loadReview(): void {
+    if (this.user) {
+      this.reviewService.getUserRecipeReview(this.recipeId, this.user.userId).subscribe({
+        next: review => {
+          this.reviewModel = review;
+          this.rating = review.rating;
+
+          if (review.content) {
+            this.content = review.content;
+          }
+        },
+        error: () => { }
       });
     }
   }
@@ -93,7 +101,7 @@ export class AddReviewComponent implements OnInit, OnDestroy {
           userId: this.user.userId
         };
 
-        this.addReviewSubscription = this.reviewService.addReview(model).subscribe();
+        this.addReviewSubscription = this.reviewService.addReview(model).subscribe(() => this.loadReview());
       }
       else {
         const model: UpdateReviewRequest = {

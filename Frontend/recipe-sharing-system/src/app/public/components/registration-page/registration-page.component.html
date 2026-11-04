@@ -9,17 +9,26 @@
         id="email"
         class="form-control"
         [(ngModel)]="model.email"
+        autocomplete="email"
+        required
+        maxlength="100"
       />
     </div>
     <div class="mt-3">
       <label for="userName" class="form-label">User Name</label>
       <input
-        type="userName"
+        type="text"
         name="userName"
         id="userName"
         class="form-control"
         [(ngModel)]="model.userName"
+        autocomplete="username"
+        required
+        minlength="3"
+        maxlength="50"
+        pattern="[a-zA-Z0-9_]+"
       />
+      <div class="form-text">3–50 characters: letters, digits and underscores.</div>
     </div>
     <div class="mt-3">
       <label for="password" class="form-label">Password</label>
@@ -29,10 +38,16 @@
         id="password"
         class="form-control"
         [(ngModel)]="model.password"
+        autocomplete="new-password"
+        required
+        minlength="8"
+        maxlength="128"
       />
+      <div class="form-text">At least 8 characters; must not be the same as the user name or the email.</div>
     </div>
+    <div class="alert alert-danger mt-3" role="alert" *ngIf="errorMessage">{{ errorMessage }}</div>
     <div class="mt-3">
-      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || !form.valid">Register</button>
     </div>
   </form>
   <div class="mt-3">

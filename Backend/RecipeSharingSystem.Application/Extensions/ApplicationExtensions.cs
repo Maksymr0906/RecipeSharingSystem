@@ -23,6 +23,7 @@ public static class ApplicationExtensions
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IPermissionService, PermissionService>();
+        services.AddScoped<IResourceAccessService, ResourceAccessService>();
         services.AddScoped<IUserFavoriteRecipesService, UserFavoriteRecipesService>();
 
         return services;

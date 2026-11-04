@@ -24,6 +24,8 @@ import { CategoryPageComponent } from './public/components/category-page/categor
 import { LoginPageComponent } from './public/components/login-page/login-page.component';
 import { RegistrationPageComponent } from './public/components/registration-page/registration-page.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { NotificationComponent } from './core/components/notification/notification.component';
 import { RangePipe } from './shared/pipes/range.pipe';
 import { RatingInputComponent } from './features/rating/components/rating-input/rating-input.component';
 import { AddReviewComponent } from './features/review/components/add-review/add-review.component';
@@ -77,6 +79,7 @@ import { AuthoredRecipesPageComponent } from './public/components/authored-recip
     SearchRecipesComponent,
     DisplayRecipesPageComponent,
     AuthoredRecipesPageComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,11 +89,18 @@ import { AuthoredRecipesPageComponent } from './public/components/authored-recip
     ReactiveFormsModule,
     MarkdownModule.forRoot(),
   ],
-  providers: [{
+  providers: [
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

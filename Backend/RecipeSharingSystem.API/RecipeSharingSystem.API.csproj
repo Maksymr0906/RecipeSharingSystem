@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>recipe-sharing-system-api-7f3c2a9e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

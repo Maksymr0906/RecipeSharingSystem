@@ -97,3 +97,16 @@ The labels `[V1]`–`[V5]` reference the findings register in `security_policy.m
 | V5 | Minimum password length is 5 characters | Spoofing — `E1 User` |
 
 This table provides two-way traceability: every entry in the security policy's vulnerability register has a corresponding rationale in the threat model, and, conversely, every concrete (non-hypothetical) threat in this model traces back to a register entry that must be remediated.
+
+## Mitigation Status (updated during labs 3 and 4)
+
+| Threat | Mitigation implemented | Remaining |
+| --- | --- | --- |
+| E1 Spoofing / guessing credentials `[V5]` | 8-character minimum, generic login error, constant-ish timing, bcrypt cost 12, rate limit 5/min per IP and endpoint | No MFA yet (TOTP designed in `identity_and_access.md`), no per-account lockout |
+| F1 Information disclosure `[V4]` | CORS restricted to configured origins | HTTPS termination and forwarded headers are deployment tasks |
+| F1 Denial of service (login brute force) | Built-in rate limiter on `AuthController` | Other endpoints are not throttled |
+| D1 Tampering / disclosure `[V1]` | Secrets moved out of the repository; PII columns encrypted with AES-256-GCM, key ring with rotation | Old secrets in Git history must be rotated; the DB credentials still allow tampering with non-encrypted columns |
+| P2 Spoofing / Information disclosure / Elevation `[V2]` | `[Authorize]` on user and favorites endpoints; self-or-admin and owner-or-admin checks in the service layer | Admin accounts remain the highest-impact target |
+| D2 Tampering `[V3]` | — | **Still open** |
+| E1/P2 Repudiation | — | No audit log yet |
+

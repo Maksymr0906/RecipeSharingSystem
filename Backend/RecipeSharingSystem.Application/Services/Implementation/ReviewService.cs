@@ -2,20 +2,32 @@
 using RecipeSharingSystem.Business.DTOs.Review;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Enums;
+using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
 using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Business.Services.Implementation;
 
-public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper, IValidationService validationService)
+public class ReviewService(
+	IUnitOfWork unitOfWork,
+	IMapper mapper,
+	IValidationService validationService,
+	ICurrentUser currentUser,
+	IResourceAccessService resourceAccessService)
 	: IReviewService
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
 	private readonly IMapper _mapper = mapper;
 	private readonly IValidationService _validationService = validationService;
+	private readonly ICurrentUser _currentUser = currentUser;
+	private readonly IResourceAccessService _resourceAccessService = resourceAccessService;
 
 	public async Task<ReviewDto> CreateReviewAsync(CreateReviewRequestDto model)
 	{
+		// The reviewer is always the authenticated caller; a client-supplied UserId is ignored.
+		model.UserId = _currentUser.UserId;
+
 		await _validationService.ValidateAsync(model);
 
 		var review = _mapper.Map<Review>(model);
@@ -47,6 +59,8 @@ public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper, IValidationSe
 
 		var existingReview = await _unitOfWork.ReviewRepository.GetByIdWithDetails(id);
 
+		await _resourceAccessService.EnsureOwnerOrPermissionAsync(existingReview.UserId, PermissionType.Update);
+
 		_mapper.Map(model, existingReview);
 
 		await _unitOfWork.ReviewRepository.UpdateAsync(existingReview);
@@ -58,6 +72,10 @@ public class ReviewService(IUnitOfWork unitOfWork, IMapper mapper, IValidationSe
 
 	public async Task<ReviewDto> DeleteReviewAsync(Guid id)
 	{
+		var existingReview = await _unitOfWork.ReviewRepository.GetByIdAsync(id);
+
+		await _resourceAccessService.EnsureOwnerOrPermissionAsync(existingReview.UserId, PermissionType.Delete);
+
 		var review = await _unitOfWork.ReviewRepository.DeleteByIdAsync(id);
 
 		await _unitOfWork.SaveAsync();

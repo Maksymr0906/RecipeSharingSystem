@@ -2,6 +2,8 @@
 using RecipeSharingSystem.Business.DTOs.Recipe;
 using RecipeSharingSystem.Business.Services.Interfaces;
 using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Enums;
+using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
 using RecipeSharingSystem.Core.Interfaces.Services;
 
@@ -12,7 +14,9 @@ public class RecipeService(
 	IMapper mapper,
 	ICategoryService categoryService,
 	IIngredientService ingredientService,
-	IValidationService validationService
+	IValidationService validationService,
+	ICurrentUser currentUser,
+	IResourceAccessService resourceAccessService
 	) : IRecipeService
 {
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -20,9 +24,14 @@ public class RecipeService(
 	private readonly ICategoryService _categoryService = categoryService;
 	private readonly IIngredientService _ingredientService = ingredientService;
 	private readonly IValidationService _validationService = validationService;
+	private readonly ICurrentUser _currentUser = currentUser;
+	private readonly IResourceAccessService _resourceAccessService = resourceAccessService;
 
 	public async Task<RecipeDto> CreateRecipeAsync(CreateRecipeRequestDto model)
 	{
+		// The author is always the authenticated caller; a client-supplied AuthorId is ignored.
+		model.AuthorId = _currentUser.UserId;
+
 		await _validationService.ValidateAsync(model);
 
 		var categories = await _categoryService.GetCategoriesByIdsAsync(model.CategoryIds);
@@ -76,6 +85,8 @@ public class RecipeService(
 			return null;
 		}
 
+		await _resourceAccessService.EnsureOwnerOrPermissionAsync(existingRecipe.AuthorId, PermissionType.Update);
+
 		existingRecipe.RecipeIngredients.Clear();
 
 		existingRecipe.Categories.Clear();
@@ -122,6 +133,10 @@ public class RecipeService(
 
 	public async Task<RecipeDto> DeleteRecipeAsync(Guid id)
 	{
+		var existingRecipe = await _unitOfWork.RecipeRepository.GetByIdAsync(id);
+
+		await _resourceAccessService.EnsureOwnerOrPermissionAsync(existingRecipe.AuthorId, PermissionType.Delete);
+
 		var recipe = await _unitOfWork.RecipeRepository.DeleteByIdAsync(id);
 		
 		await _unitOfWork.SaveAsync();

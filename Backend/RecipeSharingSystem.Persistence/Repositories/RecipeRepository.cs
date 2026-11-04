@@ -19,6 +19,15 @@ public class RecipeRepository(RecipeSharingSystemDbContext context)
 		}
     }
 
+	public async Task<Guid?> GetAuthorIdByInstructionIdAsync(Guid instructionId)
+	{
+		return await Entities
+			.AsNoTracking()
+			.Where(r => r.InstructionId == instructionId)
+			.Select(r => (Guid?)r.AuthorId)
+			.FirstOrDefaultAsync();
+	}
+
 	public async Task<Recipe> GetBySlugAsync(string slug)
 	{
 		var recipe = await GetBaseRecipeQuery()

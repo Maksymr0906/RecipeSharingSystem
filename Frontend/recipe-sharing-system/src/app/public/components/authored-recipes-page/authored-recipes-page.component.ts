@@ -27,6 +27,8 @@ export class AuthoredRecipesPageComponent implements OnInit {
   }
 
   onDelete(id: string): void {
-    this.recipeService.deleteRecipe(id).subscribe();
+    this.recipeService.deleteRecipe(id).subscribe(() => {
+      this.recipes = this.recipes.filter(r => r.id !== id);
+    });
   }
 }

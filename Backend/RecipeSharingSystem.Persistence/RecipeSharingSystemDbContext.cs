@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RecipeSharingSystem.Core.Entities;
+using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 using RecipeSharingSystem.Persistence.Configurations;
 using RecipeSharingSystem.Persistence.SeedData;
 
@@ -9,11 +10,13 @@ namespace RecipeSharingSystem.Persistence
     public class RecipeSharingSystemDbContext(
 		DbContextOptions<RecipeSharingSystemDbContext> options,
 		IOptions<AuthorizationOptions> authOptions,
-		IOptions<SeedDataOptions> seedDataOptions) 
+		IOptions<SeedDataOptions> seedDataOptions,
+		IFieldEncryptor fieldEncryptor) 
 		: DbContext(options)
 	{
 		private readonly AuthorizationOptions _authorizationOptions = authOptions.Value;
 		private readonly SeedDataOptions _seedDataOptions = seedDataOptions.Value;
+		private readonly IFieldEncryptor _fieldEncryptor = fieldEncryptor;
 
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Review> Reviews { get; set; }
@@ -35,7 +38,7 @@ namespace RecipeSharingSystem.Persistence
 
 			modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(_authorizationOptions));
 
-			modelBuilder.ApplyConfiguration(new UserConfiguration(_seedDataOptions));
+			modelBuilder.ApplyConfiguration(new UserConfiguration(_seedDataOptions, _fieldEncryptor));
 
 			modelBuilder.ApplyConfiguration(new UserRoleConfiguration(_seedDataOptions));
 

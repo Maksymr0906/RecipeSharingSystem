@@ -48,7 +48,7 @@ The policy applies to the full development lifecycle — from local development 
 The policy applies to:
 
 * `Backend/` — all five solution projects: `RecipeSharingSystem.API`, `.Application`, `.Data` (Core), `.Infrastructure`, `.Persistence`;
-* `Frontend/` — the Angular SPA;
+* `Frontend/recipe-sharing-system` — the Angular SPA;
 * the `recipe_sharing_system` MySQL database;
 * the image file storage (`Backend/RecipeSharingSystem.API/Images`, served via the static-files middleware at `/Images`);
 * configuration files (`appsettings.json`, `appsettings.Development.json`);
@@ -64,6 +64,7 @@ The project is currently developed by a single person, so roles are simplified:
 
 * **Project Owner / Developer** — responsible for complying with this policy, approves exceptions, and responds to vulnerabilities.
 * **Reviewer** — not formally applied yet (no other contributors); once collaborators join, any change touching authentication, authorization, or configuration must be reviewed before merging into `master`.
+* **AI agent** — may propose or make changes to code/documentation but does not independently decide to weaken security requirements (e.g., removing `[Authorize]`, adding secrets to source).
 
 Separately from the policy roles above, the *application itself* defines runtime roles — `Guest` / `User` / `Admin` — enforced server-side on every request (detailed in `business-logic.md`, §2 and §6–7). This policy requires that a user's role always be determined by the server from the token/database, never trusted from a value supplied by the client.
 
@@ -95,12 +96,12 @@ Separately from the policy roles above, the *application itself* defines runtime
 
 ## 7. Secure Implementation
 
-* **Input validation.** FluentValidation is used (`RegisterRequestDtoValidator`, `LoginRequestDtoValidator`, etc.). `UpdateUserRequestDtoValidator` currently has no rules at all — it must be filled in with constraints consistent with the `User` entity's annotations (`UserName` length ≤ 100, `Email` format/length ≤ 255, `FirstName`/`LastName` length ≤ 50, `PostalCode` length ≤ 20).
+* **Input validation.** FluentValidation is used (`RegisterRequestDtoValidator`, `LoginRequestDtoValidator`, etc.). `UpdateUserRequestDtoValidator` now has optional-field rules (user name ≤ 50, e-mail ≤ 100, first/last name ≤ 50, postal code ≤ 20, date of birth 1900-01-01 … today). The validators for recipes, reviews and similar DTOs are still empty and must be filled in.
 * **Authentication.** JWT Bearer (`Microsoft.AspNetCore.Authentication.JwtBearer`); tokens are signed with HMAC-SHA256 using a symmetric key from configuration; lifetime and signature are validated. `ValidateIssuer`/`ValidateAudience` are currently disabled — acceptable only as long as tokens are both issued and consumed by this single API; if another service ever consumes the token, these checks must be enabled.
 * **Authorization.** A custom permission-based system: the `Role → Permission` mapping is loaded from configuration and enforced by `PermissionAuthorizationHandler` via `[Authorize(Policy = "...")]`. **Mandatory requirement:** every endpoint that reads or modifies data belonging to a specific user, or performs a protected operation, must carry an explicit `[Authorize]` attribute; its absence is treated as a security defect (a concrete instance of this is recorded in Section 9).
-* **Passwords.** Hashed with BCrypt (`EnhancedHashPassword`/`EnhancedVerify`) — an acceptable, modern algorithm. The current minimum length is 5 characters with no complexity requirement (`RegisterRequestDtoValidator`); raising the minimum to 8+ characters is recommended.
+* **Passwords.** Hashed with BCrypt (`EnhancedHashPassword`/`EnhancedVerify`) — an acceptable, modern algorithm. Work factor 12. Passwords must be 8–128 characters and must not equal the user name or e-mail (`RegisterRequestDtoValidator`).
 * **File uploads (`ImagesController`).** The file name (`fileName`) comes from the client and is used directly to build the server-side path via `Path.Combine` without sanitization, and the extension is taken from the uploaded file's original name without checking it against an allow-list. **Requirement:** `fileName` must reject path separators and `..` sequences (or be ignored entirely and generated server-side, e.g. as a GUID), and the extension/content must be validated against an explicit allow-list (`.jpg`, `.jpeg`, `.png`, `.webp`) with confirmation that the content is actually an image (e.g. by attempting to decode it with the already-referenced `SixLabors.ImageSharp`).
-* **CORS.** `Program.cs` currently configures `AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()`. Acceptable for local development only; the policy must be restricted to the exact origin(s) of the deployed frontend before any public deployment.
+* **CORS.** Allowed origins come from `Cors:AllowedOrigins` (default `http://localhost:4200`); set the real frontend origin before any public deployment.
 * **Error handling.** Controllers explicitly catch `ValidationException` and return `BadRequest`. For unhandled exceptions, it must be confirmed that detailed error pages/stack traces are disabled outside the Development environment (`app.Environment.IsDevelopment()` is already used for Swagger — the same approach should be applied to error handling).
 * **Logging.** Passwords, password hashes, and JWT tokens must never be written to application logs.
 
@@ -117,17 +118,26 @@ Separately from the policy roles above, the *application itself* defines runtime
 
 **Process:** register → classify by severity (Critical / High / Medium / Low) → assign an owner (the repository owner) → remediate → re-verify → update this document, `threat_model.md`, or `business-logic.md` if the issue reveals a gap in them.
 
-**Register compiled while preparing this policy** (verified against the actual repository code as of 2026-09-25):
+**Register compiled while preparing this policy** (verified against the actual repository code as of 2026-09-25; the *Status* column was updated during labs 3 and 4):
 
-| # | Finding | Severity | Component | Description / recommendation |
-| - | ------- | :------: | --------- | ------------------------------ |
-| V1 | The DB password and JWT signing key are committed in plaintext | **Critical** | `Backend/RecipeSharingSystem.API/appsettings.json` | Move both to environment variables / user-secrets; after removing them from source, both values must be rotated, since the old ones must be treated as compromised. |
-| V2 | `UsersController.GetUserById` and `UpdateUser` have no `[Authorize]` attribute | **Critical** | `Backend/RecipeSharingSystem.API/Controllers/UsersController.cs` | Any caller — even unauthenticated — can read or modify any user's profile by GUID: a classic Broken Access Control / IDOR issue. Add `[Authorize]` and a check that `id` matches the caller's own id (or that the caller is an Admin). |
-| V3 | `ImagesController.CreateImage` builds the file path from a client-supplied `fileName` without sanitization | High | `Backend/RecipeSharingSystem.API/Controllers/ImagesController.cs` | Potential path traversal / write outside the intended directory. Sanitize or generate the name server-side; validate the extension/content against an allow-list. |
-| V4 | The CORS policy allows any origin (`AllowAnyOrigin`) | Medium | `Backend/RecipeSharingSystem.API/Program.cs` | Acceptable for local development only; restrict before deployment. |
-| V5 | Minimum password length is 5 characters with no complexity rule | Low | `RegisterRequestDtoValidator.cs` | Raise the minimum (recommended ≥ 8) per §7. |
+| # | Finding | Severity | Component | Status |
+| - | ------- | :------: | --------- | ------ |
+| V1 | The DB password and JWT signing key are committed in plaintext | **Critical** | `appsettings.json` | **Mitigated.** Secrets removed from the file; they come from user-secrets / environment variables and the API refuses to start without them (JWT key ≥ 32 bytes, valid encryption key ring). **The old values remain in Git history and must be rotated.** |
+| V2 | `UsersController.GetUserById` and `UpdateUser` have no `[Authorize]` | **Critical** | `UsersController.cs` | **Fixed.** `[Authorize]` on the controller plus a "self or administrator" check in `UserService` (see `identity_and_access.md`). |
+| V3 | `ImagesController.CreateImage` builds the file path from a client-supplied `fileName` | High | `ImagesController.cs` | **Open.** Not part of labs 3–4; remains the next item to fix. |
+| V4 | The CORS policy allows any origin | Medium | `Program.cs` | **Fixed.** `WithOrigins(Cors:AllowedOrigins)`, default `http://localhost:4200`. |
+| V5 | Minimum password length is 5 characters | Low | `RegisterRequestDtoValidator.cs` | **Fixed.** 8–128 characters, password must differ from user name and e-mail. |
+| V6 | No ownership check when changing recipes, reviews, instructions, favorites (any authenticated user with `Update`/`Delete` permission could change anyone's data); `CreateReview` trusted `UserId` from the body | High | `RecipeService`, `ReviewService`, `InstructionService`, `UserFavoriteRecipesService` | **Fixed.** Hybrid RBAC + ownership via `ResourceAccessService`; the author is always taken from the token. |
+| V7 | `UserFavoriteRecipesController` had no `[Authorize]` | High | `UserFavoriteRecipesController.cs` | **Fixed.** |
+| V8 | Registration did not assign a role; login errors were unhandled (`KeyNotFoundException` → 500, user enumeration through different messages) | Medium | `AuthService` | **Fixed.** `User` role assigned; one generic message for unknown e-mail and wrong password, plus a dummy hash to equalise timing. |
+| V9 | No unique constraint on `Email` / `UserName` | Medium | `UserConfiguration` | **Fixed** (unique indexes + application-level check). Requires recreating the database. |
+| V10 | Personal data (`FirstName`, `LastName`, `DateOfBirth`, `PostalCode`) stored in clear text | Medium | `users` table | **Fixed** by AES-256-GCM field encryption (see `cryptography.md`). `Email` stays in clear text because it is a login key. |
+| V11 | No throttling of login/registration | Medium | `AuthController` | **Mitigated.** 5 requests/min per IP and endpoint. Per-account lockout and MFA are not implemented. |
+| V12 | `InstructionService.DeleteInstructionAsync` deleted through the ingredient repository (pre-existing bug) | Low | `InstructionService.cs` | **Fixed.** |
 
-These items are also the input to `threat_model.md`, where each one is tied to specific STRIDE threats (the `V1`–`V5` labels in the threat model correspond to this table).
+Known remaining weaknesses are listed in `identity_and_access.md` (§ Residual risks) and `cryptography.md` (§ Limitations). Other FluentValidation validators (recipes, reviews, …) are still empty — pre-existing and not yet addressed.
+
+These items are also the input to `threat_model.md`, where each one is tied to specific STRIDE threats (the `V1`–`V5` labels in the threat model correspond to this table; V6–V12 were found during labs 3–4).
 
 ## 10. Exceptions
 

@@ -1,0 +1,8 @@
+.notification-host {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  width: min(90vw, 560px);
+}

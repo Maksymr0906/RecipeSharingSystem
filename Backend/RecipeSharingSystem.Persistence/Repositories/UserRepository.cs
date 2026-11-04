@@ -25,6 +25,23 @@ public class UserRepository(RecipeSharingSystemDbContext context)
 		return user;
 	}
 
+	public async Task<User?> FindByEmailAsync(string email)
+	{
+		return await Entities
+			.AsNoTracking()
+			.Include(x => x.UserRoles)
+				.ThenInclude(x => x.Role)
+			.FirstOrDefaultAsync(x => x.Email == email);
+	}
+
+	public async Task<bool> ExistsByEmailOrUserNameAsync(string? email, string? userName, Guid excludeUserId = default)
+	{
+		return await Entities
+			.AsNoTracking()
+			.AnyAsync(x => x.Id != excludeUserId
+				&& ((email != null && x.Email == email) || (userName != null && x.UserName == userName)));
+	}
+
 	public async Task<HashSet<PermissionType>> GetPermissions(Guid userId)
 	{
 		var userRoles = await Entities
