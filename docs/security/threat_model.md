@@ -86,18 +86,6 @@ The labels `[V1]`–`[V5]` reference the findings register in `security_policy.m
 
 > Where a single underlying issue produces several different STRIDE threats, they are recorded in each relevant cell (for example, `V2` is simultaneously Spoofing, Information Disclosure, and partially Elevation of Privilege for `P2`). STRIDE categories are not mutually exclusive and are used as a systematic way to search for threats rather than a strict classification.
 
-## Traceability to the Vulnerability Register
-
-| ID | Finding (`security_policy.md` §9) | STRIDE categories in this model |
-| --- | --- | --- |
-| V1 | Secrets (DB password, JWT key) committed in plaintext in `appsettings.json` | Tampering, Information Disclosure — `D1 MySQL Database` |
-| V2 | Missing `[Authorize]` on `UsersController.GetUserById`/`UpdateUser` | Spoofing, Information Disclosure, Elevation of Privilege — `P2 Web API` |
-| V3 | Unsanitized `fileName` in `ImagesController.CreateImage` | Tampering — `D2 Local Image Storage`, `P2 Web API` |
-| V4 | CORS allows any origin | Information Disclosure — `F1 Client → Web API` |
-| V5 | Minimum password length is 5 characters | Spoofing — `E1 User` |
-
-This table provides two-way traceability: every entry in the security policy's vulnerability register has a corresponding rationale in the threat model, and, conversely, every concrete (non-hypothetical) threat in this model traces back to a register entry that must be remediated.
-
 ## Mitigation Status (updated during labs 3 and 4)
 
 | Threat | Mitigation implemented | Remaining |

@@ -114,32 +114,7 @@ Separately from the policy roles above, the *application itself* defines runtime
 * **CI:** open item — add a GitHub Actions workflow to automatically build the backend (`dotnet build`) and frontend (`ng build`) on every push/PR.
 * **Release gate.** A change must not land on `master` if it: adds a secret in plaintext; removes an existing `[Authorize]` attribute; or removes an ownership check on a resource.
 
-## 9. Vulnerability Management
-
-**Process:** register → classify by severity (Critical / High / Medium / Low) → assign an owner (the repository owner) → remediate → re-verify → update this document, `threat_model.md`, or `business-logic.md` if the issue reveals a gap in them.
-
-**Register compiled while preparing this policy** (verified against the actual repository code as of 2026-09-25; the *Status* column was updated during labs 3 and 4):
-
-| # | Finding | Severity | Component | Status |
-| - | ------- | :------: | --------- | ------ |
-| V1 | The DB password and JWT signing key are committed in plaintext | **Critical** | `appsettings.json` | **Mitigated.** Secrets removed from the file; they come from user-secrets / environment variables and the API refuses to start without them (JWT key ≥ 32 bytes, valid encryption key ring). **The old values remain in Git history and must be rotated.** |
-| V2 | `UsersController.GetUserById` and `UpdateUser` have no `[Authorize]` | **Critical** | `UsersController.cs` | **Fixed.** `[Authorize]` on the controller plus a "self or administrator" check in `UserService` (see `identity_and_access.md`). |
-| V3 | `ImagesController.CreateImage` builds the file path from a client-supplied `fileName` | High | `ImagesController.cs` | **Open.** Not part of labs 3–4; remains the next item to fix. |
-| V4 | The CORS policy allows any origin | Medium | `Program.cs` | **Fixed.** `WithOrigins(Cors:AllowedOrigins)`, default `http://localhost:4200`. |
-| V5 | Minimum password length is 5 characters | Low | `RegisterRequestDtoValidator.cs` | **Fixed.** 8–128 characters, password must differ from user name and e-mail. |
-| V6 | No ownership check when changing recipes, reviews, instructions, favorites (any authenticated user with `Update`/`Delete` permission could change anyone's data); `CreateReview` trusted `UserId` from the body | High | `RecipeService`, `ReviewService`, `InstructionService`, `UserFavoriteRecipesService` | **Fixed.** Hybrid RBAC + ownership via `ResourceAccessService`; the author is always taken from the token. |
-| V7 | `UserFavoriteRecipesController` had no `[Authorize]` | High | `UserFavoriteRecipesController.cs` | **Fixed.** |
-| V8 | Registration did not assign a role; login errors were unhandled (`KeyNotFoundException` → 500, user enumeration through different messages) | Medium | `AuthService` | **Fixed.** `User` role assigned; one generic message for unknown e-mail and wrong password, plus a dummy hash to equalise timing. |
-| V9 | No unique constraint on `Email` / `UserName` | Medium | `UserConfiguration` | **Fixed** (unique indexes + application-level check). Requires recreating the database. |
-| V10 | Personal data (`FirstName`, `LastName`, `DateOfBirth`, `PostalCode`) stored in clear text | Medium | `users` table | **Fixed** by AES-256-GCM field encryption (see `cryptography.md`). `Email` stays in clear text because it is a login key. |
-| V11 | No throttling of login/registration | Medium | `AuthController` | **Mitigated.** 5 requests/min per IP and endpoint. Per-account lockout and MFA are not implemented. |
-| V12 | `InstructionService.DeleteInstructionAsync` deleted through the ingredient repository (pre-existing bug) | Low | `InstructionService.cs` | **Fixed.** |
-
-Known remaining weaknesses are listed in `identity_and_access.md` (§ Residual risks) and `cryptography.md` (§ Limitations). Other FluentValidation validators (recipes, reviews, …) are still empty — pre-existing and not yet addressed.
-
-These items are also the input to `threat_model.md`, where each one is tied to specific STRIDE threats (the `V1`–`V5` labels in the threat model correspond to this table; V6–V12 were found during labs 3–4).
-
-## 10. Exceptions
+## 9. Exceptions
 
 Since the project is currently a student lab assignment developed by a single person, with no public production deployment, a temporary deviation from parts of Sections 6–7 is allowed:
 
@@ -148,13 +123,13 @@ Since the project is currently a student lab assignment developed by a single pe
 
 Any new exception must be justified in writing, have a defined expiration, and be approved by the project owner.
 
-## 11. Related Documents
+## 10. Related Documents
 
 * [`project-policy.md`](../policies/project-policy.md) — the project's overall policy (architecture, naming, Git workflow, the top-level §9 "Security Policy" section).
 * [`privacy_policy.md`](./privacy_policy.md) — the privacy policy for users' personal data.
 * [`threat_model.md`](./threat_model.md) — the STRIDE threat model and intruder model.
 * [`business-logic.md`](../architecture/business-logic.md) — business logic, roles (`Guest`/`User`/`Admin`), recipe ownership rules.
 
-## 12. Final Provisions
+## 11. Final Provisions
 
 This policy takes effect once approved by the project owner. It is reviewed after significant changes to the architecture, technology stack, authentication/authorization mechanism, or development process, and after any item in Section 9 is remediated (the entry is marked resolved rather than deleted, to preserve history). Policy changes are recorded in a dedicated commit that bumps the document version. In case of conflict between this document and `project-policy.md`, the stricter constraint applies until the documents are reconciled.
