@@ -21,12 +21,21 @@ public static class ApiExtensions
 				options.TokenValidationParameters = new TokenValidationParameters
 				{
 					AuthenticationType = "Jwt",
-					ValidateIssuer = false,
-					ValidateAudience = false,
+					// Lab 6: a token must be scoped to a specific issuer/recipient, not merely
+					// bear a valid signature - otherwise a token issued for another system that
+					// happens to share (or recover) this signing key could be replayed here.
+					ValidateIssuer = true,
+					ValidIssuer = jwtOptions!.Issuer,
+					ValidateAudience = true,
+					ValidAudience = jwtOptions.Audience,
 					ValidateLifetime = true,
 					ValidateIssuerSigningKey = true,
 					IssuerSigningKey =
-					new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions!.SecretKey))
+					new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecretKey)),
+					// Explicit, short, auditable allowance for clock drift between the token
+					// issuer and this validator (both are the same API here, but the default
+					// 5-minute skew is unnecessarily generous and was never a deliberate choice).
+					ClockSkew = TimeSpan.FromSeconds(30)
 				};
 			});
 

@@ -6,6 +6,7 @@ using RecipeSharingSystem.Core.Entities;
 using RecipeSharingSystem.Core.Enums;
 using RecipeSharingSystem.Core.Exceptions;
 using RecipeSharingSystem.Core.Interfaces.Infrastructure;
+using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 using RecipeSharingSystem.Core.Interfaces.Repositories;
 using RecipeSharingSystem.Core.Interfaces.Services;
 
@@ -16,7 +17,8 @@ public class AuthService(
 	IMapper mapper,
 	IPasswordHasher passwordHasher,
 	IJwtProvider jwtProvider,
-	IValidationService validationService) : IAuthService
+	IValidationService validationService,
+	ISecurityEventLogger securityEventLogger) : IAuthService
 {
 	// One message for every authentication failure: it must not reveal whether the account exists.
 	private const string InvalidCredentialsMessage = "Invalid email or password.";
@@ -26,6 +28,7 @@ public class AuthService(
 	private readonly IValidationService _validationService = validationService;
 	private readonly IMapper _mapper = mapper;
 	private readonly IUnitOfWork _unitOfWork = unitOfWork;
+	private readonly ISecurityEventLogger _securityEventLogger = securityEventLogger;
 
 	public async Task Register(RegisterRequestDto model)
 	{
@@ -64,13 +67,19 @@ public class AuthService(
 			// Spend comparable time as for an existing account, then fail with the same message.
 			_passwordHasher.SimulateVerification(model.Password);
 
+			_securityEventLogger.AuthenticationFailed(model.Email, "no account with this email");
+
 			throw new AuthenticationFailedException(InvalidCredentialsMessage);
 		}
 
 		if (!_passwordHasher.Verify(model.Password, user.PasswordHash))
 		{
+			_securityEventLogger.AuthenticationFailed(model.Email, "password did not match");
+
 			throw new AuthenticationFailedException(InvalidCredentialsMessage);
 		}
+
+		_securityEventLogger.AuthenticationSucceeded(user.Id);
 
 		var token = _jwtProvider.Generate(user);
 

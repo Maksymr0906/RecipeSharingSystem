@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using RecipeSharingSystem.Core.Interfaces.Infrastructure;
 using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Infrastructure.Auth;
@@ -34,6 +35,13 @@ public class PermissionAuthorizationHandler
         if (permissions.Intersect(requirement.Permissions).Any())
         {
             context.Succeed(requirement);
+        }
+        else
+        {
+            // Policy-based denial (as opposed to the ownership checks in ResourceAccessService):
+            // the caller is authenticated but holds none of the permissions the endpoint requires.
+            var securityEventLogger = scope.ServiceProvider.GetRequiredService<ISecurityEventLogger>();
+            securityEventLogger.AuthorizationDenied(id, "policy", string.Join(",", requirement.Permissions));
         }
     }
 }

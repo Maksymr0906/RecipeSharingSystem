@@ -7,7 +7,7 @@
 | Status | Draft |
 | Last updated | 2026-09-25 |
 | Owner | Maksym R. (project developer/owner) |
-| Related documents | [`security_policy.md`](./security_policy.md), [`privacy_policy.md`](./privacy_policy.md), [`business-logic.md`](../architecture/business-logic.md) |
+| Related documents | [`security_policy.md`](./security_policy.md), [`privacy_policy.md`](./privacy_policy.md), [`business-logic.md`](../architecture/business-logic.md), [`client_server_trust.md`](./client_server_trust.md) |
 
 ## Scope
 
@@ -86,7 +86,19 @@ The labels `[V1]`–`[V5]` reference the findings register in `security_policy.m
 
 > Where a single underlying issue produces several different STRIDE threats, they are recorded in each relevant cell (for example, `V2` is simultaneously Spoofing, Information Disclosure, and partially Elevation of Privilege for `P2`). STRIDE categories are not mutually exclusive and are used as a systematic way to search for threats rather than a strict classification.
 
-## Mitigation Status (updated during labs 3 and 4)
+## Traceability to the Vulnerability Register
+
+| ID | Finding (`security_policy.md` §9) | STRIDE categories in this model |
+| --- | --- | --- |
+| V1 | Secrets (DB password, JWT key) committed in plaintext in `appsettings.json` | Tampering, Information Disclosure — `D1 MySQL Database` |
+| V2 | Missing `[Authorize]` on `UsersController.GetUserById`/`UpdateUser` | Spoofing, Information Disclosure, Elevation of Privilege — `P2 Web API` |
+| V3 | Unsanitized `fileName` in `ImagesController.CreateImage` | Tampering — `D2 Local Image Storage`, `P2 Web API` |
+| V4 | CORS allows any origin | Information Disclosure — `F1 Client → Web API` |
+| V5 | Minimum password length is 5 characters | Spoofing — `E1 User` |
+
+This table provides two-way traceability: every entry in the security policy's vulnerability register has a corresponding rationale in the threat model, and, conversely, every concrete (non-hypothetical) threat in this model traces back to a register entry that must be remediated.
+
+## Mitigation Status (updated during labs 3, 4, 5, 6 and 7-8)
 
 | Threat | Mitigation implemented | Remaining |
 | --- | --- | --- |
@@ -96,5 +108,8 @@ The labels `[V1]`–`[V5]` reference the findings register in `security_policy.m
 | D1 Tampering / disclosure `[V1]` | Secrets moved out of the repository; PII columns encrypted with AES-256-GCM, key ring with rotation | Old secrets in Git history must be rotated; the DB credentials still allow tampering with non-encrypted columns |
 | P2 Spoofing / Information disclosure / Elevation `[V2]` | `[Authorize]` on user and favorites endpoints; self-or-admin and owner-or-admin checks in the service layer | Admin accounts remain the highest-impact target |
 | D2 Tampering `[V3]` | — | **Still open** |
-| E1/P2 Repudiation | — | No audit log yet |
+| E1/P2 Repudiation | Named security events (`ISecurityEventLogger`: authentication success/failure, authorization denial, rate-limit rejection, admin operations) with a per-request correlation id, single consistent timestamp format (`logging_and_monitoring.md`) | Not yet shipped to a central/append-only log store, so an attacker with server access could still edit the local log files after the fact |
+| T (new) Tampering with published release artifacts in transit between build and deployment | `RecipeSharingSystem.ReleaseIntegrity`: SHA-256 manifest + RSA-3072-PSS signature, private key held only by the project owner (`integrity_and_distribution.md`) | Verification is a manual pipeline step, not yet wired into CI; build-machine compromise before signing is out of scope |
+| D3 (new) Destruction/loss of the database — accidental or via an unpatched injection (modelled on the Libraxis `DROP DATABASE` incident) | Daily `mysqldump` backups with SHA-256 integrity verification before restore, documented RPO/RTO, restore drill executed and verified (`backup_and_recovery.md`); `5xx`-spike and `AuthorizationDenied` monitoring guidance would surface the attack earlier (`logging_and_monitoring.md`) | Backups are not yet automated against the real production database/schedule; no automated restore test on a recurring basis; no WAF/parameterisation audit was run against every raw-SQL code path in this project itself |
+| S1 (new) Spoofing via token replayed from, or crafted for, another system (lab 6: client-server trust) | JWT validation now checks `iss`/`aud` (`JwtOptions:Issuer`/`Audience`), not only the signature and expiry; explicit `ClockSkew` (30 s) replaces the implicit 5-minute default; `client_server_trust.md` documents that the one client-side role check (`authGuard`) is UX-only and is independently enforced server-side for every route it fronts | `Issuer`/`Audience` only block cross-system replay, not reuse of a stolen, still-valid token on this same API (no revocation list yet, same gap as E1/P2 Repudiation above); the access-token cookie is still not `HttpOnly` |
 

@@ -363,3 +363,16 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Lab 5: release-signing private key must never be committed; only
+# release-signing/public_key.pem is tracked.
+**/release-signing/private_key.pem
+
+# Lab 7-8: application log files (rolling daily logs written by Serilog) and local backup dumps -
+# these may contain personal data and must never be committed.
+Backend/RecipeSharingSystem.API/logs/
+**/db-backups/
+*.sql.gz
+*.sql.gz.sha256
+
+/Backend/private_key.pem

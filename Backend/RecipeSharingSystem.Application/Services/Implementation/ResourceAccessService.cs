@@ -5,11 +5,15 @@ using RecipeSharingSystem.Core.Interfaces.Services;
 
 namespace RecipeSharingSystem.Application.Services.Implementation;
 
-public class ResourceAccessService(ICurrentUser currentUser, IPermissionService permissionService)
+public class ResourceAccessService(
+	ICurrentUser currentUser,
+	IPermissionService permissionService,
+	ISecurityEventLogger securityEventLogger)
 	: IResourceAccessService
 {
 	private readonly ICurrentUser _currentUser = currentUser;
 	private readonly IPermissionService _permissionService = permissionService;
+	private readonly ISecurityEventLogger _securityEventLogger = securityEventLogger;
 
 	public async Task EnsureOwnerOrPermissionAsync(Guid ownerId, PermissionType overridePermission)
 	{
@@ -27,6 +31,8 @@ public class ResourceAccessService(ICurrentUser currentUser, IPermissionService 
 		{
 			return;
 		}
+
+		_securityEventLogger.AuthorizationDenied(callerId, $"owner:{ownerId}", overridePermission.ToString());
 
 		throw new ForbiddenException("You do not have permission to access this resource.");
 	}

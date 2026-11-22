@@ -3,7 +3,7 @@
 | | |
 | --- | --- |
 | Version | 1.0.0 |
-| Related | [`security_policy.md`](./security_policy.md), [`threat_model.md`](./threat_model.md), [`cryptography.md`](./cryptography.md) |
+| Related | [`security_policy.md`](./security_policy.md), [`threat_model.md`](./threat_model.md), [`cryptography.md`](./cryptography.md), [`client_server_trust.md`](./client_server_trust.md) |
 
 ## 1. Identification
 
@@ -15,7 +15,7 @@
 | Method | Status | Notes |
 | --- | --- | --- |
 | Password (e-mail + password) | **Implemented** | bcrypt via `EnhancedHashPassword` (SHA-384 pre-hash, so the 72-byte limit does not truncate long passwords), work factor 12 (≈ 0.28 s per hash in the lab measurement), per-hash random salt. Password length 8–128, must differ from user name/e-mail. |
-| JWT bearer token | **Implemented** | HMAC-SHA256, key ≥ 32 bytes from secrets, lifetime from `JwtOptions:ExpiresHours`. Carries `userId` and the role claims. |
+| JWT bearer token | **Implemented** | HMAC-SHA256, key ≥ 32 bytes from secrets, lifetime from `JwtOptions:ExpiresHours`, `ClockSkew` 30s. Carries only `userId` (roles are re-resolved server-side on each request, not trusted from the token). Issuer/audience are validated (lab 6) — see [`client_server_trust.md`](./client_server_trust.md). |
 | Login error handling | **Implemented** | Unknown e-mail and wrong password give the same `401 Invalid email or password.`; for an unknown e-mail a dummy bcrypt verification is performed so response time does not reveal whether the account exists. |
 | Throttling | **Implemented** | 5 requests per minute per IP and endpoint on `/api/Auth/*` → `429`. |
 | Multi-factor authentication (TOTP, RFC 6238) | **Designed, not implemented** | Planned: `TotpSecret` (encrypted with `IFieldEncryptor`, context `User.TotpSecret`) and `TotpEnabled` on `User`; enrolment endpoint returns an `otpauth://` URI; login with enabled MFA returns a short-lived "MFA required" token, the second step checks a 6-digit code (30 s step, ±1 window, replay protection by remembering the last accepted step) and only then issues the full JWT; 10 one-time recovery codes stored as bcrypt hashes. Mandatory for the `Admin` role. |

@@ -10,6 +10,7 @@ using RecipeSharingSystem.Infrastructure.Auth;
 using RecipeSharingSystem.Infrastructure.Crypto;
 using RecipeSharingSystem.Persistence;
 using RecipeSharingSystem.Persistence.SeedData;
+using Serilog;
 using System.Text;
 using System.Threading.RateLimiting;
 
@@ -17,6 +18,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
 var configuration = builder.Configuration;
+
+// Lab 7-8: structured logging to console and a rolling daily file (logs/, excluded from git - see
+// .gitignore and docs/security/logging_and_monitoring.md). Configuration lives under "Serilog" in
+// appsettings*.json so levels/sinks can be tuned per environment without a code change.
+builder.Host.UseSerilog((context, loggerConfiguration) =>
+	loggerConfiguration.ReadFrom.Configuration(context.Configuration));
 
 // Secrets must not live in committed files: provide them with `dotnet user-secrets` or environment variables
 // (see README.md). Fail fast with a clear message instead of starting with a weak or empty key.
@@ -50,6 +57,11 @@ services.AddRateLimiter(options =>
 {
 	options.OnRejected = async (context, cancellationToken) =>
 	{
+		var clientKey = $"{context.HttpContext.Connection.RemoteIpAddress}|{context.HttpContext.Request.Path}";
+
+		context.HttpContext.RequestServices.GetRequiredService<ISecurityEventLogger>()
+			.RateLimitRejected(clientKey, context.HttpContext.Request.Path);
+
 		context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
 		await context.HttpContext.Response.WriteAsJsonAsync(
 			new { title = "Too many requests.", detail = "Please wait a minute and try again." },
@@ -110,6 +122,11 @@ if (args.Contains("--reencrypt-pii"))
 	using var scope = app.Services.CreateScope();
 	var db = scope.ServiceProvider.GetRequiredService<RecipeSharingSystemDbContext>();
 
+	// Run from an operator's own machine, not by an authenticated user, so there is no caller id to
+	// attribute this to; it is still a sensitive, auditable operation (lab 7-8: admin/key operations).
+	scope.ServiceProvider.GetRequiredService<ISecurityEventLogger>()
+		.AdminOperation(Guid.Empty, "ReencryptPii", "all users (CLI operator)");
+
 	var users = await db.Users.ToListAsync();
 	foreach (var user in users)
 	{
@@ -143,7 +160,15 @@ app.UseCors(options =>
 	options.AllowAnyMethod();
 });
 
-// After CORS so that error responses keep their CORS headers; before everything that can throw.
+// Correlation id first, so every log line written below (including by the request-logging middleware
+// and the exception handler) carries it. After CORS so that error responses keep their CORS headers;
+// before everything that can throw.
+app.UseMiddleware<RequestCorrelationMiddleware>();
+
+// One structured summary line per request (method, path, status, duration), separate from the
+// per-event logs written by ISecurityEventLogger and the exception middleware.
+app.UseSerilogRequestLogging();
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseRateLimiter();
